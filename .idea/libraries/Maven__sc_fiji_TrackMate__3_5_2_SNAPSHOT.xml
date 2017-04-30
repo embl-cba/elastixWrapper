@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: sc.fiji:TrackMate_:3.5.2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/TrackMate_/3.5.2-SNAPSHOT/TrackMate_-3.5.2-20170430.041806-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/TrackMate_/3.5.2-SNAPSHOT/TrackMate_-3.5.2-20170430.041806-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/TrackMate_/3.5.2-SNAPSHOT/TrackMate_-3.5.2-20170430.041806-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

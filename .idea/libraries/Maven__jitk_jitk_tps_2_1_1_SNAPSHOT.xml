@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: jitk:jitk-tps:2.1.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/jitk/jitk-tps/2.1.1-SNAPSHOT/jitk-tps-2.1.1-20160426.130604-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/jitk/jitk-tps/2.1.1-SNAPSHOT/jitk-tps-2.1.1-20160426.130604-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/jitk/jitk-tps/2.1.1-SNAPSHOT/jitk-tps-2.1.1-20160426.130604-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Class-Path: native-lib-loader-2.1.4.jar netcdf-4.3.19.jar imglib2-real
+ transform-2.0.0-beta-34.jar mines-jtk-20151125.jar jdom2-2.0.6.jar jo
+ da-time-2.9.4.jar pal-optimization-2.0.0.jar jogl-all-2.3.2.jar batik
+ -svggen-1.8.jar jhdf5-14.12.0.jar JWlz-1.4.0.jar imglib2-3.2.1.jar ob
+ jenesis-2.1.jar ome-mdbtools-5.3.0.jar ejml-0.24.jar jhdf5-14.12.5.ja
+ r mpicbg-1.1.1.jar imagej-deprecated-0.1.1.jar logback-classic-1.1.7.
+ jar perf4j-0.9.13.jar guava-19.0.jar ome-xml-5.4.0.jar 3D_Viewer-4.0.
+ 1.jar formats-gpl-5.3.4.jar ome-poi-5.3.1.jar eventbus-1.4.jar TrackM
+ ate_-3.4.2.jar udunits-4.3.18.jar slf4j-api-1.7.21.jar itextpdf-5.1.1
+ .jar imagej-common-0.24.3.jar j3dcore-1.6.0-scijava-2.jar opencsv-2.4
+ .jar commons-logging-1.1.1.jar turbojpeg-5.3.4.jar formats-bsd-5.3.4.
+ jar scijava-common-2.62.1.jar gentyref-1.1.0.jar batik-xml-1.8.jar mi
+ nlog-1.2.jar xml-apis-ext-1.3.04.jar ij-1.51h.jar imglib2-roi-0.4.4.j
+ ar kryo-2.24.0.jar parsington-1.0.0.jar jgraphx-1.10.4.1.jar xercesIm
+ pl-2.8.1.jar trove4j-3.0.3.jar batik-ext-1.8.jar fiji-lib-2.1.1.jar x
+ mpcore-5.1.2.jar vecmath-1.6.0-scijava-2.jar gluegen-rt-2.3.2.jar img
+ lib2-algorithm-0.6.2.jar batik-awt-util-1.8.jar jgoodies-common-1.7.0
+ .jar VIB-lib-2.1.1.jar batik-util-1.8.jar metakit-5.3.0.jar jai_image
+ io-5.3.4.jar batik-dom-1.8.jar imglib-2.0.0-beta6.jar logback-core-1.
+ 1.7.jar jfreechart-1.0.19.jar specification-5.4.0.jar j3dutils-1.6.0-
+ scijava-2.jar jgoodies-forms-1.7.2.jar jcommon-1.0.23.jar imglib-ij-2
+ .0.0-beta6.jar imglib2-ij-2.0.0-beta-35.jar jama-1.0.3.jar formats-ap
+ i-5.3.4.jar metadata-extractor-2.6.2.jar ij1-patcher-0.12.5.jar jitk-
+ tps-2.1.0.jar ome-common-5.3.1.jar jgrapht-0.8.3.jar jama-1.0.2.jar l
+ og4j-1.2.17.jar imglib-algorithms-2.0.0-beta6.jar batik-css-1.8.jar i
+ mglib2-algorithm-fft-0.1.2.jar imglib2-algorithm-gpl-0.1.5.jar javass
+ ist-3.20.0-GA.jar jxrlib-all-0.2.1.jar
+

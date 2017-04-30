@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: mpicbg:imglib:2.0.0-beta6">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/mpicbg/imglib/2.0.0-beta6/imglib-2.0.0-beta6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/mpicbg/imglib/2.0.0-beta6/imglib-2.0.0-beta6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/mpicbg/imglib/2.0.0-beta6/imglib-2.0.0-beta6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
