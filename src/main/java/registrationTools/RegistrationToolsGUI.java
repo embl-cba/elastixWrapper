@@ -5,7 +5,7 @@ package registrationTools;
  */
 public class RegistrationToolsGUI {
 
-    public final static String CURRENT_IMAGE = "current image";
+    public final static String IMAGEPLUS = "from ImageJ";
     public final static String ELASTIX = "Elastix";
 
 
@@ -22,6 +22,10 @@ public class RegistrationToolsGUI {
      *
      */
 
+    public static void showDialog()
+    {
+
+    }
 
 
 }

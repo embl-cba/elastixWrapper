@@ -19,4 +19,24 @@ public class RegistrationToolsPlugIn implements PlugIn {
         });
 
     }
+
+
+    // main method for debugging
+    // throws ImgIOException
+    public void main(String[] args)
+    {
+        // set the plugins.dir property to make the plugin appear in the Plugins menu
+        Class<?> clazz = RegistrationToolsPlugIn.class;
+        String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
+        String pluginsDir = url.substring("file:".length(), url.length() - clazz.getName().length() - ".class".length
+                ());
+        System.setProperty("plugins.dir", pluginsDir);
+
+        // start ImageJ
+        new ij.ImageJ();
+
+        // set the plugins.dir property to make the plugin appear in the Plugins menu
+        run("");
+    }
+
 }

@@ -6,5 +6,7 @@ package registrationTools;
 public class RegistrationSettings {
 
     String method;
+    Boolean snake = false;
+    int reference, first, last, delta;
 
 }
