@@ -43,12 +43,24 @@ public class RegistrationTools {
     public void run()
     {
 
+        if ( outputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
+        {
+            impOut = imp.duplicate();
+            IJ.run(impOut, "Select All", "");
+            IJ.run(impOut, "Clear", "stack");
+            impOut.show();
+        }
+
         if ( settings.method.equals(RegistrationToolsGUI.ELASTIX) )
         {
             Elastix registration = new Elastix();
             registration.setReference();
             registration.setParameters();
-            registration.run();
+            new Thread(new Runnable() {
+                        public void run() {
+                            registration.run();
+                        }}).start();
+
         }
 
 
@@ -186,7 +198,7 @@ public class RegistrationTools {
             parameters.add("(BSplineInterpolationOrder 1)");
             parameters.add("(FinalBSplineInterpolationOrder 3)");
             parameters.add("(WriteResultImage \"true\")");
-            parameters.add("(ResultImagePixelType \"short\")");
+            parameters.add("(ResultImagePixelType \"char\")"); // !!
             parameters.add("(ResultImageFormat \"tif\")");
 
             return(parameters);
@@ -236,8 +248,9 @@ public class RegistrationTools {
                         logger.info("ref: " + settings.referenceFrame + " reg: " + t);
                         String transformation = computeTransformation(t);
                         applyTransformation(t, transformation);
-                        showTransformedImage(settings.tmpDir+"result.0.tif",
-                                             RegistrationToolsGUI.IMAGEPLUS);
+                        showTransformedImage(t,
+                                settings.tmpDir+"result.0.tif",
+                                RegistrationToolsGUI.IMAGEPLUS);
                     }
                 );
 
@@ -304,7 +317,8 @@ public class RegistrationTools {
             }
 
 
-            public void showTransformedImage(String inputImage,
+            public void showTransformedImage(int t,
+                                             String inputImage,
                                              String outputImage)
             {
                 if ( outputImage.equals(RegistrationToolsGUI.IMAGEPLUS) )
@@ -313,18 +327,14 @@ public class RegistrationTools {
                     ImagePlus impTmp = IJ.openImage(inputImage);
                     ImageStack stackTmp = impTmp.getStack();
 
-                    if ( impOut == null )
+
+                    ImageStack stackOut = impOut.getStack();
+                    int iOut = impOut.getStackIndex(1,1,t+1);
+                    for ( int i = 0; i < stackTmp.size(); i++ )
                     {
-                        impOut = new ImagePlus("Transformed", stackTmp);
+                        stackOut.setProcessor(stackTmp.getProcessor(i + 1), iOut++);
                     }
-                    else
-                    {
-                        ImageStack stackOut = impOut.getStack();
-                        for (int i = 0; i < stackTmp.size(); i++)
-                        {
-                            stackOut.addSlice(stackTmp.getProcessor(i + 1));
-                        }
-                    }
+
                     impOut.updateAndDraw();
                 }
             }
