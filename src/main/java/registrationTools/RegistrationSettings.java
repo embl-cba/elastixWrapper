@@ -7,7 +7,7 @@ public class RegistrationSettings {
 
     String method;
     String tmpDir;
-    Boolean snake = false;
+    Boolean snake = true;
     int reference = 1, first = 1, last = 0, delta;
     Type type = Type.AFFINE;
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/bin/";

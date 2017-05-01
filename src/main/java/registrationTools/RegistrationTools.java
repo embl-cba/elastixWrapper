@@ -9,6 +9,7 @@ import registrationTools.logging.IJLazySwingLogger;
 import registrationTools.logging.Logger;
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -83,6 +84,7 @@ public class RegistrationTools {
     {
         String pathReferenceImage;
         String pathParameterFile = settings.tmpDir + "elastix_parameters.txt";
+        String fileType = ".tif";
 
         public Elastix()
         {
@@ -112,37 +114,35 @@ public class RegistrationTools {
             String[] transformations = new String[numImages];
             String fixedImage, movingImage;
 
-            if (settings.snake)
+            // forward
+            if( settings.last > settings.reference )
             {
-                // forward
-                if( settings.last > settings.reference )
-                {
-                    Registerer registerer = new Registerer(
-                            Math.max(settings.reference, settings.first),
-                            settings.last,
-                            settings.delta
-                    );
-                    registerer.run();
-                }
-
-                // backward
-                if( settings.first < settings.reference )
-                {
-                    Registerer registerer = new Registerer(
-                            Math.min(settings.reference, settings.last),
-                            settings.first,
-                            settings.delta
-                    );
-                    registerer.run();
-                }
+                Registerer registerer = new Registerer(
+                        Math.max(settings.reference, settings.first),
+                        settings.last,
+                        settings.delta
+                );
+                registerer.run();
             }
+
+            // backward
+            if( settings.first < settings.reference )
+            {
+                Registerer registerer = new Registerer(
+                        Math.min(settings.reference, settings.last),
+                        settings.first,
+                        settings.delta
+                );
+                registerer.run();
+            }
+
         }
 
         public void setReference()
         {
             if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
             {
-                pathReferenceImage = settings.tmpDir + "reference.tif";
+                pathReferenceImage = settings.tmpDir + "reference" + fileType;
                 saveFrameAsMHD(pathReferenceImage, settings.reference + 1);
             }
         }
@@ -223,6 +223,7 @@ public class RegistrationTools {
             int s, e, d;
             IntStream range;
             String pathMovingImage;
+            Boolean firstTransformation = true;
 
 
             public Registerer(int s, int e, int d)
@@ -249,16 +250,22 @@ public class RegistrationTools {
             public void run()
             {
                 // TODO: check out "Parallel()"
-                range.forEach(
-                    t -> {
-                        logger.info("ref: " + settings.reference + " reg: " + t);
-                        String transformation = computeTransformation(t);
-                        applyTransformation(t, transformation);
-                        showTransformedImage(t,
-                                settings.tmpDir+"result.0.tif",
-                                RegistrationToolsGUI.IMAGEPLUS);
-                    }
-                );
+                String pathTransformation = null;
+
+                for ( int t : range.toArray() )
+                {
+                    logger.info("ref: " + settings.reference +
+                            " reg: " + t +
+                            " t0: " + pathTransformation);
+
+                    pathTransformation = transform( t, pathTransformation );
+
+                    //applyTransformation(t, transformation);
+                    showTransformedImage(t,
+                            settings.tmpDir + "result.0" + fileType,
+                            RegistrationToolsGUI.IMAGEPLUS);
+                }
+
 
                 //applyTransformation(getImagePath(inputImages, i),
                 //        getImagePath(outputImages, i),
@@ -267,16 +274,60 @@ public class RegistrationTools {
 
             }
 
-            public String computeTransformation(int t)
+            public String transform(int t, String pathTransformation)
             {
-                pathMovingImage = settings.tmpDir + "moving_"+t+".tif";
-                saveFrameAsMHD(pathMovingImage, t+1);
-                sysCallElastix(pathReferenceImage, pathMovingImage);
-                return("");
+                pathMovingImage = settings.tmpDir + "moving" + fileType;
+                saveFrameAsMHD(pathMovingImage, t + 1);
+
+                if ( settings.snake )
+                {
+                    if ( firstTransformation )
+                    {
+                        sysCallElastix(pathReferenceImage, pathMovingImage, null);
+                        firstTransformation = false;
+                    }
+                    else
+                    {
+                        sysCallElastix(settings.tmpDir + "result.0" + fileType,
+                                pathMovingImage,
+                                pathTransformation);
+                    }
+
+                    try
+                    {
+                        pathTransformation = settings.tmpDir + "IntitialTransformParameters."+t+".txt";
+                        copyFile(settings.tmpDir + "TransformParameters.0.txt",
+                                pathTransformation);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.error(e.toString());
+                    }
+
+                }
+                else
+                {
+                    // simply always register against reference
+                    sysCallElastix(pathReferenceImage, pathMovingImage, null);
+                }
+
+                return ( pathTransformation );
+            }
+
+            private void copyFile(String source, String dest) throws IOException {
+                Path FROM = Paths.get(source);
+                Path TO = Paths.get(dest);
+                //overwrite existing file, if exists
+                CopyOption[] options = new CopyOption[]{
+                        StandardCopyOption.REPLACE_EXISTING,
+                        StandardCopyOption.COPY_ATTRIBUTES
+                };
+                Files.copy(FROM, TO, options);
             }
 
             private String sysCallElastix(String pathReferenceImage,
-                                          String pathMovingImage)
+                                          String pathMovingImage,
+                                          String pathInitialTransformation)
             {
                 List<String> args = new ArrayList<>();
                 args.add( settings.folderElastix+"elastix" ); // command name
@@ -290,6 +341,12 @@ public class RegistrationTools {
                 args.add(pathMovingImage);
                 args.add("-threads");
                 args.add(""+settings.workers);
+
+                if ( pathInitialTransformation != null )
+                {
+                    args.add("-t0");
+                    args.add(pathInitialTransformation);
+                }
 
                 ProcessBuilder pb = new ProcessBuilder(args);
 

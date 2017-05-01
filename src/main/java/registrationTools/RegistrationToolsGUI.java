@@ -18,12 +18,11 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JTextField tfNumIterations = new JTextField(12);
     JTextField tfNumSpatialSamples = new JTextField(12);
     JTextField tfResolutionPyramid = new JTextField(12);
-    JTextField tfNumWorkers = new JTextField(2);
+    JTextField tfNumWorkers = new JTextField(3);
     JTextField tfReference = new JTextField(3);
     JTextField tfFirst = new JTextField(3);
     JTextField tfLast = new JTextField(3);
-
-
+    JCheckBox cbSnake = new JCheckBox();
 
     JButton btRunElastix = new JButton("Run Registration");
 
@@ -55,7 +54,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         settings.last = IJ.getImage().getNFrames();
 
         addTabPanel(tabs);
-        addHeader(panels, tabs, "ELASTIX PARAMETERS");
+        addHeader(panels, tabs, "PARAMETERS");
         addTextField(panels, tabs, tfNumIterations, "Number of iterations", "" + settings.iterations);
         addTextField(panels, tabs, tfNumSpatialSamples, "Number of spatial samples", ""+settings.spatialSamples);
         addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
@@ -63,8 +62,9 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
         addTextField(panels, tabs, tfFirst, "First", "" + settings.first);
         addTextField(panels, tabs, tfLast, "Last", "" + settings.last);
+        addCheckBox(panels, tabs, cbSnake, "Snake", settings.snake);
 
-        addHeader(panels, tabs, "ELASTIX");
+        addHeader(panels, tabs, "RUN");
         addButton(panels, tabs, btRunElastix);
         jtp.add("Elastix", tabs.get(tabs.size() - 1));
 
@@ -88,7 +88,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     {
         panels.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         panels.get(panels.size()-1).add(new JLabel(label));
-        tabs.get(tabs.size()-1).add(panels.get(panels.size()-1));
+        tabs.get(tabs.size()-1).add(panels.get(panels.size() - 1));
     }
 
     public void addTextField(ArrayList<JPanel> panels, ArrayList<JPanel> tabs, JTextField textField,
@@ -103,6 +103,17 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         panels.get(panels.size()-1).add(textField);
         tabs.get(tabs.size()-1).add(panels.get(panels.size()-1));
     }
+
+    public void addCheckBox(ArrayList<JPanel> panels, ArrayList<JPanel> tabs, JCheckBox checkBox,
+                             String label, Boolean defaultValue)
+    {
+        panels.add(new JPanel(new FlowLayout(FlowLayout.RIGHT)));
+        checkBox.setSelected(defaultValue);
+        panels.get(panels.size()-1).add(new JLabel(label));
+        panels.get(panels.size()-1).add(checkBox);
+        tabs.get(tabs.size()-1).add(panels.get(panels.size()-1));
+    }
+
 
     public void addButton(ArrayList<JPanel> panels, ArrayList<JPanel> tabs, JButton button)
     {
@@ -130,7 +141,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.method = RegistrationToolsGUI.ELASTIX;
             settings.first = 0;
             settings.last = IJ.getImage().getNFrames() - 1;
-            settings.snake = true;
+            settings.snake = cbSnake.isSelected();
             settings.tmpDir = "/Users/tischi/Desktop/tmp/";
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
             settings.spatialSamples = Integer.parseInt(tfNumSpatialSamples.getText());
