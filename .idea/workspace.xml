@@ -80,8 +80,8 @@
       <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.037037">
-              <caret line="143" column="50" selection-start-line="143" selection-start-column="50" selection-end-line="143" selection-end-column="50" />
+            <state vertical-scroll-proportion="-7.740741">
+              <caret line="146" column="67" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
               <folding>
                 <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
@@ -151,14 +151,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3905883">
-              <caret line="309" column="63" selection-start-line="309" selection-start-column="63" selection-end-line="309" selection-end-column="63" />
+            <state vertical-scroll-proportion="-6.4074073">
+              <caret line="181" column="53" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+                <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="e#1677#1678#0" expanded="true" />
                 <element signature="e#1751#1752#0" expanded="true" />
@@ -170,10 +171,10 @@
                 <element signature="e#4017#4018#0" expanded="true" />
                 <element signature="e#4082#4083#0" expanded="true" />
                 <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-                <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#saveFrameAsMHD#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#sysCallElastix#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -241,11 +242,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationSettings.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationSettings.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.58849555">
+              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -289,9 +290,9 @@
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/dataStreamingTools/DataStreamingTools.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/utils/Utils.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsPlugIn.java" />
-        <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
+        <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
       </list>
     </option>
   </component>
@@ -311,8 +312,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="134" />
-    <option name="y" value="23" />
+    <option name="x" value="48" />
+    <option name="y" value="73" />
     <option name="width" value="1383" />
     <option name="height" value="807" />
   </component>
@@ -689,7 +690,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="134" y="23" width="1383" height="807" extended-state="0" />
+    <frame x="48" y="73" width="1383" height="807" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -756,19 +757,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java</url>
-          <line>398</line>
+          <line>414</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java</url>
-          <line>389</line>
+          <line>405</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java</url>
-          <line>390</line>
+          <line>406</line>
           <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
@@ -811,6 +812,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
             <element signature="e#1677#1678#0" expanded="true" />
             <element signature="e#1751#1752#0" expanded="true" />
@@ -822,10 +824,10 @@
             <element signature="e#4017#4018#0" expanded="true" />
             <element signature="e#4082#4083#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrameAsMHD#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#sysCallElastix#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -1100,18 +1102,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.037037">
-          <caret line="143" column="50" selection-start-line="143" selection-start-column="50" selection-end-line="143" selection-end-column="50" />
+        <state vertical-scroll-proportion="-7.740741">
+          <caret line="146" column="67" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
           <folding>
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
@@ -1132,11 +1126,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3905883">
-          <caret line="309" column="63" selection-start-line="309" selection-start-column="63" selection-end-line="309" selection-end-column="63" />
+        <state vertical-scroll-proportion="-6.4074073">
+          <caret line="181" column="53" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
             <element signature="e#1677#1678#0" expanded="true" />
             <element signature="e#1751#1752#0" expanded="true" />
@@ -1148,15 +1143,23 @@
             <element signature="e#4017#4018#0" expanded="true" />
             <element signature="e#4082#4083#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrameAsMHD#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#sysCallElastix#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#showTransformedImage#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58849555">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>

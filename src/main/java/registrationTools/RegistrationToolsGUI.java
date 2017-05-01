@@ -144,7 +144,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.snake = cbSnake.isSelected();
             settings.tmpDir = "/Users/tischi/Desktop/tmp/";
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
-            settings.spatialSamples = Integer.parseInt(tfNumSpatialSamples.getText());
+            settings.spatialSamples = tfNumSpatialSamples.getText();
             settings.workers = Integer.parseInt(tfNumWorkers.getText());
             settings.resolutionPyramid = tfResolutionPyramid.getText();
             settings.last = Integer.parseInt(tfLast.getText())-1;

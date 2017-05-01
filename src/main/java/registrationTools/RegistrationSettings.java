@@ -12,9 +12,9 @@ public class RegistrationSettings {
     Type type = Type.AFFINE;
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/bin/";
     int iterations = 100;
-    int spatialSamples = 2000;
+    String spatialSamples = "full; 10000";
     int workers = Runtime.getRuntime().availableProcessors();
-    String resolutionPyramid = "4 4; 1 1";
+    String resolutionPyramid = "10 10; 2 2";
 
 
     public enum Type {
