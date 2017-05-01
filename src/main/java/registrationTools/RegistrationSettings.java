@@ -6,7 +6,26 @@ package registrationTools;
 public class RegistrationSettings {
 
     String method;
+    String tmpDir;
     Boolean snake = false;
-    int reference, first, last, delta;
+    int referenceFrame, first, last, delta;
+    Type type = Type.AFFINE;
+    String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/bin/";
 
+
+    public enum Type {
+        TRANSLATION("Translation"),
+        EULER("Euler"),
+        AFFINE("Affine");
+
+        private final String text;
+
+        private Type(final String text) {
+            this.text = text;
+        }
+
+        public String toString() {
+            return text;
+        }
+    }
 }

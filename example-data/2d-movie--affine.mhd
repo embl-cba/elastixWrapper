@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = True
+DimSize = 512 512 11
+ElementSize = 1.0 1.0 1.0
+ElementType = MET_UCHAR
+ElementDataFile = 2d-movie--affine.raw

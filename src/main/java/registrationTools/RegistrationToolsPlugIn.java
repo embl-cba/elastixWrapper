@@ -14,7 +14,7 @@ public class RegistrationToolsPlugIn implements PlugIn {
         SwingUtilities.invokeLater(new Runnable() {
             public void run()
             {
-                RegistrationToolsGUI.showDialog();
+                registrationToolsGUI.showDialog();
             }
         });
 
@@ -23,7 +23,7 @@ public class RegistrationToolsPlugIn implements PlugIn {
 
     // main method for debugging
     // throws ImgIOException
-    public void main(String[] args)
+    public static void main(String[] args)
     {
         // set the plugins.dir property to make the plugin appear in the Plugins menu
         Class<?> clazz = RegistrationToolsPlugIn.class;
@@ -36,7 +36,8 @@ public class RegistrationToolsPlugIn implements PlugIn {
         new ij.ImageJ();
 
         // set the plugins.dir property to make the plugin appear in the Plugins menu
-        run("");
+        RegistrationToolsPlugIn registrationToolsPlugIn = new RegistrationToolsPlugIn();
+        registrationToolsPlugIn.run("");
     }
 
 }
