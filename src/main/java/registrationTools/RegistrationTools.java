@@ -3,7 +3,6 @@ package registrationTools;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.io.FileSaver;
 import ij.plugin.Duplicator;
 import org.apache.commons.io.IOUtils;
 import registrationTools.logging.IJLazySwingLogger;
@@ -48,6 +47,7 @@ public class RegistrationTools {
             impOut = imp.duplicate();
             IJ.run(impOut, "Select All", "");
             IJ.run(impOut, "Clear", "stack");
+            IJ.run(impOut, "Select None", "");
             impOut.show();
         }
 
@@ -115,21 +115,26 @@ public class RegistrationTools {
             if (settings.snake)
             {
                 // forward
-                Registerer forwardRegisterer = new Registerer(
-                        settings.referenceFrame + 1,
-                        settings.last,
-                        settings.delta
-                );
-                forwardRegisterer.run();
+                if( settings.last > settings.reference )
+                {
+                    Registerer registerer = new Registerer(
+                            Math.max(settings.reference, settings.first),
+                            settings.last,
+                            settings.delta
+                    );
+                    registerer.run();
+                }
 
                 // backward
-                Registerer backwardRegisterer = new Registerer(
-                        settings.referenceFrame - 1,
-                        settings.first,
-                        settings.delta
-                );
-                backwardRegisterer.run();
-
+                if( settings.first < settings.reference )
+                {
+                    Registerer registerer = new Registerer(
+                            Math.min(settings.reference, settings.last),
+                            settings.first,
+                            settings.delta
+                    );
+                    registerer.run();
+                }
             }
         }
 
@@ -137,8 +142,8 @@ public class RegistrationTools {
         {
             if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
             {
-                pathReferenceImage = settings.tmpDir + "referenceFrame.tif";
-                saveFrameAsMHD(pathReferenceImage, settings.referenceFrame + 1);
+                pathReferenceImage = settings.tmpDir + "reference.tif";
+                saveFrameAsMHD(pathReferenceImage, settings.reference + 1);
             }
         }
 
@@ -169,11 +174,13 @@ public class RegistrationTools {
             List<String> parameters = new ArrayList<>();
 
             parameters.add("(Transform \"" + settings.type + "Transform\")");
-            parameters.add("(NumberOfResolutions 2)");
-            parameters.add("(MaximumNumberOfIterations 10)");
-            parameters.add("(ImagePyramidSchedule 1 1)");
-            parameters.add("(NumberOfSpatialSamples 10)");
+            parameters.add("(NumberOfResolutions "+settings.resolutionPyramid.split(";").length+")");
+            parameters.add("(MaximumNumberOfIterations "+settings.iterations +")");
+            parameters.add("(ImagePyramidSchedule "+settings.resolutionPyramid.replace(";","")+")");
+            parameters.add("(NumberOfSpatialSamples "+settings.spatialSamples +")");
             parameters.add("(DefaultPixelValue 0)");
+            parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
+
             parameters.add("(Registration \"MultiResolutionRegistration\")");
             parameters.add("(WriteTransformParametersEachIteration \"false\")");
             parameters.add("(WriteTransformParametersEachResolution \"false\")");
@@ -184,9 +191,8 @@ public class RegistrationTools {
             parameters.add("(UseDirectionCosines \"false\")");
             parameters.add("(Interpolator \"LinearInterpolator\")");
             parameters.add("(ResampleInterpolator \"FinalLinearInterpolator\")");
-            parameters.add("(FixedImagePyramid \"FixedRecursiveImagePyramid\")");
-            parameters.add("(MovingImagePyramid \"MovingRecursiveImagePyramid\")");
-            parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
+            parameters.add("(FixedImagePyramid \"FixedSmoothingImagePyramid\")");
+            parameters.add("(MovingImagePyramid \"MovingSmoothingImagePyramid\")");
             parameters.add("(AutomaticParameterEstimation \"true\")");
             parameters.add("(AutomaticScalesEstimation \"true\")");
             parameters.add("(Metric \"AdvancedMeanSquares\")");
@@ -245,7 +251,7 @@ public class RegistrationTools {
                 // TODO: check out "Parallel()"
                 range.forEach(
                     t -> {
-                        logger.info("ref: " + settings.referenceFrame + " reg: " + t);
+                        logger.info("ref: " + settings.reference + " reg: " + t);
                         String transformation = computeTransformation(t);
                         applyTransformation(t, transformation);
                         showTransformedImage(t,
@@ -283,7 +289,7 @@ public class RegistrationTools {
                 args.add("-m");
                 args.add(pathMovingImage);
                 args.add("-threads");
-                args.add("4");
+                args.add(""+settings.workers);
 
                 ProcessBuilder pb = new ProcessBuilder(args);
 
