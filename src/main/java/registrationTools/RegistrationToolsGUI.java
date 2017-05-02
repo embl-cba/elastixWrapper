@@ -1,6 +1,7 @@
 package registrationTools;
 
 import ij.IJ;
+import ij.ImagePlus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
 
     JButton btRunElastix = new JButton("Run Registration");
 
+    RegistrationSettings settings = new RegistrationSettings();
 
     /**
      *
@@ -50,15 +52,25 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         ArrayList<JPanel> panels = new ArrayList<>();
         ArrayList<JPanel> tabs = new ArrayList<>();
 
-        RegistrationSettings settings = new RegistrationSettings();
         settings.last = IJ.getImage().getNFrames();
+
+        // suggest some settings based on current image
+        //
+        ImagePlus imp = IJ.getImage();
+        if ( imp != null )
+        {
+            double dimRatio = (imp.getWidth() + imp.getHeight()) / imp.getNSlices();
+            int zBinning = (int)Math.ceil(10/dimRatio);
+            settings.resolutionPyramid = imp.getNSlices() > 1 ? "10 10 "+zBinning+"; 2 2 1" : "10 10; 2 2";
+            settings.bitDepth = imp.getBitDepth();
+        }
 
         addTabPanel(tabs);
         addHeader(panels, tabs, "PARAMETERS");
-        addTextField(panels, tabs, tfNumIterations, "Number of iterations", "" + settings.iterations);
-        addTextField(panels, tabs, tfNumSpatialSamples, "Number of spatial samples", ""+settings.spatialSamples);
+        addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
+        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", ""+settings.spatialSamples);
         addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
-        addTextField(panels, tabs, tfNumWorkers, "Number of workers", "" + settings.workers);
+        addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
         addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
         addTextField(panels, tabs, tfFirst, "First", "" + settings.first);
         addTextField(panels, tabs, tfLast, "Last", "" + settings.last);
@@ -137,7 +149,6 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         if ( e.getActionCommand().equals(btRunElastix.getText()) )
         {
 
-            RegistrationSettings settings = new RegistrationSettings();
             settings.method = RegistrationToolsGUI.ELASTIX;
             settings.first = 0;
             settings.last = IJ.getImage().getNFrames() - 1;
@@ -154,7 +165,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             String inputImages = RegistrationToolsGUI.IMAGEPLUS;
             String outputImages = RegistrationToolsGUI.IMAGEPLUS;
 
-            RegistrationTools registrationTools = new RegistrationTools(inputImages, outputImages, settings);
+            RegistrationTools registrationTools = new RegistrationTools(inputImages,
+                    outputImages, settings);
             registrationTools.run();
         }
     }

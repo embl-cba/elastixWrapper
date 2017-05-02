@@ -49,6 +49,7 @@ public class RegistrationTools {
             IJ.run(impOut, "Select All", "");
             IJ.run(impOut, "Clear", "stack");
             IJ.run(impOut, "Select None", "");
+            impOut.setTitle("Registered-"+imp.getTitle());
             impOut.show();
         }
 
@@ -173,6 +174,8 @@ public class RegistrationTools {
         {
             List<String> parameters = new ArrayList<>();
 
+            parameters.add("(CheckNumberOfSamples \"false\")");
+
             parameters.add("(Transform \"" + settings.type + "Transform\")");
             parameters.add("(NumberOfResolutions "+settings.resolutionPyramid.split(";").length+")");
             parameters.add("(MaximumNumberOfIterations "+settings.iterations +")");
@@ -193,6 +196,16 @@ public class RegistrationTools {
             }
             imageSampler += ")";
             parameters.add(imageSampler);
+
+            if ( settings.bitDepth == 8 )
+                parameters.add("(ResultImagePixelType \"char\")");
+            else if ( settings.bitDepth == 16 )
+                parameters.add("(ResultImagePixelType \"short\")");
+            else
+            {
+                logger.error("Bit depth " + settings.bitDepth + " not supported.");
+                return null;
+            }
 
             parameters.add("(DefaultPixelValue 0)");
             parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
@@ -220,7 +233,6 @@ public class RegistrationTools {
             parameters.add("(BSplineInterpolationOrder 1)");
             parameters.add("(FinalBSplineInterpolationOrder 3)");
             parameters.add("(WriteResultImage \"true\")");
-            parameters.add("(ResultImagePixelType \"char\")"); // !!
             parameters.add("(ResultImageFormat \"tif\")");
 
             return(parameters);
@@ -270,8 +282,8 @@ public class RegistrationTools {
 
                 for ( int t : range.toArray() )
                 {
-                    logger.info("ref: " + settings.reference +
-                            " reg: " + t +
+                    logger.info("ref: " + (settings.reference + 1) +
+                            " reg: " + (t + 1) +
                             " t0: " + pathTransformation);
 
                     pathTransformation = transform( t, pathTransformation );
@@ -405,7 +417,6 @@ public class RegistrationTools {
 
                     ImagePlus impTmp = IJ.openImage(inputImage);
                     ImageStack stackTmp = impTmp.getStack();
-
 
                     ImageStack stackOut = impOut.getStack();
                     int iOut = impOut.getStackIndex(1,1,t+1);

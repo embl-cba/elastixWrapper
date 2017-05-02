@@ -7,7 +7,7 @@ public class RegistrationSettings {
 
     String method;
     String tmpDir;
-    Boolean snake = true;
+    Boolean snake = false;
     int reference = 1, first = 1, last = 0, delta;
     Type type = Type.AFFINE;
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/bin/";
@@ -15,7 +15,7 @@ public class RegistrationSettings {
     String spatialSamples = "full; 10000";
     int workers = Runtime.getRuntime().availableProcessors();
     String resolutionPyramid = "10 10; 2 2";
-
+    int bitDepth = 8;
 
     public enum Type {
         TRANSLATION("Translation"),
