@@ -403,15 +403,23 @@ public class RegistrationTools {
             {
 
 
+                ProcessBuilder pb = new ProcessBuilder();
+
                 List<String> args = new ArrayList<>();
                 if ( settings.os.equals("Mac") )
                 {
+                    logger.info("MAC");
+                    Map<String, String> env = pb.environment();
+                    env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
                     args.add(settings.folderElastix + "bin/elastix"); // command name
                 }
                 else if ( settings.os.equals("Windows") )
                 {
-                    //args.add("CMD");
-                    //args.add("/C");
+                    logger.info("WINDOWS");
+                    Map<String, String> env = pb.environment();
+                    logger.info(env.get("PATH"));
+                    env.put("PATH", settings.folderElastix + ":$PATH");
+                    logger.info(env.get("PATH"));
                     args.add(settings.folderElastix + "elastix.exe"); // command name
                 }
 
@@ -432,21 +440,7 @@ public class RegistrationTools {
                     args.add(pathInitialTransformation);
                 }
 
-                ProcessBuilder pb = new ProcessBuilder(args);
-
-                if ( settings.os.equals("Mac") )
-                {
-                    Map<String, String> env = pb.environment();
-                    env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
-                    //logger.info(env.get("DYLD_LIBRARY_PATH"));
-                }
-                if ( settings.os.equals("Windows") )
-                {
-                    Map<String, String> env = pb.environment();
-                    logger.info(env.get("PATH"));
-                    env.put("PATH", settings.folderElastix + ":$PATH");
-                    logger.info(env.get("PATH"));
-                }
+                pb = new ProcessBuilder(args);
 
 
                 String s2 = "";
