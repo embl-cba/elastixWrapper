@@ -53,9 +53,8 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/MonitorThreadPoolStatus.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils$FileType.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/registrationTools_fiji_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/registrationTools_fiji_jar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/registrationTools_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/registrationTools_jar.xml" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,7 +80,7 @@
       <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23430963">
+            <state vertical-scroll-proportion="0.16969697">
               <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
               <folding>
                 <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
@@ -735,7 +734,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981357" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1538,7 +1537,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23430963">
+        <state vertical-scroll-proportion="0.16969697">
           <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
           <folding>
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
