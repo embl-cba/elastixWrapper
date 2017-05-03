@@ -449,8 +449,8 @@ public class RegistrationTools {
                 try
                 {
                     Process p = pb.start();
-                    String output = IOUtils.toString(p.getErrorStream());
-                    logger.info(output);
+                    //String output = IOUtils.toString(p.getErrorStream());
+                    //logger.info(output);
                     p.waitFor();
 
                 }

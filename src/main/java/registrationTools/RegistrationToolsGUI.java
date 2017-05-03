@@ -88,7 +88,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             logger.info("Choosing Windows OS");
             settings.os = "Windows";
             settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
-            settings.folderTmp = "C:\\Users\\"+System.getProperty("user.name")+"\\tmp\\";
+            settings.folderTmp = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\tmp\\";
         }
 
         addTabPanel(tabs);
