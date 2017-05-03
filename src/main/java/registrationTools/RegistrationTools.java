@@ -495,7 +495,6 @@ public class RegistrationTools {
                         impTmp = reader.load(settings.folderTmp, "result.0" + fileType, false);
                     }
 
-
                     ImageStack stackTmp = impTmp.getStack();
                     ImageStack stackOut = impOut.getStack();
                     int iOut = impOut.getStackIndex(1,1,t+1);

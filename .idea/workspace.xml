@@ -7,12 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41b89418-ca66-4d9d-99d7-863d54a7533c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_VIB_lib_2_1_3_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_fiji_lib_2_1_3_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/MetaImage_Reader.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/MetaImage_Writer.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_VIB_lib_2_1_2_SNAPSHOT.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_fiji_lib_2_1_2_SNAPSHOT.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/fiji--bigDataTools_.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/ProjectionXYZ.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/VirtualStackOfStacks/FastTiffDecoder.class" afterPath="" />
@@ -59,20 +53,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/MonitorThreadPoolStatus.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils$FileType.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix$Registerer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_3D_Viewer_4_0_2_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_3D_Viewer_4_0_3_SNAPSHOT.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_pal_optimization_2_0_1_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__sc_fiji_pal_optimization_2_0_2_SNAPSHOT.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationSettings.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationSettings.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/registrationTools_.jar" afterPath="$PROJECT_DIR$/out/artifacts/registrationTools_.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsPlugIn.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsPlugIn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/registrationTools.iml" afterPath="$PROJECT_DIR$/registrationTools.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -188,8 +169,8 @@
       <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3764706">
-              <caret line="494" column="63" selection-start-line="494" selection-start-column="62" selection-end-line="494" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.66527194">
+              <caret line="502" column="36" selection-start-line="502" selection-start-column="36" selection-end-line="502" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#RegistrationTools#0" expanded="false" />
@@ -355,8 +336,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="171" />
-    <option name="y" value="43" />
+    <option name="x" value="69" />
+    <option name="y" value="41" />
     <option name="width" value="1092" />
     <option name="height" value="807" />
   </component>
@@ -748,7 +729,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="171" y="43" width="1092" height="807" extended-state="0" />
+    <frame x="69" y="41" width="1092" height="807" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -761,13 +742,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981357" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2885906" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32867134" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32867134" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32867134" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -823,7 +804,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java</url>
-          <line>504</line>
+          <line>503</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
@@ -1601,8 +1582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3764706">
-          <caret line="494" column="63" selection-start-line="494" selection-start-column="62" selection-end-line="494" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.66527194">
+          <caret line="502" column="36" selection-start-line="502" selection-start-column="36" selection-end-line="502" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#RegistrationTools#0" expanded="false" />
