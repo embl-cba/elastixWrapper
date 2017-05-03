@@ -7,8 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41b89418-ca66-4d9d-99d7-863d54a7533c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/registrationTools_fiji_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/registrationTools_jar.xml" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/fiji--bigDataTools_.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/ProjectionXYZ.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/VirtualStackOfStacks/FastTiffDecoder.class" afterPath="" />
@@ -55,19 +53,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/MonitorThreadPoolStatus.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils$FileType.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/bigDataTools/utils/Utils.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationSettings.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationSettings.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$1.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix$Registerer.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix$Registerer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools$Elastix.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationTools.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsGUI.class" afterPath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsGUI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/plugins.config" afterPath="$PROJECT_DIR$/src/main/resources/plugins.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/plugins.config" afterPath="$PROJECT_DIR$/target/classes/plugins.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,22 +76,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.888889">
-              <caret line="177" column="30" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.18636364">
+              <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
               <folding>
                 <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="true" />
-                <element signature="method#showDialog#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="true" />
+                <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="true" />
                 <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="true" />
@@ -180,10 +166,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09414226">
+            <state vertical-scroll-proportion="-1.6666666">
               <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="22" />
               <folding>
                 <element signature="docComment;class#RegistrationTools#0" expanded="false" />
@@ -381,8 +367,8 @@
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsPlugIn.java" />
         <option value="$PROJECT_DIR$/src/main/resources/plugins.config" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationSettings.java" />
-        <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
+        <option value="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
       </list>
     </option>
   </component>
@@ -402,8 +388,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="39" />
-    <option name="y" value="45" />
+    <option name="x" value="15" />
+    <option name="y" value="26" />
     <option name="width" value="1383" />
     <option name="height" value="807" />
   </component>
@@ -735,7 +721,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="39" y="45" width="1383" height="807" extended-state="0" />
+    <frame x="15" y="26" width="1383" height="807" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -748,7 +734,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25454545" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981357" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -856,13 +842,13 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#showDialog#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="true" />
@@ -1104,13 +1090,13 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#showDialog#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="true" />
             <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="true" />
@@ -1524,31 +1510,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.888889">
-          <caret line="177" column="30" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
-          <folding>
-            <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#showDialog#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="true" />
-            <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09414226">
+        <state vertical-scroll-proportion="-1.6666666">
           <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="22" />
           <folding>
             <element signature="docComment;class#RegistrationTools#0" expanded="false" />
@@ -1570,6 +1534,28 @@
             <element signature="method#sysCallElastix#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#showTransformedImage#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18636364">
+          <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
+          <folding>
+            <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="true" />
+            <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>

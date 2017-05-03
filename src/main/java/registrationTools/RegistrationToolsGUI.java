@@ -19,6 +19,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     public final static String ELASTIX = "Elastix";
 
     JTextField tfElastixFolder = new JTextField(40);
+    JTextField tfTmpFolder = new JTextField(40);
     JTextField tfNumIterations = new JTextField(12);
     JTextField tfNumSpatialSamples = new JTextField(12);
     JTextField tfResolutionPyramid = new JTextField(12);
@@ -83,15 +84,16 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.folderElastix = "C:/Program Files/elastix_v4.8/";
             settings.folderTmp = "C:/tmp/";
         }
-
-
+        
         addTabPanel(tabs);
         addHeader(panels, tabs, "INSTALLATION");
-        addTextField(panels, tabs, tfElastixFolder, "Elastix Folder", "" + settings.folderElastix);
+        addTextField(panels, tabs, tfElastixFolder, "Elastix Installation Folder", "" + settings.folderElastix);
+        addTextField(panels, tabs, tfTmpFolder, "Temp Folder", "" + settings.folderTmp);
+
         addHeader(panels, tabs, "PARAMETERS");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
-        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", ""+settings.spatialSamples);
-        addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
+        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial Samples", ""+settings.spatialSamples);
+        addTextField(panels, tabs, tfResolutionPyramid, "Resolution Pyramid", settings.resolutionPyramid);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
         addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
         addTextField(panels, tabs, tfFirst, "First", "" + settings.first);
@@ -175,7 +177,6 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.first = 0;
             settings.last = IJ.getImage().getNFrames() - 1;
             settings.snake = cbSnake.isSelected();
-            settings.folderTmp = "/Users/tischi/Desktop/tmp/";
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
             settings.spatialSamples = tfNumSpatialSamples.getText();
             settings.workers = Integer.parseInt(tfNumWorkers.getText());
