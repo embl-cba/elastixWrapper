@@ -81,14 +81,14 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             logger.info("Choosing Mac OS");
             settings.os = "Mac";
             settings.folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
-            settings.folderTmp = "/Users/tischi/Desktop/tmp/";
+            settings.folderTmp = "/Users/"+System.getProperty("user.name")+"/Desktop/tmp/";
         }
         if (os.startsWith("Windows") )
         {
             logger.info("Choosing Windows OS");
             settings.os = "Windows";
             settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
-            settings.folderTmp = "C:\\tmp\\";
+            settings.folderTmp = "C:\\Users\\"+System.getProperty("user.name")+"\\tmp\\";
         }
 
         addTabPanel(tabs);
@@ -190,6 +190,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.last = Integer.parseInt(tfLast.getText())-1;
             settings.first = Integer.parseInt(tfFirst.getText())-1;
             settings.reference = Integer.parseInt(tfReference.getText())-1;
+            settings.folderTmp = tfTmpFolder.getText();
+            settings.folderElastix = tfElastixFolder.getText();
 
             String inputImages = RegistrationToolsGUI.IMAGEPLUS;
             String outputImages = RegistrationToolsGUI.IMAGEPLUS;
