@@ -2,6 +2,8 @@ package registrationTools;
 
 import ij.IJ;
 import ij.ImagePlus;
+import registrationTools.logging.IJLazySwingLogger;
+import registrationTools.logging.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     public final static String IMAGEPLUS = "from ImageJ";
     public final static String ELASTIX = "Elastix";
 
+    JTextField tfElastixFolder = new JTextField(40);
     JTextField tfNumIterations = new JTextField(12);
     JTextField tfNumSpatialSamples = new JTextField(12);
     JTextField tfResolutionPyramid = new JTextField(12);
@@ -28,6 +31,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JButton btRunElastix = new JButton("Run Registration");
 
     RegistrationSettings settings = new RegistrationSettings();
+
+    Logger logger = new IJLazySwingLogger();
 
     /**
      *
@@ -65,7 +70,24 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.bitDepth = imp.getBitDepth();
         }
 
+        // suggest some settings based on current OS
+        //
+        logger.info(System.getProperty("os.name"));
+        if ( System.getProperty("os.name").startsWith("Mac") )
+        {
+            settings.folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
+            settings.folderTmp = "/tmp/";
+        }
+        if ( System.getProperty("os.name").startsWith("Windows") )
+        {
+            settings.folderElastix = "C:/Program Files/elastix_v4.8/";
+            settings.folderTmp = "C:/tmp/";
+        }
+
+
         addTabPanel(tabs);
+        addHeader(panels, tabs, "INSTALLATION");
+        addTextField(panels, tabs, tfElastixFolder, "Elastix Folder", "" + settings.folderElastix);
         addHeader(panels, tabs, "PARAMETERS");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
         addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", ""+settings.spatialSamples);
@@ -153,7 +175,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.first = 0;
             settings.last = IJ.getImage().getNFrames() - 1;
             settings.snake = cbSnake.isSelected();
-            settings.tmpDir = "/Users/tischi/Desktop/tmp/";
+            settings.folderTmp = "/Users/tischi/Desktop/tmp/";
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
             settings.spatialSamples = tfNumSpatialSamples.getText();
             settings.workers = Integer.parseInt(tfNumWorkers.getText());

@@ -6,11 +6,11 @@ package registrationTools;
 public class RegistrationSettings {
 
     String method;
-    String tmpDir;
     Boolean snake = false;
     int reference = 1, first = 1, last = 0, delta;
     Type type = Type.AFFINE;
-    String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/bin/";
+    String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
+    String folderTmp = "/Users/tischi/Desktop/tmp/";
     int iterations = 100;
     String spatialSamples = "full; 10000";
     int workers = Runtime.getRuntime().availableProcessors();

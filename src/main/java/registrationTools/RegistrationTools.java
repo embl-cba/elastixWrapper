@@ -3,6 +3,7 @@ package registrationTools;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.gui.Roi;
 import ij.plugin.Duplicator;
 import org.apache.commons.io.IOUtils;
 import registrationTools.logging.IJLazySwingLogger;
@@ -12,6 +13,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -49,7 +51,7 @@ public class RegistrationTools {
             IJ.run(impOut, "Select All", "");
             IJ.run(impOut, "Clear", "stack");
             IJ.run(impOut, "Select None", "");
-            impOut.setTitle("Registered-"+imp.getTitle());
+            impOut.setTitle("Registered-" + imp.getTitle());
             impOut.show();
         }
 
@@ -84,17 +86,48 @@ public class RegistrationTools {
     public class Elastix
     {
         String pathReferenceImage;
-        String pathParameterFile = settings.tmpDir + "elastix_parameters.txt";
+        String pathParameterFile = settings.folderTmp + "elastix_parameters.txt";
+        String pathMaskImage = null;
         String fileType = ".tif";
 
         public Elastix()
         {
-            createTmpDir();
+            createOrEmptyTmpDir();
+
+            if ( imp.getRoi() != null )
+            {
+                createMaskFile();
+            }
         }
 
-        private void createTmpDir()
+        private String createMaskFile()
         {
-            File directory = new File(settings.tmpDir);
+            String pathMaskImage = settings.folderTmp + "mask";
+            /*
+            Roi roi = imp.getRoi();
+            imp_mask = imp.duplicate()
+            IJ.setBackgroundColor(0, 0, 0);
+            IJ.run(imp_mask, "Select All", "");
+            IJ.run(imp_mask, "Clear", "stack");
+            IJ.run(imp_mask, "Select None", "");
+            #IJ.run(imp_mask, "8-bit", "");
+            for iSlice in range(z_min, z_min+z_width):
+            imp_mask.setSlice(iSlice)
+            ip = imp_mask.getProcessor()
+            ip.setColor(1)
+            ip.setRoi(x_min, y_min, x_width, y_width)
+            ip.fill()
+
+            mask_filepath = os.path.join(p['output_folder'],'mask.tif')
+            IJ.saveAs(imp_mask, 'TIFF', mask_filepath)
+            return mask_filepath
+            */
+            return ( pathMaskImage );
+        }
+
+        private void createOrEmptyTmpDir()
+        {
+            File directory = new File(settings.folderTmp);
             if (! directory.exists() )
             {
                 directory.mkdir();
@@ -143,7 +176,7 @@ public class RegistrationTools {
         {
             if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
             {
-                pathReferenceImage = settings.tmpDir + "reference" + fileType;
+                pathReferenceImage = settings.folderTmp + "reference" + fileType;
                 saveFrameAsMHD(pathReferenceImage, settings.reference + 1);
             }
         }
@@ -290,7 +323,7 @@ public class RegistrationTools {
 
                     //applyTransformation(t, transformation);
                     showTransformedImage(t,
-                            settings.tmpDir + "result.0" + fileType,
+                            settings.folderTmp + "result.0" + fileType,
                             RegistrationToolsGUI.IMAGEPLUS);
                 }
 
@@ -304,7 +337,7 @@ public class RegistrationTools {
 
             public String transform(int t, String pathTransformation)
             {
-                pathMovingImage = settings.tmpDir + "moving" + fileType;
+                pathMovingImage = settings.folderTmp + "moving" + fileType;
                 saveFrameAsMHD(pathMovingImage, t + 1);
 
                 if ( settings.snake )
@@ -316,15 +349,15 @@ public class RegistrationTools {
                     }
                     else
                     {
-                        sysCallElastix(settings.tmpDir + "result.0" + fileType,
+                        sysCallElastix(settings.folderTmp + "result.0" + fileType,
                                 pathMovingImage,
                                 pathTransformation);
                     }
 
                     try
                     {
-                        pathTransformation = settings.tmpDir + "IntitialTransformParameters."+t+".txt";
-                        copyFile(settings.tmpDir + "TransformParameters.0.txt",
+                        pathTransformation = settings.folderTmp + "IntitialTransformParameters."+t+".txt";
+                        copyFile(settings.folderTmp + "TransformParameters.0.txt",
                                 pathTransformation);
                     }
                     catch (Exception e)
@@ -357,12 +390,22 @@ public class RegistrationTools {
                                           String pathMovingImage,
                                           String pathInitialTransformation)
             {
+
+
                 List<String> args = new ArrayList<>();
-                args.add( settings.folderElastix+"elastix" ); // command name
+                if ( System.getProperty("os.name").startsWith("Mac") )
+                {
+                    args.add(settings.folderElastix + "bin/elastix"); // command name
+                }
+                else if ( System.getProperty("os.name").startsWith("Windows") )
+                {
+                    args.add(settings.folderElastix + "elastix.exe"); // command name
+                }
+
                 args.add("-p");
                 args.add(pathParameterFile);
                 args.add("-out");
-                args.add(settings.tmpDir);
+                args.add(settings.folderTmp);
                 args.add("-f");
                 args.add(pathReferenceImage);
                 args.add("-m");
@@ -378,10 +421,17 @@ public class RegistrationTools {
 
                 ProcessBuilder pb = new ProcessBuilder(args);
 
+                if ( System.getProperty("os.name").startsWith("Mac") )
+                {
+                    Map<String, String> env = pb.environment();
+                    env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
+                    //logger.info(env.get("DYLD_LIBRARY_PATH"));
+                }
+
                 String s2 = "";
                 for (String s : pb.command() )
                 {
-                    s2 = s2 + s;
+                    s2 = s2 + " " + s;
                 }
                 logger.info(s2);
 
