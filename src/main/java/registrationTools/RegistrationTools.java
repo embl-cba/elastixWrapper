@@ -410,8 +410,8 @@ public class RegistrationTools {
                 }
                 else if ( settings.os.equals("Windows") )
                 {
-                    args.add("CMD");
-                    args.add("/C");
+                    //args.add("CMD");
+                    //args.add("/C");
                     args.add(settings.folderElastix + "elastix.exe"); // command name
                 }
 
@@ -440,7 +440,7 @@ public class RegistrationTools {
                     env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
                     //logger.info(env.get("DYLD_LIBRARY_PATH"));
                 }
-                if ( settings.os.equals("Mac") )
+                if ( settings.os.equals("Windows") )
                 {
                     Map<String, String> env = pb.environment();
                     logger.info(env.get("PATH"));
