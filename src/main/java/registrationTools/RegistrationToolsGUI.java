@@ -81,10 +81,10 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         }
         if ( System.getProperty("os.name").startsWith("Windows") )
         {
-            settings.folderElastix = "C:/Program Files/elastix_v4.8/";
-            settings.folderTmp = "C:/tmp/";
+            settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
+            settings.folderTmp = "C:\\tmp\\";
         }
-        
+
         addTabPanel(tabs);
         addHeader(panels, tabs, "INSTALLATION");
         addTextField(panels, tabs, tfElastixFolder, "Elastix Installation Folder", "" + settings.folderElastix);
