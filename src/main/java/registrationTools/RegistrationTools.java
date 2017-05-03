@@ -393,11 +393,11 @@ public class RegistrationTools {
 
 
                 List<String> args = new ArrayList<>();
-                if ( System.getProperty("os.name").startsWith("Mac") )
+                if ( settings.os.equals("Mac") )
                 {
                     args.add(settings.folderElastix + "bin/elastix"); // command name
                 }
-                else if ( System.getProperty("os.name").startsWith("Windows") )
+                else if ( settings.os.equals("Windows") )
                 {
                     args.add(settings.folderElastix + "elastix.exe"); // command name
                 }
@@ -421,7 +421,7 @@ public class RegistrationTools {
 
                 ProcessBuilder pb = new ProcessBuilder(args);
 
-                if ( System.getProperty("os.name").startsWith("Mac") )
+                if ( settings.os.equals("Mac") )
                 {
                     Map<String, String> env = pb.environment();
                     env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");

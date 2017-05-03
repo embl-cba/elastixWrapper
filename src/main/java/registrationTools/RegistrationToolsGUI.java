@@ -73,14 +73,20 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
 
         // suggest some settings based on current OS
         //
-        logger.info(System.getProperty("os.name"));
-        if ( System.getProperty("os.name").startsWith("Mac") )
+        String os = System.getProperty("os.name");
+        logger.info(os);
+        
+        if ( os.startsWith("Mac") )
         {
+            logger.info("Choosing Mac OS");
+            settings.os = "Mac";
             settings.folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
             settings.folderTmp = "/tmp/";
         }
-        if ( System.getProperty("os.name").startsWith("Windows") )
+        if ( os.startsWith("Windows") )
         {
+            logger.info("Choosing Windows OS");
+            settings.os = "Windows";
             settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
             settings.folderTmp = "C:\\tmp\\";
         }
