@@ -410,6 +410,8 @@ public class RegistrationTools {
                 }
                 else if ( settings.os.equals("Windows") )
                 {
+                    args.add("CMD");
+                    args.add("/C");
                     args.add(settings.folderElastix + "elastix.exe"); // command name
                 }
 
@@ -438,6 +440,14 @@ public class RegistrationTools {
                     env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
                     //logger.info(env.get("DYLD_LIBRARY_PATH"));
                 }
+                if ( settings.os.equals("Mac") )
+                {
+                    Map<String, String> env = pb.environment();
+                    logger.info(env.get("PATH"));
+                    env.put("PATH", settings.folderElastix + ":$PATH");
+                    logger.info(env.get("PATH"));
+                }
+
 
                 String s2 = "";
                 for (String s : pb.command() )
@@ -449,10 +459,9 @@ public class RegistrationTools {
                 try
                 {
                     Process p = pb.start();
-                    //String output = IOUtils.toString(p.getErrorStream());
-                    //logger.info(output);
+                    String output = IOUtils.toString(p.getErrorStream());
+                    logger.info(output);
                     p.waitFor();
-
                 }
                 catch (Exception e)
                 {
