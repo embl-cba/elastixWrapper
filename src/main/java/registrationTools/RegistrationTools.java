@@ -3,7 +3,6 @@ package registrationTools;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.gui.Roi;
 import ij.plugin.Duplicator;
 import org.apache.commons.io.IOUtils;
 import registrationTools.logging.IJLazySwingLogger;
@@ -85,10 +84,15 @@ public class RegistrationTools {
 
     public class Elastix
     {
-        String pathReferenceImage;
+        String nameReferenceImage = "reference";
+        String nameMovingImage = "moving";
+        String nameMaskImage = "mask";
+
+        String fileType = ".mhd";
+
         String pathParameterFile = settings.folderTmp + "elastix_parameters.txt";
         String pathMaskImage = null;
-        String fileType = ".tif";
+
 
         public Elastix()
         {
@@ -100,9 +104,9 @@ public class RegistrationTools {
             }
         }
 
-        private String createMaskFile()
+        private void createMaskFile()
         {
-            String pathMaskImage = settings.folderTmp + "mask";
+            String pathMaskImage = settings.folderTmp + nameMaskImage + fileType;
             /*
             Roi roi = imp.getRoi();
             imp_mask = imp.duplicate()
@@ -122,7 +126,6 @@ public class RegistrationTools {
             IJ.saveAs(imp_mask, 'TIFF', mask_filepath)
             return mask_filepath
             */
-            return ( pathMaskImage );
         }
 
         private void createOrEmptyTmpDir()
@@ -176,8 +179,7 @@ public class RegistrationTools {
         {
             if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
             {
-                pathReferenceImage = settings.folderTmp + "reference" + fileType;
-                saveFrameAsMHD(pathReferenceImage, settings.reference + 1);
+                saveFrame(settings.folderTmp, nameReferenceImage, settings.reference + 1);
             }
         }
 
@@ -231,9 +233,9 @@ public class RegistrationTools {
             parameters.add(imageSampler);
 
             if ( settings.bitDepth == 8 )
-                parameters.add("(ResultImagePixelType \"char\")");
+                parameters.add("(ResultImagePixelType \"unsigned char\")");
             else if ( settings.bitDepth == 16 )
-                parameters.add("(ResultImagePixelType \"short\")");
+                parameters.add("(ResultImagePixelType \"unsigned short\")");
             else
             {
                 logger.error("Bit depth " + settings.bitDepth + " not supported.");
@@ -266,24 +268,31 @@ public class RegistrationTools {
             parameters.add("(BSplineInterpolationOrder 1)");
             parameters.add("(FinalBSplineInterpolationOrder 3)");
             parameters.add("(WriteResultImage \"true\")");
-            parameters.add("(ResultImageFormat \"tif\")");
+            parameters.add("(ResultImageFormat \""+fileType.replace(".","")+"\")");
 
             return(parameters);
         }
 
 
-        public void saveFrameAsMHD(String path, int t)
+        public void saveFrame(String folder, String file, int t)
         {
             Duplicator duplicator = new Duplicator();
             ImagePlus imp2 = duplicator.run(imp, 1, 1, 1, imp.getNSlices(), t, t);
-            IJ.saveAs(imp2, "Tiff", path);
-            //IJ.run(imp2, "MHD/MHA ...", "save=" + path);
+
+            if ( fileType.equals(".mhd") )
+            {
+                MetaImage_Writer writer = new MetaImage_Writer();
+                writer.save(imp2, folder, file + fileType);
+            }
+            else if ( fileType.equals(".tif") )
+            {
+                IJ.saveAs(imp2, "Tiff", folder + file + fileType);
+            }
         }
 
         class Registerer implements Runnable {
             int s, e, d;
             IntStream range;
-            String pathMovingImage;
             Boolean firstTransformation = true;
 
 
@@ -322,8 +331,7 @@ public class RegistrationTools {
                     pathTransformation = transform( t, pathTransformation );
 
                     //applyTransformation(t, transformation);
-                    showTransformedImage(t,
-                            settings.folderTmp + "result.0" + fileType,
+                    putTransformedImageToImagePlus(t,
                             RegistrationToolsGUI.IMAGEPLUS);
                 }
 
@@ -337,28 +345,29 @@ public class RegistrationTools {
 
             public String transform(int t, String pathTransformation)
             {
-                pathMovingImage = settings.folderTmp + "moving" + fileType;
-                saveFrameAsMHD(pathMovingImage, t + 1);
+                saveFrame(settings.folderTmp, nameMovingImage, t + 1);
 
                 if ( settings.snake )
                 {
                     if ( firstTransformation )
                     {
-                        sysCallElastix(pathReferenceImage, pathMovingImage, null);
+                        sysCallElastix(settings.folderTmp+nameReferenceImage+fileType,
+                                       settings.folderTmp+nameMovingImage+fileType,
+                                       null);
                         firstTransformation = false;
                     }
                     else
                     {
                         sysCallElastix(settings.folderTmp + "result.0" + fileType,
-                                pathMovingImage,
-                                pathTransformation);
+                                       settings.folderTmp+nameMovingImage+fileType,
+                                       pathTransformation);
                     }
 
                     try
                     {
                         pathTransformation = settings.folderTmp + "IntitialTransformParameters."+t+".txt";
                         copyFile(settings.folderTmp + "TransformParameters.0.txt",
-                                pathTransformation);
+                                 pathTransformation);
                     }
                     catch (Exception e)
                     {
@@ -369,7 +378,9 @@ public class RegistrationTools {
                 else
                 {
                     // simply always register against reference
-                    sysCallElastix(pathReferenceImage, pathMovingImage, null);
+                    sysCallElastix(settings.folderTmp+nameReferenceImage+fileType,
+                            settings.folderTmp+nameMovingImage+fileType,
+                            null);
                 }
 
                 return ( pathTransformation );
@@ -458,16 +469,34 @@ public class RegistrationTools {
             }
 
 
-            public void showTransformedImage(int t,
-                                             String inputImage,
-                                             String outputImage)
+            public void putTransformedImageToImagePlus(int t, String outputImage)
             {
+
+                ImagePlus impTmp = null;
+
+
                 if ( outputImage.equals(RegistrationToolsGUI.IMAGEPLUS) )
                 {
 
-                    ImagePlus impTmp = IJ.openImage(inputImage);
-                    ImageStack stackTmp = impTmp.getStack();
+                    File file = new File(settings.folderTmp + "result.0" + fileType);
+                    if (! file.exists() )
+                    {
+                        logger.error("Elastix output file not found: "+settings.folderTmp + "result.0" + fileType +
+                        "\nPlease check the elastix log file: "+settings.folderTmp + "elastix.log");
+                    }
 
+                    if ( fileType.equals(".tif") )
+                    {
+                        impTmp = IJ.openImage(settings.folderTmp + "result.0" + fileType);
+                    }
+                    else if ( fileType.equals(".mhd") )
+                    {
+                        MetaImage_Reader reader = new MetaImage_Reader();
+                        impTmp = reader.load(settings.folderTmp, "result.0" + fileType, false);
+                    }
+
+
+                    ImageStack stackTmp = impTmp.getStack();
                     ImageStack stackOut = impOut.getStack();
                     int iOut = impOut.getStackIndex(1,1,t+1);
                     for ( int i = 0; i < stackTmp.size(); i++ )

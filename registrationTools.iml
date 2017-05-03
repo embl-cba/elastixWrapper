@@ -50,10 +50,10 @@
     <orderEntry type="library" name="Maven: jama:jama:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: mpicbg:imglib-ij:2.0.0-beta6" level="project" />
     <orderEntry type="library" name="Maven: sc.fiji:TrackMate_:3.5.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:3D_Viewer:4.0.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:VIB-lib:2.1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:pal-optimization:2.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:fiji-lib:2.1.2-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:3D_Viewer:4.0.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:VIB-lib:2.1.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:pal-optimization:2.0.2-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:fiji-lib:2.1.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:ij1-patcher:0.12.5" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej-deprecated:0.1.1" level="project" />

@@ -13,7 +13,7 @@ public class RegistrationSettings {
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
     String folderTmp = "/Users/tischi/Desktop/tmp/";
     int iterations = 100;
-    String spatialSamples = "full; 10000";
+    String spatialSamples = "100; 100";
     int workers = Runtime.getRuntime().availableProcessors();
     String resolutionPyramid = "10 10; 2 2";
     int bitDepth = 8;
