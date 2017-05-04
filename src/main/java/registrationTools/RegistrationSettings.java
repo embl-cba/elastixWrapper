@@ -20,11 +20,13 @@ public class RegistrationSettings {
     String resolutionPyramid = "10 10; 2 2";
     int bitDepth = 8;
     Roi roi = null;
+    String bSplineGridSpacing = "30 30";
 
     public enum Type {
         TRANSLATION("Translation"),
         EULER("Euler"),
-        AFFINE("Affine");
+        AFFINE("Affine"),
+        SPLINE("BSpline");
 
         private final String text;
 

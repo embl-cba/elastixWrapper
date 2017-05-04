@@ -226,6 +226,7 @@ public class RegistrationTools {
             parameters.add("(NumberOfResolutions "+settings.resolutionPyramid.split(";").length+")");
             parameters.add("(MaximumNumberOfIterations "+settings.iterations +")");
             parameters.add("(ImagePyramidSchedule "+settings.resolutionPyramid.replace(";"," ")+")");
+            parameters.add("(FinalGridSpacingInVoxels "+settings.bSplineGridSpacing+" )");
 
             // Spatial Samples
             parameters.add("(NumberOfSpatialSamples " +

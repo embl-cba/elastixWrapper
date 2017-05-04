@@ -23,10 +23,12 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JTextField tfNumIterations = new JTextField(12);
     JTextField tfNumSpatialSamples = new JTextField(12);
     JTextField tfResolutionPyramid = new JTextField(12);
+    JTextField tfBSplineGridSpacing = new JTextField(12);
     JTextField tfNumWorkers = new JTextField(3);
     JTextField tfReference = new JTextField(3);
     JTextField tfFirst = new JTextField(3);
     JTextField tfLast = new JTextField(3);
+    JComboBox comboTransform = new JComboBox(RegistrationSettings.Type.values());
     JCheckBox cbSnake = new JCheckBox();
 
     JButton btRunElastix = new JButton("Run Registration");
@@ -68,6 +70,12 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             double dimRatio = (imp.getWidth() + imp.getHeight()) / imp.getNSlices();
             int zBinning = (int)Math.ceil(10/dimRatio);
             settings.resolutionPyramid = imp.getNSlices() > 1 ? "10 10 "+zBinning+"; 2 2 1" : "10 10; 2 2";
+            int bsgsX = (int) Math.ceil( imp.getWidth() / 5 );
+            int bsgsY = (int) Math.ceil( imp.getHeight() / 5) ;
+            int bsgsZ = (int) Math.ceil( imp.getNSlices() / 5) ;
+            settings.bSplineGridSpacing = imp.getNSlices() > 1 ?
+                    ""+bsgsX+" "+bsgsY+" "+bsgsZ : ""+bsgsX+" "+bsgsY;
+
             settings.bitDepth = imp.getBitDepth();
         }
 
@@ -97,9 +105,11 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         addTextField(panels, tabs, tfTmpFolder, "Temp Folder", "" + settings.folderTmp);
 
         addHeader(panels, tabs, "PARAMETERS");
+        addComboBox(panels, tabs, comboTransform, "Transform");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
         addTextField(panels, tabs, tfNumSpatialSamples, "Spatial Samples", ""+settings.spatialSamples);
         addTextField(panels, tabs, tfResolutionPyramid, "Resolution Pyramid", settings.resolutionPyramid);
+        addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline Grid Spacing", settings.bSplineGridSpacing);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
         addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
         addTextField(panels, tabs, tfFirst, "First", "" + settings.first);
@@ -166,12 +176,12 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         tabs.get(tabs.size()-1).add(panels.get(panels.size()-1));
     }
 
-    public void addComboBox(ArrayList<JPanel> panels, int iPanel, Container c, JComboBox comboBox, String comboBoxLabel)
+    public void addComboBox(ArrayList<JPanel> panels, ArrayList<JPanel> tabs, JComboBox comboBox, String comboBoxLabel)
     {
         panels.add(new JPanel(new FlowLayout(FlowLayout.RIGHT)));
-        panels.get(iPanel).add(new JLabel(comboBoxLabel));
-        panels.get(iPanel).add(comboBox);
-        c.add(panels.get(iPanel));
+        panels.get(panels.size()-1).add(new JLabel(comboBoxLabel));
+        panels.get(panels.size()-1).add(comboBox);
+        tabs.get(tabs.size() - 1).add(panels.get(panels.size()-1));
     }
 
     public void actionPerformed(ActionEvent e)
@@ -180,6 +190,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         {
 
             settings.method = RegistrationToolsGUI.ELASTIX;
+            settings.type = (RegistrationSettings.Type) comboTransform.getSelectedItem();
             settings.first = 0;
             settings.last = IJ.getImage().getNFrames() - 1;
             settings.snake = cbSnake.isSelected();
@@ -193,6 +204,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.folderTmp = tfTmpFolder.getText();
             settings.folderElastix = tfElastixFolder.getText();
             settings.roi = IJ.getImage().getRoi();
+            settings.bSplineGridSpacing = tfBSplineGridSpacing.getText();
             IJ.getImage().deleteRoi(); // otherwise the duplicators later only duplicate the roi
 
             String inputImages = RegistrationToolsGUI.IMAGEPLUS;
