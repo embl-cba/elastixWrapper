@@ -192,6 +192,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.reference = Integer.parseInt(tfReference.getText())-1;
             settings.folderTmp = tfTmpFolder.getText();
             settings.folderElastix = tfElastixFolder.getText();
+            settings.roi = IJ.getImage().getRoi();
+            IJ.getImage().deleteRoi(); // otherwise the duplicators later only duplicate the roi
 
             String inputImages = RegistrationToolsGUI.IMAGEPLUS;
             String outputImages = RegistrationToolsGUI.IMAGEPLUS;

@@ -3,7 +3,9 @@ package registrationTools;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.gui.Roi;
 import ij.plugin.Duplicator;
+import ij.process.ImageProcessor;
 import org.apache.commons.io.IOUtils;
 import registrationTools.logging.IJLazySwingLogger;
 import registrationTools.logging.Logger;
@@ -98,7 +100,7 @@ public class RegistrationTools {
         {
             createOrEmptyTmpDir();
 
-            if ( imp.getRoi() != null )
+            if ( settings.roi != null )
             {
                 createMaskFile();
             }
@@ -106,26 +108,35 @@ public class RegistrationTools {
 
         private void createMaskFile()
         {
-            String pathMaskImage = settings.folderTmp + nameMaskImage + fileType;
-            /*
-            Roi roi = imp.getRoi();
-            imp_mask = imp.duplicate()
+            Duplicator duplicator = new Duplicator();
+            ImagePlus impMask = duplicator.run(imp, 1, 1, 1, imp.getNSlices(), 1, 1);
             IJ.setBackgroundColor(0, 0, 0);
-            IJ.run(imp_mask, "Select All", "");
-            IJ.run(imp_mask, "Clear", "stack");
-            IJ.run(imp_mask, "Select None", "");
-            #IJ.run(imp_mask, "8-bit", "");
-            for iSlice in range(z_min, z_min+z_width):
-            imp_mask.setSlice(iSlice)
-            ip = imp_mask.getProcessor()
-            ip.setColor(1)
-            ip.setRoi(x_min, y_min, x_width, y_width)
-            ip.fill()
+            IJ.run(impMask, "Select All", "");
+            IJ.run(impMask, "Clear", "stack");
+            IJ.run(impMask, "Select None", "");
+            IJ.run(impMask, "8-bit", "");
+            for (int i = 1; i <= impMask.getStack().size(); i++) {
+                impMask.setSlice(i);
+                ImageProcessor ip = impMask.getProcessor();
+                ip.setColor(1);
+                ip.setRoi(settings.roi);
+                ip.fill();
+            }
+            impMask.setTitle("Mask");
+            impMask.show();
 
-            mask_filepath = os.path.join(p['output_folder'],'mask.tif')
-            IJ.saveAs(imp_mask, 'TIFF', mask_filepath)
-            return mask_filepath
-            */
+            pathMaskImage = settings.folderTmp + nameMaskImage + fileType;
+
+            if ( fileType.equals(".mhd") )
+            {
+                MetaImage_Writer writer = new MetaImage_Writer();
+                writer.save(impMask, settings.folderTmp, nameMaskImage + fileType);
+            }
+            else if ( fileType.equals(".tif") )
+            {
+                IJ.saveAs(impMask, "Tiff", pathMaskImage);
+            }
+
         }
 
         private void createOrEmptyTmpDir()
@@ -276,6 +287,7 @@ public class RegistrationTools {
 
         public void saveFrame(String folder, String file, int t)
         {
+
             Duplicator duplicator = new Duplicator();
             ImagePlus imp2 = duplicator.run(imp, 1, 1, 1, imp.getNSlices(), t, t);
 
@@ -440,22 +452,29 @@ public class RegistrationTools {
                     args.add(pathInitialTransformation);
                 }
 
+                if ( pathMaskImage != null )
+                {
+                    args.add("-fMask");
+                    args.add(pathMaskImage);
+                }
+
                 pb = new ProcessBuilder(args);
 
-
-                String s2 = "";
+                String cmd = "";
                 for (String s : pb.command() )
                 {
-                    s2 = s2 + " " + s;
+                    cmd = cmd + " " + s;
                 }
-                logger.info(s2);
+                logger.info(cmd);
 
                 try
                 {
-                    Process p = pb.start();
-                    String output = IOUtils.toString(p.getErrorStream());
-                    logger.info(output);
-                    p.waitFor();
+                    pb.redirectErrorStream(true);
+                    final Process process = pb.start();
+                    InputStream myIS = process.getInputStream();
+                    String tempOut = convertStreamToStr(myIS);
+                    logger.info(tempOut);
+                    //p.waitFor();
                 }
                 catch (Exception e)
                 {
@@ -465,6 +484,28 @@ public class RegistrationTools {
                 return("");
             }
 
+            public String convertStreamToStr(InputStream is) throws IOException {
+
+                if (is != null) {
+                    Writer writer = new StringWriter();
+
+                    char[] buffer = new char[1024];
+                    try {
+                        Reader reader = new BufferedReader(new InputStreamReader(is,
+                                "UTF-8"));
+                        int n;
+                        while ((n = reader.read(buffer)) != -1) {
+                            writer.write(buffer, 0, n);
+                        }
+                    } finally {
+                        is.close();
+                    }
+                    return writer.toString();
+                }
+                else {
+                    return "";
+                }
+            }
 
             public void applyTransformation(int t, String transformation)
             {

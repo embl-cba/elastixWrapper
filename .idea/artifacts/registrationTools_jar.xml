@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="registrationTools:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <output-path>$USER_HOME$/Desktop/fiji-win64/Fiji.app/plugins</output-path>
     <root id="archive" name="registrationTools_.jar">
       <element id="module-output" name="registrationTools" />
     </root>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -49,11 +49,11 @@
     <orderEntry type="library" name="Maven: edu.mines:mines-jtk:20151125" level="project" />
     <orderEntry type="library" name="Maven: jama:jama:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: mpicbg:imglib-ij:2.0.0-beta6" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:TrackMate_:3.5.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:3D_Viewer:4.0.3-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:VIB-lib:2.1.3-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:pal-optimization:2.0.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sc.fiji:fiji-lib:2.1.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:TrackMate_:3.4.2" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:3D_Viewer:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:VIB-lib:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:pal-optimization:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: sc.fiji:fiji-lib:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:ij1-patcher:0.12.5" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej-deprecated:0.1.1" level="project" />
@@ -67,7 +67,7 @@
     <orderEntry type="library" name="Maven: net.imglib2:imglib2-algorithm-fft:0.1.2" level="project" />
     <orderEntry type="library" name="Maven: net.imglib2:imglib2-ij:2.0.0-beta-35" level="project" />
     <orderEntry type="library" name="Maven: net.imglib2:imglib2-realtransform:2.0.0-beta-34" level="project" />
-    <orderEntry type="library" name="Maven: jitk:jitk-tps:2.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: jitk:jitk-tps:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.24" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Maven: au.com.bytecode:opencsv:2.4" level="project" />

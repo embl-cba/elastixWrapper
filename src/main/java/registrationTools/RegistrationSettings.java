@@ -1,5 +1,7 @@
 package registrationTools;
 
+import ij.gui.Roi;
+
 /**
  * Created by tischi on 30/04/17.
  */
@@ -17,6 +19,7 @@ public class RegistrationSettings {
     int workers = Runtime.getRuntime().availableProcessors();
     String resolutionPyramid = "10 10; 2 2";
     int bitDepth = 8;
+    Roi roi = null;
 
     public enum Type {
         TRANSLATION("Translation"),
