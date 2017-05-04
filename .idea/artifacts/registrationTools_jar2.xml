@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="registrationTools:jar2">
-    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
-    <root id="archive" name="registrationTools_.jar">
-      <element id="module-output" name="registrationTools" />
-    </root>
-  </artifact>
-</component>
