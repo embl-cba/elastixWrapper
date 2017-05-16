@@ -9,8 +9,10 @@ public class RegistrationSettings {
 
     String os;
     String method;
-    Boolean snake = false;
-    int reference = 1, first = 1, last = 0, delta;
+    Boolean recursive = false;
+    int reference = 1, delta;
+    int[] regRange = new int[]{1,1};
+    int[] zRange = new int[]{1,1};
     Type type = Type.AFFINE;
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
     String folderTmp = "/Users/tischi/Desktop/tmp/";

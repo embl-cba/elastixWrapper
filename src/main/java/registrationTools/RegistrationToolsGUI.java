@@ -4,6 +4,7 @@ import ij.IJ;
 import ij.ImagePlus;
 import registrationTools.logging.IJLazySwingLogger;
 import registrationTools.logging.Logger;
+import registrationTools.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,10 +27,10 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JTextField tfBSplineGridSpacing = new JTextField(12);
     JTextField tfNumWorkers = new JTextField(3);
     JTextField tfReference = new JTextField(3);
-    JTextField tfFirst = new JTextField(3);
-    JTextField tfLast = new JTextField(3);
+    JTextField tfRegRange = new JTextField(3);
+    JTextField tfZRange = new JTextField(4);
     JComboBox comboTransform = new JComboBox(RegistrationSettings.Type.values());
-    JCheckBox cbSnake = new JCheckBox();
+    JCheckBox cbRecursive = new JCheckBox();
 
     JButton btRunElastix = new JButton("Run Registration");
 
@@ -60,9 +61,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         ArrayList<JPanel> panels = new ArrayList<>();
         ArrayList<JPanel> tabs = new ArrayList<>();
 
-        settings.last = IJ.getImage().getNFrames();
-
-        // suggest some settings based on current image
+        // suggest settings based on current image
         //
         ImagePlus imp = IJ.getImage();
         if ( imp != null )
@@ -77,6 +76,13 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
                     ""+bsgsX+" "+bsgsY+" "+bsgsZ : ""+bsgsX+" "+bsgsY;
 
             settings.bitDepth = imp.getBitDepth();
+
+            settings.regRange[0] = 1;
+            settings.regRange[1] = imp.getNFrames();
+
+            settings.zRange[0] = 1;
+            settings.zRange[1] = imp.getNSlices();
+
         }
 
         // suggest some settings based on current OS
@@ -112,9 +118,9 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline Grid Spacing", settings.bSplineGridSpacing);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
         addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
-        addTextField(panels, tabs, tfFirst, "First", "" + settings.first);
-        addTextField(panels, tabs, tfLast, "Last", "" + settings.last);
-        addCheckBox(panels, tabs, cbSnake, "Snake", settings.snake);
+        addTextField(panels, tabs, tfRegRange, "First, Last", "" + settings.regRange[0]+","+settings.regRange[1]);
+        addTextField(panels, tabs, tfZRange, "zMin, zMax", "" + settings.zRange[0]+","+settings.zRange[1]);
+        addCheckBox(panels, tabs, cbRecursive, "Recursive", settings.recursive);
 
         addHeader(panels, tabs, "RUN");
         addButton(panels, tabs, btRunElastix);
@@ -191,16 +197,14 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
 
             settings.method = RegistrationToolsGUI.ELASTIX;
             settings.type = (RegistrationSettings.Type) comboTransform.getSelectedItem();
-            settings.first = 0;
-            settings.last = IJ.getImage().getNFrames() - 1;
-            settings.snake = cbSnake.isSelected();
+            settings.recursive = cbRecursive.isSelected();
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
             settings.spatialSamples = tfNumSpatialSamples.getText();
             settings.workers = Integer.parseInt(tfNumWorkers.getText());
             settings.resolutionPyramid = tfResolutionPyramid.getText();
-            settings.last = Integer.parseInt(tfLast.getText())-1;
-            settings.first = Integer.parseInt(tfFirst.getText())-1;
-            settings.reference = Integer.parseInt(tfReference.getText())-1;
+            settings.regRange = Utils.delimitedStringToIntegerArray(tfRegRange.getText(), ",");
+            settings.zRange = Utils.delimitedStringToIntegerArray(tfZRange.getText(), ",");
+            settings.reference = Integer.parseInt(tfReference.getText());
             settings.folderTmp = tfTmpFolder.getText();
             settings.folderElastix = tfElastixFolder.getText();
             settings.roi = IJ.getImage().getRoi();

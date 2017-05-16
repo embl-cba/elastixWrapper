@@ -3,10 +3,8 @@ package registrationTools;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.gui.Roi;
 import ij.plugin.Duplicator;
 import ij.process.ImageProcessor;
-import org.apache.commons.io.IOUtils;
 import registrationTools.logging.IJLazySwingLogger;
 import registrationTools.logging.Logger;
 
@@ -100,7 +98,9 @@ public class RegistrationTools {
         {
             createOrEmptyTmpDir();
 
-            if ( settings.roi != null )
+            if ( (settings.roi != null) ||
+                    (settings.zRange[0] > 1)  ||
+                        (settings.zRange[1] < imp.getNSlices()))
             {
                 createMaskFile();
             }
@@ -115,15 +115,14 @@ public class RegistrationTools {
             IJ.run(impMask, "Clear", "stack");
             IJ.run(impMask, "Select None", "");
             IJ.run(impMask, "8-bit", "");
-            for (int i = 1; i <= impMask.getStack().size(); i++) {
+            for (int i = settings.zRange[0]; i <= settings.zRange[1]; i++) {
                 impMask.setSlice(i);
                 ImageProcessor ip = impMask.getProcessor();
                 ip.setColor(1);
                 ip.setRoi(settings.roi);
                 ip.fill();
             }
-            impMask.setTitle("Mask");
-            impMask.show();
+
 
             pathMaskImage = settings.folderTmp + nameMaskImage + fileType;
 
@@ -136,6 +135,11 @@ public class RegistrationTools {
             {
                 IJ.saveAs(impMask, "Tiff", pathMaskImage);
             }
+
+            // show the mask to the user
+            IJ.run(impMask, "Multiply...", "value=255 stack");
+            impMask.setTitle("Mask");
+            impMask.show();
 
         }
 
@@ -163,22 +167,22 @@ public class RegistrationTools {
             String fixedImage, movingImage;
 
             // forward
-            if( settings.last > settings.reference )
+            if( settings.regRange[1] > settings.reference )
             {
                 Registerer registerer = new Registerer(
-                        Math.max(settings.reference, settings.first),
-                        settings.last,
+                        Math.max(settings.reference, settings.regRange[0]),
+                        settings.regRange[1],
                         settings.delta
                 );
                 registerer.run();
             }
 
             // backward
-            if( settings.first < settings.reference )
+            if( settings.regRange[0] < settings.reference )
             {
                 Registerer registerer = new Registerer(
-                        Math.min(settings.reference, settings.last),
-                        settings.first,
+                        Math.min(settings.reference, settings.regRange[1]),
+                        settings.regRange[0],
                         settings.delta
                 );
                 registerer.run();
@@ -285,7 +289,6 @@ public class RegistrationTools {
             return(parameters);
         }
 
-
         public void saveFrame(String folder, String file, int t)
         {
 
@@ -337,8 +340,8 @@ public class RegistrationTools {
 
                 for ( int t : range.toArray() )
                 {
-                    logger.info("ref: " + (settings.reference + 1) +
-                            " reg: " + (t + 1) +
+                    logger.info("ref: " + settings.reference +
+                            " reg: " + t +
                             " t0: " + pathTransformation);
 
                     pathTransformation = transform( t, pathTransformation );
@@ -358,9 +361,9 @@ public class RegistrationTools {
 
             public String transform(int t, String pathTransformation)
             {
-                saveFrame(settings.folderTmp, nameMovingImage, t + 1);
+                saveFrame(settings.folderTmp, nameMovingImage, t);
 
-                if ( settings.snake )
+                if ( settings.recursive)
                 {
                     if ( firstTransformation )
                     {
@@ -419,20 +422,21 @@ public class RegistrationTools {
                 ProcessBuilder pb = new ProcessBuilder();
 
                 List<String> args = new ArrayList<>();
-                if ( settings.os.equals("Mac") )
+                if ( settings.os.equals("Mac"))
                 {
-                    logger.info("MAC");
+                    logger.info("Setting system variables for Mac OS");
                     Map<String, String> env = pb.environment();
-                    env.put("DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
+                    env.put( "DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
+                    logger.info( "DYLD_LIBRARY_PATH = " + env.get("DYLD_LIBRARY_PATH"));
                     args.add(settings.folderElastix + "bin/elastix"); // command name
                 }
                 else if ( settings.os.equals("Windows") )
                 {
-                    logger.info("WINDOWS");
+                    logger.info("Setting system variables for Windows OS");
                     Map<String, String> env = pb.environment();
-                    logger.info(env.get("PATH"));
+                    //logger.info(env.get("PATH"));
                     env.put("PATH", settings.folderElastix + ":$PATH");
-                    logger.info(env.get("PATH"));
+                    //logger.info(env.get("PATH"));
                     args.add(settings.folderElastix + "elastix.exe"); // command name
                 }
 
@@ -519,7 +523,6 @@ public class RegistrationTools {
 
                 ImagePlus impTmp = null;
 
-
                 if ( outputImage.equals(RegistrationToolsGUI.IMAGEPLUS) )
                 {
 
@@ -527,7 +530,9 @@ public class RegistrationTools {
                     if (! file.exists() )
                     {
                         logger.error("Elastix output file not found: "+settings.folderTmp + "result.0" + fileType +
-                        "\nPlease check the elastix log file: "+settings.folderTmp + "elastix.log");
+                        "\nPlease check the Log window.");
+                        //"\nPlease check the log file: "+settings.folderTmp + "elastix.log");
+
                     }
 
                     if ( fileType.equals(".tif") )
@@ -542,10 +547,10 @@ public class RegistrationTools {
 
                     ImageStack stackTmp = impTmp.getStack();
                     ImageStack stackOut = impOut.getStack();
-                    int iOut = impOut.getStackIndex(1,1,t+1);
+                    int iOut = impOut.getStackIndex(1, 1, t);
                     for ( int i = 0; i < stackTmp.size(); i++ )
                     {
-                        stackOut.setProcessor(stackTmp.getProcessor(i + 1), iOut++);
+                        stackOut.setProcessor( stackTmp.getProcessor(i + 1), iOut++ );
                     }
 
                     impOut.updateAndDraw();

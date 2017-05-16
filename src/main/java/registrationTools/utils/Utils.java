@@ -29,8 +29,6 @@
  */
 
 package registrationTools.utils;
-
-import registrationTools.VirtualStackOfStacks.VirtualStackOfStacks;
 import registrationTools.logging.IJLazySwingLogger;
 import registrationTools.logging.Logger;
 import ij.IJ;
@@ -137,16 +135,6 @@ public class Utils {
         imp.updateAndDraw();
     }
 
-    public static VirtualStackOfStacks getVirtualStackOfStacks(ImagePlus imp) {
-        VirtualStackOfStacks vss = null;
-        try {
-            vss = (VirtualStackOfStacks) imp.getStack();
-            return (vss);
-        } catch (Exception e) {
-             logger.error("This is only implemented for images opened with the Data Streaming Tools plugin.");
-            return (null);
-        }
-    }
 
     public static double[] delimitedStringToDoubleArray(String s, String delimiter) {
 
@@ -179,89 +167,6 @@ public class Utils {
             it.remove(); // avoids a ConcurrentModificationException
         }
     }
-
-
-    public static boolean hasVirtualStackOfStacks(ImagePlus imp) {
-
-        if( ! (imp.getStack() instanceof VirtualStackOfStacks) ) {
-             logger.error("Wrong image type. " +
-                     "This method is only implemented for images opened via " +
-                     "the Data Streaming Tools plugin.");
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-
-    }
-
-
-    public static boolean checkMemoryRequirements(ImagePlus imp)
-    {
-        long numPixels = (long)imp.getWidth()*imp.getHeight()*imp.getNSlices()*imp.getNChannels()*imp.getNFrames();
-        boolean ok = checkMemoryRequirements(numPixels, imp.getBitDepth(), 1);
-        return(ok);
-    }
-
-
-    public static boolean checkMemoryRequirements(ImagePlus imp, int nThreads)
-    {
-        long numPixels = (long)imp.getWidth()*imp.getHeight()*imp.getNSlices();
-        boolean ok = checkMemoryRequirements(numPixels, imp.getBitDepth(), nThreads);
-        return(ok);
-    }
-
-    public static boolean checkMemoryRequirements(long numPixels, int bitDepth, int nThreads)
-    {
-        //
-        // check that the data cube is not too large for the java indexing
-        //
-        long maxSize = (1L<<31) - 1;
-        if( numPixels > maxSize )
-        {
-
-              logger.info("Warning: " + "The size of one requested data cube is " + numPixels + " (larger than 2^31)\n");
-            //logger.error("The size of one requested data cube is "+numPixels +" (larger than 2^31)\n" +
-            //        "and can thus not be loaded as one java array into RAM.\n" +
-            //        "Please crop a smaller region.");
-            //return(false);
-        }
-
-        //
-        // check that the data cube(s) fits into the RAM
-        //
-        double GIGA = 1000000000.0;
-        long freeMemory = IJ.maxMemory() - IJ.currentMemory();
-        double maxMemoryGB = IJ.maxMemory()/GIGA;
-        double freeMemoryGB = freeMemory/GIGA;
-        double requestedMemoryGB = numPixels*bitDepth/8*nThreads/GIGA;
-
-        if( requestedMemoryGB > freeMemoryGB )
-        {
-             logger.error("The size of the requested data cube(s) is " + requestedMemoryGB + " GB.\n" +
-                     "The free memory is only " + freeMemoryGB + " GB.\n" +
-                     "Please consider cropping a smaller region \n" +
-                     "and/or reducing the number of I/O threads \n" +
-                     "(you are currently using " + nThreads + ").");
-            return(false);
-        }
-        else
-        {
-            if( requestedMemoryGB > 0.1 ) {
-                logger.info("Memory [GB]: Max=" + maxMemoryGB + "; Free=" + freeMemoryGB + "; Requested=" +
-                        requestedMemoryGB);
-            }
-
-        }
-
-
-
-        return(true);
-
-    }
-
-
 
 
 }
