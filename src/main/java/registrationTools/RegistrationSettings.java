@@ -13,6 +13,7 @@ public class RegistrationSettings {
     int reference = 1, delta;
     int[] regRange = new int[]{1,1};
     int[] zRange = new int[]{1,1};
+    double background = 0;
     Type type = Type.AFFINE;
     String folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
     String folderTmp = "/Users/tischi/Desktop/tmp/";

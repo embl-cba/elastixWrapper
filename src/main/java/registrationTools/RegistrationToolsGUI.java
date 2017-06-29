@@ -29,6 +29,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JTextField tfReference = new JTextField(3);
     JTextField tfRegRange = new JTextField(3);
     JTextField tfZRange = new JTextField(4);
+    JTextField tfBackground = new JTextField(4);
     JComboBox comboTransform = new JComboBox(RegistrationSettings.Type.values());
     JCheckBox cbRecursive = new JCheckBox();
 
@@ -106,21 +107,23 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         }
 
         addTabPanel(tabs);
-        addHeader(panels, tabs, "INSTALLATION");
-        addTextField(panels, tabs, tfElastixFolder, "Elastix Installation Folder", "" + settings.folderElastix);
-        addTextField(panels, tabs, tfTmpFolder, "Temp Folder", "" + settings.folderTmp);
+        addHeader(panels, tabs, "ELASTIX CONFIGURATION");
+        addTextField(panels, tabs, tfElastixFolder, "Installation folder", "" + settings.folderElastix);
+        addTextField(panels, tabs, tfTmpFolder, "Temp folder", "" + settings.folderTmp);
 
         addHeader(panels, tabs, "PARAMETERS");
         addComboBox(panels, tabs, comboTransform, "Transform");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
-        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial Samples", ""+settings.spatialSamples);
-        addTextField(panels, tabs, tfResolutionPyramid, "Resolution Pyramid", settings.resolutionPyramid);
-        addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline Grid Spacing", settings.bSplineGridSpacing);
+        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", ""+settings.spatialSamples);
+        addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
+        addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline grid spacing", settings.bSplineGridSpacing);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
-        addTextField(panels, tabs, tfReference, "Reference", "" + settings.reference);
-        addTextField(panels, tabs, tfRegRange, "First, Last", "" + settings.regRange[0]+","+settings.regRange[1]);
-        addTextField(panels, tabs, tfZRange, "zMin, zMax", "" + settings.zRange[0]+","+settings.zRange[1]);
-        addCheckBox(panels, tabs, cbRecursive, "Recursive", settings.recursive);
+        addTextField(panels, tabs, tfReference, "Reference frame", "" + settings.reference);
+        addTextField(panels, tabs, tfRegRange, "Temporal range (first frame, last frame)", "" + settings.regRange[0]+","+settings.regRange[1]);
+        addTextField(panels, tabs, tfZRange, "Axial range (first z, last z)", "" + settings.zRange[0]+","+settings.zRange[1]);
+        addTextField(panels, tabs, tfBackground, "Image background value", "" + settings.background);
+
+        addCheckBox(panels, tabs, cbRecursive, "Recursive registration", settings.recursive);
 
         addHeader(panels, tabs, "RUN");
         addButton(panels, tabs, btRunElastix);
@@ -204,7 +207,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.resolutionPyramid = tfResolutionPyramid.getText();
             settings.regRange = Utils.delimitedStringToIntegerArray(tfRegRange.getText(), ",");
             settings.zRange = Utils.delimitedStringToIntegerArray(tfZRange.getText(), ",");
-            settings.reference = Integer.parseInt(tfReference.getText());
+            settings.background = Double.parseDouble( tfBackground.getText() );
+            settings.reference = Integer.parseInt( tfReference.getText() );
             settings.folderTmp = tfTmpFolder.getText();
             settings.folderElastix = tfElastixFolder.getText();
             settings.roi = IJ.getImage().getRoi();

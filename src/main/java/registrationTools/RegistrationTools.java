@@ -136,10 +136,12 @@ public class RegistrationTools {
                 IJ.saveAs(impMask, "Tiff", pathMaskImage);
             }
 
-            // show the mask to the user
+            // show mask to user
+            /*
             IJ.run(impMask, "Multiply...", "value=255 stack");
             impMask.setTitle("Mask");
             impMask.show();
+            */
 
         }
 
@@ -194,7 +196,9 @@ public class RegistrationTools {
         {
             if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
             {
-                saveFrame(settings.folderTmp, nameReferenceImage, settings.reference + 1);
+                saveFrame(settings.folderTmp, nameReferenceImage,
+                          settings.reference,
+                          settings.background);
             }
         }
 
@@ -289,11 +293,16 @@ public class RegistrationTools {
             return(parameters);
         }
 
-        public void saveFrame(String folder, String file, int t)
+        public void saveFrame(String folder, String file, int t, double background)
         {
 
             Duplicator duplicator = new Duplicator();
             ImagePlus imp2 = duplicator.run(imp, 1, 1, 1, imp.getNSlices(), t, t);
+
+            if ( background > 0 )
+            {
+                IJ.run(imp2, "Subtract...", "value="+background+" stack");
+            }
 
             if ( fileType.equals(".mhd") )
             {
@@ -361,7 +370,8 @@ public class RegistrationTools {
 
             public String transform(int t, String pathTransformation)
             {
-                saveFrame(settings.folderTmp, nameMovingImage, t);
+                saveFrame(settings.folderTmp, nameMovingImage,
+                          t, settings.background);
 
                 if ( settings.recursive)
                 {
@@ -554,6 +564,7 @@ public class RegistrationTools {
                     }
 
                     impOut.updateAndDraw();
+                    impOut.setT(t);
                 }
             }
 

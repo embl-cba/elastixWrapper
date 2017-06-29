@@ -6,7 +6,7 @@ import ij.plugin.PlugIn;
 
 import javax.swing.*;
 
-public class RegistrationToolsPlugIn implements PlugIn {
+public class RegistrationToolsPlugIn_ implements PlugIn {
 
     @Override
     public void run(String s)
@@ -28,7 +28,7 @@ public class RegistrationToolsPlugIn implements PlugIn {
     public static void main(String[] args)
     {
         // set the plugins.dir property to make the plugin appear in the Plugins menu
-        Class<?> clazz = RegistrationToolsPlugIn.class;
+        Class<?> clazz = RegistrationToolsPlugIn_.class;
         String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
         String pluginsDir = url.substring("file:".length(), url.length() - clazz.getName().length() - ".class".length
                 ());
@@ -51,7 +51,7 @@ public class RegistrationToolsPlugIn implements PlugIn {
         // Run the plugin
         //
 
-        RegistrationToolsPlugIn registrationToolsPlugIn = new RegistrationToolsPlugIn();
+        RegistrationToolsPlugIn_ registrationToolsPlugIn = new RegistrationToolsPlugIn_();
         registrationToolsPlugIn.run("");
     }
 
