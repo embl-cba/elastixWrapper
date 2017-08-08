@@ -1,4 +1,4 @@
-# Fiji wrapper pluing around elatix for 3-D registration
+# Fiji wrapper plugin around elastix for 3-D registration
 
 For questions please contact: tischitischer@gmail.com
 
