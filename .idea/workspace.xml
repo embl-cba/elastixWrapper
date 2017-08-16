@@ -10,7 +10,6 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn$1.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,13 +35,13 @@
       <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43716815">
-              <caret line="96" column="32" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.7061947">
+              <caret line="105" column="80" selection-start-line="105" selection-start-column="80" selection-end-line="105" selection-end-column="80" />
               <folding>
                 <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="e#2824#2868#0" expanded="false" />
-                <element signature="e#5352#5359#0" expanded="false" />
+                <element signature="e#5372#5379#0" expanded="false" />
                 <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
               </folding>
             </state>
@@ -601,7 +600,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
@@ -655,7 +654,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
@@ -709,7 +708,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
@@ -800,7 +799,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
@@ -861,7 +860,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
@@ -1032,13 +1031,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationToolsGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43716815">
-          <caret line="96" column="32" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.7061947">
+          <caret line="105" column="80" selection-start-line="105" selection-start-column="80" selection-end-line="105" selection-end-column="80" />
           <folding>
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
-            <element signature="e#5352#5359#0" expanded="false" />
+            <element signature="e#5372#5379#0" expanded="false" />
             <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>

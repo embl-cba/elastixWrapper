@@ -108,6 +108,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         else
         {
             logger.error("Your operation system is currently not supported: " + os);
+            return;
         }
 
         addTabPanel(tabs);
