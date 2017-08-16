@@ -98,12 +98,19 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
             settings.folderTmp = "/Users/"+System.getProperty("user.name")+"/Desktop/tmp/";
         }
-        if (os.toLowerCase().contains("windows"))
+        else if (os.toLowerCase().contains("windows"))
         {
             logger.info("Choosing Windows OS");
             settings.os = "Windows";
             settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
             settings.folderTmp = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\tmp\\";
+        }
+        else if (os.toLowerCase().contains("linux"))
+        {
+            logger.info("Choosing Linux OS");
+            settings.os = "Linux";
+            settings.folderElastix = "/usr/bin/elastix_macosx64_v4.8/";
+            settings.folderTmp = "/usr/tmp/";
         }
         else
         {
