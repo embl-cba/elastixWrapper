@@ -51,18 +51,32 @@
       <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6081081">
-              <caret line="447" column="83" selection-start-line="447" selection-start-column="83" selection-end-line="447" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.7601351">
+              <caret line="450" column="20" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
               <folding>
-                <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+                <element signature="imports" expanded="true" />
                 <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-                <element signature="class#1701:1832" expanded="false" />
+                <element signature="e#1756#1757#0" expanded="true" />
+                <element signature="e#1830#1831#0" expanded="true" />
+                <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="e#5859#5860#0" expanded="true" />
+                <element signature="e#5924#5925#0" expanded="true" />
                 <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+                <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -532,7 +546,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25301206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25301206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495238" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -637,15 +651,29 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="138" column="27" selection-start-line="138" selection-start-column="27" selection-end-line="138" selection-end-column="27" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -693,15 +721,29 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="138" column="27" selection-start-line="138" selection-start-column="27" selection-end-line="138" selection-end-column="27" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -749,15 +791,29 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -850,15 +906,29 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="181" column="53" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -905,15 +975,29 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="271" column="32" selection-start-line="271" selection-start-column="32" selection-end-line="271" selection-end-column="32" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1065,18 +1149,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6081081">
-          <caret line="447" column="83" selection-start-line="447" selection-start-column="83" selection-end-line="447" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.7601351">
+          <caret line="450" column="20" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
           <folding>
-            <element signature="docComment;class#RegistrationTools#0" expanded="false" />
+            <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="class#1701:1832" expanded="false" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1830#1831#0" expanded="true" />
+            <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#Registerer#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#transform#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#copyFile#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#convertStreamToStr#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#applyTransformation#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
+            <element signature="method#putTransformedImageToImagePlus#0;class#Registerer#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
           </folding>
         </state>
       </provider>
