@@ -445,7 +445,7 @@ public class RegistrationTools {
                 {
                     logger.info("Settings for Linux");
                     Map<String, String> env = pb.environment();
-                    env.put( "LD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$LD_LIBRARY_PATH");
+                    env.put( "LD_LIBRARY_PATH", settings.folderElastix + "lib"); // + ":$LD_LIBRARY_PATH");
                     logger.info("LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
                     logger.info( "elastix binary = " + settings.folderElastix + "bin/elastix");
                     args.add(settings.folderElastix + "bin/elastix"); // command name

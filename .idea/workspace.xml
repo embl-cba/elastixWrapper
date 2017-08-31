@@ -9,7 +9,7 @@
     <list default="true" id="41b89418-ca66-4d9d-99d7-863d54a7533c" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn$1.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,8 +51,8 @@
       <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7347973">
-              <caret line="452" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="452" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6081081">
+              <caret line="447" column="83" selection-start-line="447" selection-start-column="83" selection-end-line="447" selection-end-column="83" />
               <folding>
                 <element signature="docComment;class#RegistrationTools#0" expanded="false" />
                 <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
@@ -532,7 +532,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25301206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25301206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495238" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1065,8 +1065,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7347973">
-          <caret line="452" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="452" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6081081">
+          <caret line="447" column="83" selection-start-line="447" selection-start-column="83" selection-end-line="447" selection-end-column="83" />
           <folding>
             <element signature="docComment;class#RegistrationTools#0" expanded="false" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
