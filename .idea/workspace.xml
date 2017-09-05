@@ -10,6 +10,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn$1.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/registrationTools/RegistrationToolsPlugIn.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" afterPath="$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="registrationTools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +43,6 @@
                 <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="e#2824#2868#0" expanded="false" />
                 <element signature="e#5649#5656#0" expanded="false" />
-                <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,22 +51,18 @@
       <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7601351">
-              <caret line="450" column="20" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.7195946">
+              <caret line="453" column="57" selection-start-line="453" selection-start-column="57" selection-end-line="453" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-                <element signature="e#1756#1757#0" expanded="true" />
-                <element signature="e#1830#1831#0" expanded="true" />
                 <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-                <element signature="e#5859#5860#0" expanded="true" />
-                <element signature="e#5924#5925#0" expanded="true" />
                 <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
                 <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -195,9 +191,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -330,6 +323,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -542,7 +538,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20358515" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -552,13 +547,14 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13304721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771084" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277849" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20358515" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771084" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -577,13 +573,13 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25454545" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981357" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2885906" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32867134" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32867134" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -641,7 +637,6 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -654,16 +649,12 @@
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -711,7 +702,6 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -724,16 +714,12 @@
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -781,7 +767,6 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -794,16 +779,12 @@
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -888,7 +869,6 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -909,16 +889,12 @@
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -965,7 +941,6 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -978,16 +953,12 @@
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
@@ -1142,29 +1113,24 @@
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="e#2824#2868#0" expanded="false" />
             <element signature="e#5649#5656#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7601351">
-          <caret line="450" column="20" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.7195946">
+          <caret line="453" column="57" selection-start-line="453" selection-start-column="57" selection-end-line="453" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#1756#1757#0" expanded="true" />
-            <element signature="e#1830#1831#0" expanded="true" />
             <element signature="method#getNumberOfImages#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#Elastix#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#createOrEmptyTmpDir#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#run#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#setReference#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
             <element signature="method#saveParameters#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#getParametersHenningNo5#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
             <element signature="method#saveFrame#0;class#Elastix#0;class#RegistrationTools#0" expanded="true" />
