@@ -449,10 +449,10 @@ public class RegistrationTools {
                     env.put("LD_LIBRARY_PATH", settings.folderElastix + "lib"); // + ":$LD_LIBRARY_PATH");
                     logger.info("- After setting it: LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
                     //args.add("env LD_LIBRARY_PATH="+settings.folderElastix + "lib");
-                    args.add("/bin/bash");
-                    args.add("-c");
-                    args.add("export LD_LIBRARY_PATH=" + settings.folderElastix + "lib");
-                    args.add(";");
+                    //args.add("csh");
+                    //args.add("-c");
+                    //args.add("setenv LD_LIBRARY_PATH " + settings.folderElastix + "lib");
+                    //args.add(";");
                     args.add(settings.folderElastix + "bin/elastix"); // command name
                 }
                 else if ( settings.os.equals("Windows") )

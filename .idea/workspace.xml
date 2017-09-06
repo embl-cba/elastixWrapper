@@ -62,8 +62,8 @@
       <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6587838">
-              <caret line="453" column="20" selection-start-line="453" selection-start-column="20" selection-end-line="453" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.6891892">
+              <caret line="454" column="22" selection-start-line="454" selection-start-column="22" selection-end-line="454" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
@@ -94,7 +94,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+                <element signature="e#396#397#0" expanded="false" />
+                <element signature="e#461#462#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -639,7 +644,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -736,7 +746,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -833,7 +848,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -930,7 +950,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -995,7 +1020,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1092,7 +1122,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1173,7 +1208,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1285,7 +1325,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#run#0;class#RegistrationToolsPlugIn_#0" expanded="false" />
+            <element signature="e#396#397#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1352,8 +1397,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationTools/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6587838">
-          <caret line="453" column="20" selection-start-line="453" selection-start-column="20" selection-end-line="453" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.6891892">
+          <caret line="454" column="22" selection-start-line="454" selection-start-column="22" selection-end-line="454" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#RegistrationTools#0;class#RegistrationTools#0" expanded="true" />
