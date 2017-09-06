@@ -14,6 +14,30 @@ This repository conatins a Fiji script to run elastix registration algorithms; F
 - download and extract below file and put it into you Fiji plugin folder: 
 	- https://github.com/tischi/fiji-plugin-registrationTools/raw/master/out/artifacts/registrationTools_.jar
 
+### Installation on Linux
+
+In your elastix folder please create a text file called:
+
+`run_elastix.sh`
+
+with the following content:
+
+```
+#!/bin/bash
+
+PATH_ELASTIX=/g/almf/software/elastix_v4.8
+
+export LD_LIBRARY_PATH=$PATH_ELASTIX/lib/
+echo $LD_LIBRARY_PATH
+$PATH_ELASTIX/bin/elastix $@
+```
+
+Please exchange the text following `PATH_TO_ELASTIX` with the correct path for your installation.
+
+Now, you also need to make this file executable by typing:
+
+`chmod +x run_elastix.sh`
+
 ## Usage
 
 - Open the time-series that you want to register in Fiji
