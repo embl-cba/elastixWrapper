@@ -445,7 +445,7 @@ public class RegistrationTools {
                 {
                     logger.info("Settings for Linux");
                     Map<String, String> env = pb.environment();
-                    args.add(settings.folderElastix + "bin/run_elastix.sh"); // command name
+                    args.add(settings.folderElastix + "run_elastix.sh"); // command name
                 }
                 else if ( settings.os.equals("Windows") )
                 {
@@ -479,7 +479,7 @@ public class RegistrationTools {
                     args.add("-fMask");
                     args.add(pathMaskImage);
                 }
-
+                
                 pb = new ProcessBuilder(args);
 
                 String cmd = "";
