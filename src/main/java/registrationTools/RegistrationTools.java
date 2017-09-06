@@ -445,14 +445,16 @@ public class RegistrationTools {
                 {
                     logger.info("Settings for Linux");
                     Map<String, String> env = pb.environment();
-                    logger.info("- Before setting it: LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
+                    //logger.info("LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
                     env.put("LD_LIBRARY_PATH", settings.folderElastix + "lib"); // + ":$LD_LIBRARY_PATH");
-                    logger.info("- After setting it: LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
+                    //logger.info("LD_LIBRARY_PATH = " + env.get("LD_LIBRARY_PATH"));
                     //args.add("env LD_LIBRARY_PATH="+settings.folderElastix + "lib");
-                    //args.add("csh");
-                    //args.add("-c");
-                    //args.add("setenv LD_LIBRARY_PATH " + settings.folderElastix + "lib");
-                    //args.add(";");
+                    args.add("csh");
+                    args.add("-c");
+                    args.add("echo $LD_LIBRARY_PATH");
+                    args.add(";");
+                    args.add("setenv LD_LIBRARY_PATH " + settings.folderElastix + "lib");
+                    args.add(";");
                     args.add(settings.folderElastix + "bin/elastix"); // command name
                 }
                 else if ( settings.os.equals("Windows") )
