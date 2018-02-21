@@ -6,15 +6,21 @@ This repository conatins a Fiji script to run elastix registration algorithms; F
 
 ## Installation
 
-- Install Fiji: https://fiji.sc/
-- Windows
-  - install elastix: http://elastix.isi.uu.nl/download.php
-  - install corresponding Visual C++: http://www.microsoft.com/en-us/download/details.aspx?id=30679
-    - see also here: http://elastix.isi.uu.nl/FAQ.php
-- download and extract below file and put it into you Fiji plugin folder: 
-	- https://github.com/tischi/fiji-plugin-registrationTools/raw/master/out/artifacts/registrationTools_.jar
+### Install Fiji
 
-### Installation on Linux
+- Install Fiji: https://fiji.sc/
+
+### Install elastix binary
+
+- Windows, MacOS and Linux
+  - install elastix: http://elastix.isi.uu.nl/download.php
+ 
+#### Windows specific requirements
+
+- install the corresponding Visual C++: http://www.microsoft.com/en-us/download/details.aspx?id=30679
+    - see also here: http://elastix.isi.uu.nl/FAQ.php
+
+#### Linux and MacOS specific requirements
 
 In your elastix folder please create a text file called:
 
@@ -32,11 +38,20 @@ echo $LD_LIBRARY_PATH
 $PATH_ELASTIX/bin/elastix $@
 ```
 
-Please exchange the text following `PATH_TO_ELASTIX` with the correct path for your installation.
+Please exchange the text following `PATH_ELASTIX=` with the correct path for your installation.
 
-Now, you also need to make this file executable by typing:
+Finally, you also need to make this file executable by typing in your terminal window (in the folder where the script that you just created is):
 
 `chmod +x run_elastix.sh`
+
+
+### Install the Fiji elastix wrapper plugin
+
+- download and extract below file and put it into you Fiji plugin folder: 
+	- https://github.com/tischi/fiji-plugin-registrationTools/raw/master/out/artifacts/registrationTools_.jar
+
+
+
 
 ## Usage
 

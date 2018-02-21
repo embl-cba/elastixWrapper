@@ -1,7 +1,7 @@
-package registrationTools.utils;
+package de.embl.cba.elastixwrapper.utils;
 
-import registrationTools.logging.IJLazySwingLogger;
-import registrationTools.logging.Logger;
+import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
+import de.embl.cba.elastixwrapper.logging.Logger;
 
 import java.util.List;
 import java.util.concurrent.Future;

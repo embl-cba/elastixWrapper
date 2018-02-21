@@ -1,10 +1,10 @@
-package registrationTools;
+package de.embl.cba.elastixwrapper;
 
+import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
+import de.embl.cba.elastixwrapper.logging.Logger;
+import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
-import registrationTools.logging.IJLazySwingLogger;
-import registrationTools.logging.Logger;
-import registrationTools.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;

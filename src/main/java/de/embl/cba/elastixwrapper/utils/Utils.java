@@ -28,16 +28,13 @@
  * #L%
  */
 
-package registrationTools.utils;
-import registrationTools.logging.IJLazySwingLogger;
-import registrationTools.logging.Logger;
+package de.embl.cba.elastixwrapper.utils;
+import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
+import de.embl.cba.elastixwrapper.logging.Logger;
 import ij.IJ;
 import ij.ImagePlus;
 import javafx.geometry.Point3D;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -51,90 +48,6 @@ public class Utils {
     public static String LOAD_CHANNELS_FROM_FOLDERS = "from sub-folders";
 
     static Logger logger = new IJLazySwingLogger();
-
-    public enum FileType {
-        TIFF("Tiff"),
-        HDF5("Hdf5"),
-        SERIALIZED_HEADERS("Serialized headers");
-        private final String text;
-        private FileType(String s) {
-            text = s;
-        }
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
-
-
-    public static boolean checkRange(ImagePlus imp, int min, int max, String dimension)
-
-    {
-        // setup
-        //
-
-        int Min = 0, Max = 0;
-
-        if ( dimension.equals("z") )
-        {
-            Min = 1;
-            Max = imp.getNSlices();
-        }
-        else if ( dimension.equals("t") )
-        {
-            Min = 1;
-            Max = imp.getNFrames();
-        }
-
-        // check
-        //
-
-        if (min < Min)
-        {
-            logger.error(""+dimension+" minimum must be >= " + Min + "; please change the value.");
-            return false;
-        }
-
-        if (max > Max)
-        {
-            logger.error(""+dimension+" maximum must be <= " + Max + "; please change the value.");
-            return false;
-        }
-
-
-        return true;
-
-    }
-
-    public static Point3D computeOffsetFromCenterSize(Point3D pCenter, Point3D pSize) {
-        return(pCenter.subtract(pSize.subtract(1, 1, 1).multiply(0.5)));
-    }
-
-    public static Point3D computeCenterFromOffsetSize(Point3D pOffset, Point3D pSize) {
-        // center of width 7 is 0,1,2,*3*,4,5,6
-        // center of width 6 is 0,1,2,*2.5*,3,4,5
-        return(pOffset.add(pSize.subtract(1, 1, 1).multiply(0.5)));
-    }
-
-    public static Point3D multiplyPoint3dComponents(Point3D p0, Point3D p1) {
-
-        double x = p0.getX() * p1.getX();
-        double y = p0.getY() * p1.getY();
-        double z = p0.getZ() * p1.getZ();
-
-        return (new Point3D(x,y,z));
-
-    }
-
-    public static void show(ImagePlus imp)
-    {
-        imp.show();
-        imp.setPosition(1, imp.getNSlices() / 2, 1);
-        IJ.wait(200);
-        imp.resetDisplayRange();
-        imp.updateAndDraw();
-    }
-
 
     public static double[] delimitedStringToDoubleArray(String s, String delimiter) {
 
@@ -157,7 +70,6 @@ public class Utils {
 
         return nums;
     }
-
 
     public static void printMap(Map mp) {
         Iterator it = mp.entrySet().iterator();

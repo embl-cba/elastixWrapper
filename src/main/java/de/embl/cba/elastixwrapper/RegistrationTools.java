@@ -1,12 +1,12 @@
-package registrationTools;
+package de.embl.cba.elastixwrapper;
 
+import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
+import de.embl.cba.elastixwrapper.logging.Logger;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.Duplicator;
 import ij.process.ImageProcessor;
-import registrationTools.logging.IJLazySwingLogger;
-import registrationTools.logging.Logger;
 
 import java.io.*;
 import java.nio.file.*;
@@ -26,9 +26,7 @@ public class RegistrationTools {
     RegistrationSettings settings;
     Logger logger = new IJLazySwingLogger();
 
-    public RegistrationTools(String inputImages,
-                                  String outputImages,
-                                  RegistrationSettings registrationSettings)
+    public RegistrationTools( String inputImages, String outputImages, RegistrationSettings registrationSettings )
     {
         this.inputImages = inputImages;
         this.outputImages = outputImages;
@@ -44,7 +42,7 @@ public class RegistrationTools {
     public void run()
     {
 
-        if ( outputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
+        if ( outputImages.equals( RegistrationToolsGUI.IMAGEPLUS ) )
         {
             impOut = imp.duplicate();
             IJ.run(impOut, "Select All", "");
@@ -54,13 +52,12 @@ public class RegistrationTools {
             impOut.show();
         }
 
-        if ( settings.method.equals(RegistrationToolsGUI.ELASTIX) )
+        if ( settings.method.equals( RegistrationToolsGUI.ELASTIX ) )
         {
             Elastix registration = new Elastix();
             registration.setReference();
             registration.setParameters();
-            new Thread(new Runnable() {
-                        public void run() {
+            new Thread(new Runnable() { public void run() {
                             registration.run();
                         }}).start();
 
@@ -98,9 +95,7 @@ public class RegistrationTools {
         {
             createOrEmptyTmpDir();
 
-            if ( (settings.roi != null) ||
-                    (settings.zRange[0] > 1)  ||
-                        (settings.zRange[1] < imp.getNSlices()))
+            if ( (settings.roi != null) || (settings.zRange[0] > 1)  || (settings.zRange[1] < imp.getNSlices()))
             {
                 createMaskFile();
             }
@@ -194,11 +189,9 @@ public class RegistrationTools {
 
         public void setReference()
         {
-            if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
+            if ( inputImages.equals( RegistrationToolsGUI.IMAGEPLUS ) )
             {
-                saveFrame(settings.folderTmp, nameReferenceImage,
-                          settings.reference,
-                          settings.background);
+                saveFrame(settings.folderTmp, nameReferenceImage, settings.reference, settings.background);
             }
         }
 
@@ -321,7 +314,7 @@ public class RegistrationTools {
             Boolean firstTransformation = true;
 
 
-            public Registerer(int s, int e, int d)
+            public Registerer( int s, int e, int d )
             {
                 this.s = s;
                 this.e = e;
@@ -368,10 +361,9 @@ public class RegistrationTools {
 
             }
 
-            public String transform(int t, String pathTransformation)
+            public String transform( int t, String pathTransformation )
             {
-                saveFrame(settings.folderTmp, nameMovingImage,
-                          t, settings.background);
+                saveFrame( settings.folderTmp, nameMovingImage, t, settings.background );
 
                 if ( settings.recursive)
                 {
@@ -423,12 +415,8 @@ public class RegistrationTools {
                 Files.copy(FROM, TO, options);
             }
 
-            private String sysCallElastix(String pathReferenceImage,
-                                          String pathMovingImage,
-                                          String pathInitialTransformation)
+            private String sysCallElastix( String pathReferenceImage, String pathMovingImage, String pathInitialTransformation )
             {
-
-
                 ProcessBuilder pb = new ProcessBuilder();
 
                 List<String> args = new ArrayList<>();

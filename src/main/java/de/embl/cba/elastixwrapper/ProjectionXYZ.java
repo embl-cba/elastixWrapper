@@ -1,4 +1,4 @@
-package registrationTools;
+package de.embl.cba.elastixwrapper;
 
 /** ProjectionXYZ.java
  *
@@ -23,8 +23,8 @@ package registrationTools;
  *
  */
 
-import registrationTools.logging.IJLazySwingLogger;
-import registrationTools.logging.Logger;
+import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
+import de.embl.cba.elastixwrapper.logging.Logger;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.measure.Calibration;

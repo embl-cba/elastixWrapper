@@ -1,4 +1,4 @@
-package registrationTools;
+package de.embl.cba.elastixwrapper;
 
 /**
  MetaImage reader plugin for ImageJ.
@@ -52,8 +52,6 @@ import ij.io.*;
 
 import java.util.zip.InflaterInputStream;
 import java.net.*;
-import java.awt.image.*;
-import ij.gui.*;
 
 class ExtendedFileOpener extends FileOpener {
     // private class which determines if the file is gzipped or not

@@ -1,4 +1,4 @@
-package registrationTools;
+package de.embl.cba.elastixwrapper;
 
 /**
  MetaImage writer plugin for ImageJ.
@@ -40,13 +40,10 @@ package registrationTools;
 //02: MHD/MHA-bug resoved
 
 import java.io.*;
-import java.awt.*;
+
 import ij.*;
-import ij.gui.*;
 import ij.io.*;
 import ij.plugin.*;
-import ij.process.*;
-import ij.measure.Calibration;
 
 //  This plugin saves MetaImage format files.
 //  It appends the '.mhd' and '.raw' suffixes to the header and data files, respectively.

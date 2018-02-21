@@ -1,4 +1,4 @@
-package registrationTools.logging;
+package de.embl.cba.elastixwrapper.logging;
 
 import ij.IJ;
 
