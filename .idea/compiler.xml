@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="fiji_plugin_elastixWrapper" />
-        <module name="registrationTools" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

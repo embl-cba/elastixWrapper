@@ -6,7 +6,7 @@ package de.embl.cba.elastixwrapper;
  *
  * === original description ===
  * Makes a composite image with x,y, and z projections.  Comparisons
- * were were made using the getPixelValue() method to compare.
+ * were were made using the getPixelValue() transformationType to compare.
  *
  * Created on July 30, 2005, 2:28 PM
  * ==== End of Original Description

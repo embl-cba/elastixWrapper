@@ -30,24 +30,26 @@
 
 package de.embl.cba.elastixwrapper.utils;
 import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
-import de.embl.cba.elastixwrapper.logging.Logger;
+import de.embl.cba.utils.logging.Logger;
+
 import ij.IJ;
 import ij.ImagePlus;
 import javafx.geometry.Point3D;
+import org.scijava.log.LogService;
 
+import java.io.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by tischi on 06/11/16.
  */
 
-public class Utils {
+public abstract class Utils {
 
     public static boolean verbose = false;
     public static String LOAD_CHANNELS_FROM_FOLDERS = "from sub-folders";
-
-    static Logger logger = new IJLazySwingLogger();
 
     public static double[] delimitedStringToDoubleArray(String s, String delimiter) {
 
@@ -71,14 +73,91 @@ public class Utils {
         return nums;
     }
 
-    public static void printMap(Map mp) {
-        Iterator it = mp.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-              logger.info("" + pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+    public static void saveStringToFile( String text, String path  )
+    {
+        PrintWriter writer = null;
+        try
+        {
+            writer = new PrintWriter( path, "UTF-8" );
+        }
+        catch ( FileNotFoundException e )
+        {
+            e.printStackTrace();
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            e.printStackTrace();
+        }
+        writer.write( text);
+        writer.close();
+    }
+
+
+    public static void saveStringListToFile( List< String > parameters, String path )
+    {
+        try
+        {
+            FileWriter writer = new FileWriter( path );
+            for (String str : parameters)
+            {
+                writer.write(str+"\n");
+            }
+            writer.close();
+        }
+        catch ( Exception e )
+        {
+            System.out.print( e.toString() );
+        }
+    }
+
+    public static String convertStreamToStr( InputStream is ) throws IOException {
+
+        if (is != null) {
+            Writer writer = new StringWriter();
+
+            char[] buffer = new char[1024];
+            try {
+                Reader reader = new BufferedReader(new InputStreamReader(is,
+                        "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
+            }
+            return writer.toString();
+        }
+        else {
+            return "";
         }
     }
 
 
+    public static void executeCommand( List< String > args, LogService logService )
+    {
+        ProcessBuilder pb = new ProcessBuilder( args );
+
+        String cmd = "";
+
+        for ( String s : pb.command() )
+        {
+            cmd = cmd + " " + s;
+        }
+
+        logService.info("Command launched:" + cmd);
+
+        try
+        {
+            pb.redirectErrorStream( true );
+            final Process process = pb.start();
+            InputStream myIS = process.getInputStream();
+            String tempOut = convertStreamToStr( myIS );
+            logService.info( tempOut );
+        }
+        catch (Exception e)
+        {
+            logService.error("" + e);
+        }
+    }
 }

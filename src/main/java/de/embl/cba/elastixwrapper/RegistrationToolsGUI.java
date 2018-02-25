@@ -30,12 +30,12 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
     JTextField tfRegRange = new JTextField(3);
     JTextField tfZRange = new JTextField(4);
     JTextField tfBackground = new JTextField(4);
-    JComboBox comboTransform = new JComboBox(RegistrationSettings.Type.values());
+    JComboBox comboTransformationType = new JComboBox( new String[] { ElastixSettings.TRANSLATION, ElastixSettings.EULER, ElastixSettings.AFFINE, ElastixSettings.SPLINE });
     JCheckBox cbRecursive = new JCheckBox();
 
     JButton btRunElastix = new JButton("Run Registration");
 
-    RegistrationSettings settings = new RegistrationSettings();
+    ElastixSettings settings = new ElastixSettings();
 
     Logger logger = new IJLazySwingLogger();
 
@@ -44,7 +44,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
      * input: current image, folder
      * output: new image, folder
      *
-     * method: Elastix
+     * transformationType: Elastix
      *
      * Elastix settings: ...
      *
@@ -93,24 +93,21 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
 
         if ( os.toLowerCase().contains("mac") )
         {
-            logger.info("Choosing Mac OS");
             settings.os = "Mac";
-            settings.folderElastix = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
-            settings.folderTmp = "/Users/"+System.getProperty("user.name")+"/Desktop/tmp/";
+            settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8/";
+            settings.workingDirectory = "/Users/"+System.getProperty("user.name")+"/Desktop/tmp/";
         }
         else if (os.toLowerCase().contains("windows"))
         {
-            logger.info("Choosing Windows OS");
             settings.os = "Windows";
-            settings.folderElastix = "C:\\Program Files\\elastix_v4.8\\";
-            settings.folderTmp = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\tmp\\";
+            settings.elastixDirectory = "C:\\Program Files\\elastix_v4.8\\";
+            settings.workingDirectory = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\tmp\\";
         }
         else if (os.toLowerCase().contains("linux"))
         {
-            logger.info("Choosing Linux OS");
             settings.os = "Linux";
-            settings.folderElastix = "/usr/bin/elastix_macosx64_v4.8/";
-            settings.folderTmp = "/usr/tmp/";
+            settings.elastixDirectory = "/usr/bin/elastix_macosx64_v4.8/";
+            settings.workingDirectory = "/usr/tmp/";
         }
         else
         {
@@ -120,13 +117,13 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
 
         addTabPanel(tabs);
         addHeader(panels, tabs, "ELASTIX CONFIGURATION");
-        addTextField(panels, tabs, tfElastixFolder, "Installation folder", "" + settings.folderElastix);
-        addTextField(panels, tabs, tfTmpFolder, "Temp folder", "" + settings.folderTmp);
+        addTextField(panels, tabs, tfElastixFolder, "Installation folder", "" + settings.elastixDirectory );
+        addTextField(panels, tabs, tfTmpFolder, "Temp folder", "" + settings.workingDirectory );
 
         addHeader(panels, tabs, "PARAMETERS");
-        addComboBox(panels, tabs, comboTransform, "Transform");
+        addComboBox(panels, tabs, comboTransformationType, "Transform");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
-        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", ""+settings.spatialSamples);
+        addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", "" + settings.spatialSamples);
         addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
         addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline grid spacing", settings.bSplineGridSpacing);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
@@ -210,8 +207,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
         if ( e.getActionCommand().equals(btRunElastix.getText()) )
         {
 
-            settings.method = RegistrationToolsGUI.ELASTIX;
-            settings.type = (RegistrationSettings.Type) comboTransform.getSelectedItem();
+            settings.transformationType = (String) comboTransformationType.getSelectedItem();
             settings.recursive = cbRecursive.isSelected();
             settings.iterations = Integer.parseInt(tfNumIterations.getText());
             settings.spatialSamples = tfNumSpatialSamples.getText();
@@ -221,8 +217,8 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.zRange = Utils.delimitedStringToIntegerArray(tfZRange.getText(), ",");
             settings.background = Double.parseDouble( tfBackground.getText() );
             settings.reference = Integer.parseInt( tfReference.getText() );
-            settings.folderTmp = tfTmpFolder.getText();
-            settings.folderElastix = tfElastixFolder.getText();
+            settings.workingDirectory = tfTmpFolder.getText();
+            settings.elastixDirectory = tfElastixFolder.getText();
             settings.roi = IJ.getImage().getRoi();
             settings.bSplineGridSpacing = tfBSplineGridSpacing.getText();
             IJ.getImage().deleteRoi(); // otherwise the duplicators later only duplicate the roi
@@ -230,8 +226,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             String inputImages = RegistrationToolsGUI.IMAGEPLUS;
             String outputImages = RegistrationToolsGUI.IMAGEPLUS;
 
-            RegistrationTools registrationTools = new RegistrationTools(inputImages,
-                    outputImages, settings);
+            RegistrationTools registrationTools = new RegistrationTools( inputImages, outputImages, settings );
             registrationTools.run();
         }
     }

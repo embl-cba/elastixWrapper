@@ -11,7 +11,6 @@
     <version>0.4.0</version>
 
 
-
     <name>Fiji plugin for image registration using elastix</name>
     <description>A Fiji plugin for image registration using elastix.</description>
     <url>https://github.com/tischi/</url>
@@ -93,10 +92,20 @@
             <url>http://maven.imagej.net/content/groups/public</url>
         </repository>
 
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
     </repositories>
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.scijava</groupId>
+            <artifactId>scijava-plugins-commands</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>net.imagej</groupId>
@@ -111,6 +120,12 @@
         <dependency>
             <groupId>ome</groupId>
             <artifactId>formats-gpl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.ssgpers</groupId>
+            <artifactId>java-utils-embl</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

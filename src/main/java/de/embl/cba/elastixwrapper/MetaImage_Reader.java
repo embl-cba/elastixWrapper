@@ -61,7 +61,7 @@ class ExtendedFileOpener extends FileOpener {
     }
 
     public InputStream createInputStream(FileInfo fi) throws IOException, MalformedURLException {
-        // use the method in the FileOpener class to generate an inputstream
+        // use the transformationType in the FileOpener class to generate an inputstream
         InputStream is= super.createInputStream(fi);
         if (is!= null && fi.fileName.toLowerCase().endsWith(".zraw")) {
             // then stick a InflaterInputStream on top of it!

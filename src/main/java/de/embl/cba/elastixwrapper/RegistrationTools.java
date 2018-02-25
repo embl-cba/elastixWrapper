@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper;
 
 import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
 import de.embl.cba.elastixwrapper.logging.Logger;
+import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -23,10 +24,10 @@ public class RegistrationTools {
     ImagePlus imp, impOut = null;
     String inputImages;
     String outputImages;
-    RegistrationSettings settings;
+    ElastixSettings settings;
     Logger logger = new IJLazySwingLogger();
 
-    public RegistrationTools( String inputImages, String outputImages, RegistrationSettings registrationSettings )
+    public RegistrationTools( String inputImages, String outputImages, ElastixSettings registrationSettings )
     {
         this.inputImages = inputImages;
         this.outputImages = outputImages;
@@ -52,7 +53,7 @@ public class RegistrationTools {
             impOut.show();
         }
 
-        if ( settings.method.equals( RegistrationToolsGUI.ELASTIX ) )
+        if ( settings.transformationType.equals( RegistrationToolsGUI.ELASTIX ) )
         {
             Elastix registration = new Elastix();
             registration.setReference();
@@ -87,7 +88,7 @@ public class RegistrationTools {
 
         String fileType = ".mhd";
 
-        String pathParameterFile = settings.folderTmp + "elastix_parameters.txt";
+        String parameterFilePath = settings.workingDirectory + "elastix_parameters.txt";
         String pathMaskImage = null;
 
 
@@ -119,12 +120,12 @@ public class RegistrationTools {
             }
 
 
-            pathMaskImage = settings.folderTmp + nameMaskImage + fileType;
+            pathMaskImage = settings.workingDirectory + nameMaskImage + fileType;
 
             if ( fileType.equals(".mhd") )
             {
                 MetaImage_Writer writer = new MetaImage_Writer();
-                writer.save(impMask, settings.folderTmp, nameMaskImage + fileType);
+                writer.save(impMask, settings.workingDirectory, nameMaskImage + fileType);
             }
             else if ( fileType.equals(".tif") )
             {
@@ -142,18 +143,17 @@ public class RegistrationTools {
 
         private void createOrEmptyTmpDir()
         {
-            File directory = new File(settings.folderTmp);
+            File directory = new File( settings.workingDirectory );
             if (! directory.exists() )
             {
                 directory.mkdir();
             }
             else
             {
-                for(File file : directory.listFiles())
+                for( File file : directory.listFiles() )
                     if ( !file.isDirectory() )
                         file.delete();
             }
-
         }
 
         public void run()
@@ -191,100 +191,15 @@ public class RegistrationTools {
         {
             if ( inputImages.equals( RegistrationToolsGUI.IMAGEPLUS ) )
             {
-                saveFrame(settings.folderTmp, nameReferenceImage, settings.reference, settings.background);
+                saveFrame(settings.workingDirectory, nameReferenceImage, settings.reference, settings.background);
             }
         }
 
         public void setParameters()
         {
-            saveParameters(getParametersHenningNo5());
+            Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenningNo5( settings ), parameterFilePath );
         }
 
-        public void saveParameters(List<String> parameters)
-        {
-            try
-            {
-                FileWriter writer = new FileWriter(pathParameterFile);
-                for (String str : parameters)
-                {
-                    writer.write(str+"\n");
-                }
-                writer.close();
-            }
-            catch (Exception e)
-            {
-                logger.error(e.toString());
-            }
-        }
-
-        public List<String> getParametersHenningNo5()
-        {
-            List<String> parameters = new ArrayList<>();
-
-            parameters.add("(CheckNumberOfSamples \"false\")");
-
-            parameters.add("(Transform \"" + settings.type + "Transform\")");
-            parameters.add("(NumberOfResolutions "+settings.resolutionPyramid.split(";").length+")");
-            parameters.add("(MaximumNumberOfIterations "+settings.iterations +")");
-            parameters.add("(ImagePyramidSchedule "+settings.resolutionPyramid.replace(";"," ")+")");
-            parameters.add("(FinalGridSpacingInVoxels "+settings.bSplineGridSpacing+" )");
-
-            // Spatial Samples
-            parameters.add("(NumberOfSpatialSamples " +
-                    settings.spatialSamples.
-                    replace(";"," ").
-                    replace("full","0")
-                    +")");
-
-            // ImageSampler
-            String imageSampler = "(ImageSampler ";
-            for ( String s : settings.spatialSamples.split(";") )
-            {
-                imageSampler += s.equals("full") ? " \"Full\" " : " \"Random\" ";
-            }
-            imageSampler += ")";
-            parameters.add(imageSampler);
-
-            if ( settings.bitDepth == 8 )
-                parameters.add("(ResultImagePixelType \"unsigned char\")");
-            else if ( settings.bitDepth == 16 )
-                parameters.add("(ResultImagePixelType \"unsigned short\")");
-            else
-            {
-                logger.error("Bit depth " + settings.bitDepth + " not supported.");
-                return null;
-            }
-
-            parameters.add("(DefaultPixelValue 0)");
-            parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
-
-            parameters.add("(Registration \"MultiResolutionRegistration\")");
-            parameters.add("(WriteTransformParametersEachIteration \"false\")");
-            parameters.add("(WriteTransformParametersEachResolution \"false\")");
-            parameters.add("(WriteResultImageAfterEachResolution \"false\")");
-            parameters.add("(WritePyramidImagesAfterEachResolution \"false\")");
-            parameters.add("(FixedInternalImagePixelType \"float\")");
-            parameters.add("(MovingInternalImagePixelType \"float\")");
-            parameters.add("(UseDirectionCosines \"false\")");
-            parameters.add("(Interpolator \"LinearInterpolator\")");
-            parameters.add("(ResampleInterpolator \"FinalLinearInterpolator\")");
-            parameters.add("(FixedImagePyramid \"FixedRecursiveImagePyramid\")");
-            parameters.add("(MovingImagePyramid \"MovingRecursiveImagePyramid\")");
-            parameters.add("(AutomaticParameterEstimation \"true\")");
-            parameters.add("(AutomaticScalesEstimation \"true\")");
-            parameters.add("(Metric \"AdvancedMeanSquares\")");
-            parameters.add("(AutomaticTransformInitialization \"false\")");
-            parameters.add("(HowToCombineTransforms \"Compose\")");
-            parameters.add("(ErodeMask \"false\")");
-            parameters.add("(NewSamplesEveryIteration \"true\")");
-
-            parameters.add("(BSplineInterpolationOrder 1)");
-            parameters.add("(FinalBSplineInterpolationOrder 3)");
-            parameters.add("(WriteResultImage \"true\")");
-            parameters.add("(ResultImageFormat \""+fileType.replace(".","")+"\")");
-
-            return(parameters);
-        }
 
         public void saveFrame(String folder, String file, int t, double background)
         {
@@ -349,8 +264,7 @@ public class RegistrationTools {
                     pathTransformation = transform( t, pathTransformation );
 
                     //applyTransformation(t, transformation);
-                    putTransformedImageToImagePlus(t,
-                            RegistrationToolsGUI.IMAGEPLUS);
+                    putTransformedImageToImagePlus( t, RegistrationToolsGUI.IMAGEPLUS );
                 }
 
 
@@ -363,28 +277,28 @@ public class RegistrationTools {
 
             public String transform( int t, String pathTransformation )
             {
-                saveFrame( settings.folderTmp, nameMovingImage, t, settings.background );
+                saveFrame( settings.workingDirectory, nameMovingImage, t, settings.background );
 
                 if ( settings.recursive)
                 {
                     if ( firstTransformation )
                     {
-                        sysCallElastix(settings.folderTmp+nameReferenceImage+fileType,
-                                       settings.folderTmp+nameMovingImage+fileType,
+                        sysCallElastix(settings.workingDirectory + nameReferenceImage + fileType,
+                                       settings.workingDirectory + nameMovingImage + fileType,
                                        null);
                         firstTransformation = false;
                     }
                     else
                     {
-                        sysCallElastix(settings.folderTmp + "result.0" + fileType,
-                                       settings.folderTmp+nameMovingImage+fileType,
+                        sysCallElastix(settings.workingDirectory + "result.0" + fileType,
+                                       settings.workingDirectory +nameMovingImage+fileType,
                                        pathTransformation);
                     }
 
                     try
                     {
-                        pathTransformation = settings.folderTmp + "IntitialTransformParameters."+t+".txt";
-                        copyFile(settings.folderTmp + "TransformParameters.0.txt",
+                        pathTransformation = settings.workingDirectory + "IntitialTransformParameters."+t+".txt";
+                        copyFile(settings.workingDirectory + "TransformParameters.0.txt",
                                  pathTransformation);
                     }
                     catch (Exception e)
@@ -396,8 +310,8 @@ public class RegistrationTools {
                 else
                 {
                     // simply always register against reference
-                    sysCallElastix(settings.folderTmp+nameReferenceImage+fileType,
-                            settings.folderTmp+nameMovingImage+fileType,
+                    sysCallElastix(settings.workingDirectory +nameReferenceImage+fileType,
+                            settings.workingDirectory +nameMovingImage+fileType,
                             null);
                 }
 
@@ -423,32 +337,27 @@ public class RegistrationTools {
                 if ( settings.os.equals("Mac") )
                 {
                     logger.info("Settings for Mac");
-                    Map<String, String> env = pb.environment();
-                    env.put( "DYLD_LIBRARY_PATH", settings.folderElastix + "lib" + ":$DYLD_LIBRARY_PATH");
-                    logger.info("DYLD_LIBRARY_PATH = " + env.get("DYLD_LIBRARY_PATH"));
-                    logger.info( "elastix binary = " + settings.folderElastix + "bin/elastix");
-                    args.add(settings.folderElastix + "bin/elastix"); // command name
+                    args.add(settings.elastixDirectory + "run_elastix.sh");
                 }
                 else if ( settings.os.equals("Linux") )
                 {
                     logger.info("Settings for Linux");
-                    Map<String, String> env = pb.environment();
-                    args.add(settings.folderElastix + "run_elastix.sh"); // command name
+                    args.add(settings.elastixDirectory + "run_elastix.sh");
                 }
                 else if ( settings.os.equals("Windows") )
                 {
                     logger.info("Setting system variables for Windows OS");
                     Map<String, String> env = pb.environment();
                     //logger.info(env.get("PATH"));
-                    env.put("PATH", settings.folderElastix + ":$PATH");
+                    env.put("PATH", settings.elastixDirectory + ":$PATH");
                     //logger.info(env.get("PATH"));
-                    args.add(settings.folderElastix + "elastix.exe"); // command name
+                    args.add(settings.elastixDirectory + "elastix.exe"); // command name
                 }
 
                 args.add("-p");
-                args.add(pathParameterFile);
+                args.add( parameterFilePath );
                 args.add("-out");
-                args.add(settings.folderTmp);
+                args.add(settings.workingDirectory );
                 args.add("-f");
                 args.add(pathReferenceImage);
                 args.add("-m");
@@ -482,7 +391,7 @@ public class RegistrationTools {
                     pb.redirectErrorStream(true);
                     final Process process = pb.start();
                     InputStream myIS = process.getInputStream();
-                    String tempOut = convertStreamToStr(myIS);
+                    String tempOut = Utils.convertStreamToStr( myIS );
                     logger.info(tempOut);
                     //p.waitFor();
                 }
@@ -494,28 +403,7 @@ public class RegistrationTools {
                 return("");
             }
 
-            public String convertStreamToStr(InputStream is) throws IOException {
 
-                if (is != null) {
-                    Writer writer = new StringWriter();
-
-                    char[] buffer = new char[1024];
-                    try {
-                        Reader reader = new BufferedReader(new InputStreamReader(is,
-                                "UTF-8"));
-                        int n;
-                        while ((n = reader.read(buffer)) != -1) {
-                            writer.write(buffer, 0, n);
-                        }
-                    } finally {
-                        is.close();
-                    }
-                    return writer.toString();
-                }
-                else {
-                    return "";
-                }
-            }
 
             public void applyTransformation(int t, String transformation)
             {
@@ -531,23 +419,23 @@ public class RegistrationTools {
                 if ( outputImage.equals(RegistrationToolsGUI.IMAGEPLUS) )
                 {
 
-                    File file = new File(settings.folderTmp + "result.0" + fileType);
+                    File file = new File(settings.workingDirectory + "result.0" + fileType);
                     if (! file.exists() )
                     {
-                        logger.error("Elastix output file not found: "+settings.folderTmp + "result.0" + fileType +
+                        logger.error("Elastix output file not found: "+settings.workingDirectory + "result.0" + fileType +
                         "\nPlease check the Log window.");
-                        //"\nPlease check the log file: "+settings.folderTmp + "elastix.log");
+                        //"\nPlease check the log file: "+settings.workingDirectory + "elastix.log");
 
                     }
 
                     if ( fileType.equals(".tif") )
                     {
-                        impTmp = IJ.openImage(settings.folderTmp + "result.0" + fileType);
+                        impTmp = IJ.openImage(settings.workingDirectory + "result.0" + fileType);
                     }
                     else if ( fileType.equals(".mhd") )
                     {
                         MetaImage_Reader reader = new MetaImage_Reader();
-                        impTmp = reader.load(settings.folderTmp, "result.0" + fileType, false);
+                        impTmp = reader.load(settings.workingDirectory, "result.0" + fileType, false);
                     }
 
                     ImageStack stackTmp = impTmp.getStack();
