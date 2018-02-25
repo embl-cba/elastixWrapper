@@ -1,15 +1,14 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.elastix;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
-import de.embl.cba.utils.logging.Logger;
 import ij.IJ;
 import ij.ImagePlus;
-import org.scijava.log.LogService;
 
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.isLinux;

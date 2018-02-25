@@ -31,15 +31,15 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="RegistrationToolsGUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsGUI.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="228" column="61" lean-forward="false" selection-start-line="228" selection-start-column="61" selection-end-line="228" selection-end-column="61" />
+            <state relative-caret-position="75">
+              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding>
                 <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-                <element signature="e#5683#5690#0" expanded="false" />
+                <element signature="e#5750#5757#0" expanded="false" />
                 <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
                 <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationTools.java">
+      <file leaf-file-name="RegistrationTools.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-538">
-              <caret line="208" column="0" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+            <state relative-caret-position="15">
+              <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="false" />
@@ -67,23 +67,77 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestFindTransformationUsingElastixUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/TestFindTransformationUsingElastixUI.java">
+      <file leaf-file-name="MetaImage_Reader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Reader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="514">
+              <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MetaImage_Writer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Writer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="53" column="6" lean-forward="false" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RegistrationToolsPlugIn.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/logging/Logger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IJLazySwingLogger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/logging/IJLazySwingLogger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ElastixBinaryRunner.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixBinaryRunner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#824#825#0" expanded="true" />
+                <element signature="e#864#865#0" expanded="true" />
+                <element signature="e#5177#5178#0" expanded="true" />
+                <element signature="e#5238#5239#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestApplyTransformationUsingTransformixUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/TestApplyTransformationUsingTransformixUI.java">
+      <file leaf-file-name="ElastixSettings.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="66" lean-forward="true" selection-start-line="6" selection-start-column="66" selection-end-line="6" selection-end-column="66" />
+            <state relative-caret-position="15">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -92,74 +146,10 @@
         </entry>
       </file>
       <file leaf-file-name="ElastixTransformationParameters.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixTransformationParameters.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="71" column="67" lean-forward="false" selection-start-line="71" selection-start-column="67" selection-end-line="71" selection-end-column="67" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ElastixBinaryRunner.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixBinaryRunner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="56" column="55" lean-forward="true" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#830#831#0" expanded="true" />
-                <element signature="e#870#871#0" expanded="true" />
-                <element signature="e#5183#5184#0" expanded="true" />
-                <element signature="e#5244#5245#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FindTransformationUsingElastix.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/commands/FindTransformationUsingElastix.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-294">
-              <caret line="43" column="4" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IJLazySwingLogger.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/github/ssgpers/java-utils-embl/master-SNAPSHOT/java-utils-embl-master-SNAPSHOT.jar!/de/embl/cba/utils/logging/IJLazySwingLogger.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="35" column="11" lean-forward="false" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/utils/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#delimitedStringToDoubleArray#0;class#Utils#0" expanded="false" />
-                <element signature="method#delimitedStringToIntegerArray#0;class#Utils#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ElastixSettings.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixTransformationParameters.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -237,6 +227,14 @@
         <option value="$PROJECT_DIR$/src/test/java/TestApplyTransformationUsingTransformixUI.java" />
         <option value="$PROJECT_DIR$/src/test/java/TestFindTransformationUsingElastixUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/commands/FindTransformationUsingElastix.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Reader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Writer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixBinaryRunner.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixTransformationParameters.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationTools.java" />
       </list>
     </option>
   </component>
@@ -303,59 +301,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="elastixwrapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="elastixwrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="elastixwrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fiji-plugin-elastixWrapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fiji-plugin-elastixWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -605,7 +550,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25213677" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -616,7 +560,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38054362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38054362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2495238" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -679,63 +623,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/utils/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="168" column="5" lean-forward="false" selection-start-line="168" selection-start-column="5" selection-end-line="168" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#delimitedStringToDoubleArray#0;class#Utils#0" expanded="false" />
-            <element signature="method#delimitedStringToIntegerArray#0;class#Utils#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="12" column="12" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="211" column="55" lean-forward="false" selection-start-line="211" selection-start-column="55" selection-end-line="211" selection-end-column="55" />
-          <folding>
-            <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="e#5683#5690#0" expanded="false" />
-            <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsPlugIn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
@@ -755,7 +643,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="12" column="12" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
@@ -765,7 +653,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/MetaImage_Reader.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Reader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="131" column="5" lean-forward="false" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
@@ -786,7 +674,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsPlugIn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
@@ -794,7 +682,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="13" column="6" lean-forward="false" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
@@ -804,7 +692,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsGUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="146" column="67" lean-forward="false" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
@@ -812,7 +700,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="e#5683#5690#0" expanded="false" />
+            <element signature="e#5750#5757#0" expanded="false" />
             <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
@@ -839,7 +727,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationTools.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="181" column="53" lean-forward="false" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
@@ -850,7 +738,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsPlugIn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
@@ -858,7 +746,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -875,7 +763,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsGUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="40" column="27" lean-forward="false" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
@@ -883,7 +771,7 @@
             <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="e#5683#5690#0" expanded="false" />
+            <element signature="e#5750#5757#0" expanded="false" />
             <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
             <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
@@ -898,7 +786,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationTools.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationTools.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="271" column="32" lean-forward="false" selection-start-line="271" selection-start-column="32" selection-end-line="271" selection-end-column="32" />
@@ -909,7 +797,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsPlugIn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
@@ -917,7 +805,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
@@ -936,13 +824,6 @@
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/util/stream/IntStream.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/Transformations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/lang/ProcessBuilder.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/net/imagej/ij/1.51h/ij-1.51h.jar!/ij/ImageStack.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -966,21 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/MetaImage_Writer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/MetaImage_Reader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsUtils.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/TestElastixSequenceWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -992,14 +858,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsPlugIn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/TestDetlevNuclei.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1007,14 +865,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixBinaryCallerSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1052,38 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixTransformationParameters.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="71" column="67" lean-forward="false" selection-start-line="71" selection-start-column="67" selection-end-line="71" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationToolsGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="228" column="61" lean-forward="false" selection-start-line="228" selection-start-column="61" selection-end-line="228" selection-end-column="61" />
-          <folding>
-            <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="e#5683#5690#0" expanded="false" />
-            <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="false" />
-            <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -1092,41 +910,6 @@
             <element signature="imports" expanded="true" />
             <element signature="method#delimitedStringToDoubleArray#0;class#Utils#0" expanded="false" />
             <element signature="method#delimitedStringToIntegerArray#0;class#Utils#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixBinaryRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="56" column="55" lean-forward="true" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#830#831#0" expanded="true" />
-            <element signature="e#870#871#0" expanded="true" />
-            <element signature="e#5183#5184#0" expanded="true" />
-            <element signature="e#5244#5245#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/RegistrationTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-538">
-          <caret line="208" column="0" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1153,10 +936,149 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/commands/FindTransformationUsingElastix.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-294">
-          <caret line="43" column="4" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
+        <state relative-caret-position="67">
+          <caret line="70" column="7" lean-forward="true" selection-start-line="70" selection-start-column="7" selection-end-line="70" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Reader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/metaimage/MetaImage_Writer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="53" column="6" lean-forward="false" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/logging/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ElastixBinaryCallerSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/logging/IJLazySwingLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/ProjectionXYZ.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1119">
+          <caret line="23" column="3" lean-forward="true" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixBinaryRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#824#825#0" expanded="true" />
+            <element signature="e#864#865#0" expanded="true" />
+            <element signature="e#5177#5178#0" expanded="true" />
+            <element signature="e#5238#5239#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/Transformations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/elastix/ElastixTransformationParameters.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="docComment;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="docComment;method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#RegistrationToolsGUI#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="e#5750#5757#0" expanded="false" />
+            <element signature="method#addTabPanel#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#addHeader#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#addTextField#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#addCheckBox#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#addButton#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#addComboBox#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#focusGained#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#focusLost#0;class#RegistrationToolsGUI#0" expanded="false" />
+            <element signature="method#itemStateChanged#0;class#RegistrationToolsGUI#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationToolsPlugIn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/embl/cba/elastixwrapper/plugins/RegistrationTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#createMaskFile#0;class#Elastix#0;class#RegistrationTools#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1240,7 +1162,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: au.com.bytecode:opencsv:2.4</last-edited>
+          <last-edited>Maven: ch.qos.logback:logback-classic:1.2.3</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

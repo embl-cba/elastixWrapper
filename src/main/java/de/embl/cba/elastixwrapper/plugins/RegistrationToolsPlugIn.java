@@ -1,7 +1,6 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.plugins;
 
-import ij.IJ;
-import ij.ImagePlus;
+import de.embl.cba.elastixwrapper.plugins.RegistrationToolsGUI;
 import ij.plugin.PlugIn;
 
 import javax.swing.*;

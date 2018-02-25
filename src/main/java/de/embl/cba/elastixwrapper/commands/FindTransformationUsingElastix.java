@@ -1,7 +1,7 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.ElastixBinaryRunner;
-import de.embl.cba.elastixwrapper.ElastixSettings;
+import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import ij.Prefs;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
@@ -41,7 +41,7 @@ public class FindTransformationUsingElastix implements Command
             ElastixSettings.SPLINE } )
     public String transformationType;
     public static final String TRANSFORMATION_TYPE = "transformationType";
-    
+
     @Parameter( label = "Number of iterations" )
     public int numIterations = 1000;
     public static final String NUMBER_OF_ITERATIONS = "numIterations";

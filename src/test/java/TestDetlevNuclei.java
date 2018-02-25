@@ -1,4 +1,4 @@
-import de.embl.cba.elastixwrapper.RegistrationToolsPlugIn;
+import de.embl.cba.elastixwrapper.plugins.RegistrationToolsPlugIn;
 import ij.IJ;
 
 public class TestDetlevNuclei

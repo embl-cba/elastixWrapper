@@ -1,4 +1,4 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.metaimage;
 
 /**
  MetaImage writer plugin for ImageJ.

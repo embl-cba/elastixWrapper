@@ -1,5 +1,6 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.plugins;
 
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
 import de.embl.cba.elastixwrapper.logging.Logger;
 import de.embl.cba.elastixwrapper.utils.Utils;

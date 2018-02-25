@@ -1,6 +1,5 @@
-import de.embl.cba.elastixwrapper.RegistrationToolsPlugIn;
+import de.embl.cba.elastixwrapper.plugins.RegistrationToolsPlugIn;
 import ij.IJ;
-import ij.ImagePlus;
 
 public class TestElastixSequenceWrapper
 {

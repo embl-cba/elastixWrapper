@@ -1,4 +1,4 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.elastix;
 
 import ij.gui.Roi;
 import org.scijava.log.LogService;

@@ -1,4 +1,5 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.elastix;
+
 
 import java.util.ArrayList;
 import java.util.List;

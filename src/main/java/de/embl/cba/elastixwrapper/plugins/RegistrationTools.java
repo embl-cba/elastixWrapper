@@ -1,7 +1,12 @@
-package de.embl.cba.elastixwrapper;
+package de.embl.cba.elastixwrapper.plugins;
 
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.elastix.ElastixTransformationParameters;
 import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
 import de.embl.cba.elastixwrapper.logging.Logger;
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
+import de.embl.cba.elastixwrapper.plugins.RegistrationToolsGUI;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
@@ -33,7 +38,7 @@ public class RegistrationTools {
         this.outputImages = outputImages;
         this.settings = registrationSettings;
 
-        if ( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
+        if ( inputImages.equals( RegistrationToolsGUI.IMAGEPLUS) )
         {
             this.imp = IJ.getImage();
         }
