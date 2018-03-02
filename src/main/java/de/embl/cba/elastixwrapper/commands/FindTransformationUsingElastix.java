@@ -2,6 +2,10 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import de.embl.cba.elastixwrapper.utils.CommandUtils;
+import ij.IJ;
+import ij.ImagePlus;
 import ij.Prefs;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
@@ -18,11 +22,11 @@ public class FindTransformationUsingElastix implements Command
 {
     public static final String PLUGIN_NAME = "Find transformation";
 
-    @Parameter( label = "Elastix directory" )
+    @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
     public static final String ELASTIX_DIRECTORY = "elastixDirectory";
 
-    @Parameter( label = "Working directory" )
+    @Parameter( label = "Working directory", style = "directory" )
     public File workingDirectory;
     public static final String WORKING_DIRECTORY = "workingDirectory";
 
@@ -58,6 +62,13 @@ public class FindTransformationUsingElastix implements Command
     public String bSplineGridSpacing = "50,50,50";
     public static final String SPLINE_GRID_SPACING = "bSplineGridSpacing";
 
+    @Parameter( label = "Output modality", choices = {
+            CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES,
+            CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE
+    } )
+    public String outputModality;
+    public static final String OUTPUT_MODALITY = "outputModality";
+
     @Parameter
     public LogService logService;
 
@@ -66,9 +77,45 @@ public class FindTransformationUsingElastix implements Command
 
     public void run()
     {
+        ElastixSettings settings = runElastix();
+        handleOutput( settings );
+    }
+
+    private ElastixSettings runElastix()
+    {
         ElastixSettings settings = getSettingsFromUI();
         ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
         elastixBinaryRunner.runElastix();
+        return settings;
+    }
+
+    private void handleOutput( ElastixSettings settings )
+    {
+        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) ||
+                outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
+        {
+            ImagePlus result, fixed, moving;
+
+            if ( settings.resultImageFileType.equals( ElastixSettings.RESULT_IMAGE_FILE_TYPE_MHD ) )
+            {
+                MetaImage_Reader reader = new MetaImage_Reader();
+                result = reader.load( settings.workingDirectory, "result.0" + "." + settings.resultImageFileType, false );
+            } else
+            {
+                result = null;
+            }
+
+            fixed = IJ.openImage( fixedImageFile.toString() );
+            moving = IJ.openImage( movingImageFile.toString() );
+
+            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) )
+            {
+                fixed.show();
+                moving.show();
+                result.show();
+            }
+
+        }
     }
 
     private ElastixSettings getSettingsFromUI()
@@ -79,6 +126,9 @@ public class FindTransformationUsingElastix implements Command
 
         settings.workingDirectory = workingDirectory.toString();
         settings.elastixDirectory = elastixDirectory.toString();
+
+        settings.initialTransformationFilePath = "";
+        settings.maskImageFilePath = "";
 
         settings.fixedImageFilePath = fixedImageFile.toString();
         settings.movingImageFilePath = movingImageFile.toString();

@@ -1,5 +1,11 @@
 package de.embl.cba.elastixwrapper.commands;
 
+import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import de.embl.cba.elastixwrapper.utils.CommandUtils;
+import ij.ImagePlus;
+import ij.Prefs;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -26,11 +32,62 @@ public class ApplyTransformationUsingTransformix implements Command
     public File transformationFile;
     public static final String TRANSFORMATION_FILE = "transformationFile";
 
+    @Parameter( label = "Output modality", choices = { CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE } )
+    public String outputModality;
+    public static final String OUTPUT_MODALITY = "outputModality";
+
     @Parameter
     public LogService logService;
 
     public void run()
     {
+        ElastixSettings settings = runTransformix();
+        handleOutput( settings );
+    }
 
+    private void handleOutput( ElastixSettings settings )
+    {
+        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE ) )
+        {
+            ImagePlus result;
+
+            if ( settings.resultImageFileType.equals( ElastixSettings.RESULT_IMAGE_FILE_TYPE_MHD ) )
+            {
+                MetaImage_Reader reader = new MetaImage_Reader();
+                result = reader.load( settings.workingDirectory, "result.0" + "." + settings.resultImageFileType, false );
+            }
+            else
+            {
+                result = null;
+            }
+
+            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE ) )
+            {
+                result.show();
+            }
+        }
+    }
+
+    private ElastixSettings runTransformix()
+    {
+        ElastixSettings settings = getSettingsFromUI();
+        ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
+        elastixBinaryRunner.runTransformix();
+        return settings;
+    }
+
+    private ElastixSettings getSettingsFromUI()
+    {
+        ElastixSettings settings = new ElastixSettings();
+
+        settings.logService = logService;
+
+        settings.elastixDirectory = elastixDirectory.toString();
+        settings.movingImageFilePath = inputImageFile.toString();
+        settings.transformationFilePath = transformationFile.toString();
+
+        settings.workers = Prefs.getThreads(); // TODO
+
+        return settings;
     }
 }

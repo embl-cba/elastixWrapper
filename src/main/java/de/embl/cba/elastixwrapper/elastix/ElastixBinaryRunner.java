@@ -1,6 +1,7 @@
 package de.embl.cba.elastixwrapper.elastix;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,9 @@ public class ElastixBinaryRunner
 
         stageImageAsMhd( settings.movingImageFilePath );
 
-        Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenningNo5( settings ), getDefaultParameterFilePath() );
+        settings.parameterFilePath = getDefaultParameterFilePath();
+
+        Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenningNo5( settings ), settings.parameterFilePath );
 
         setElastixSystemPathForWindowsOS();
 
@@ -80,7 +83,7 @@ public class ElastixBinaryRunner
     private List< String > getTransformixCallArgs( )
     {
         List<String> args = new ArrayList<>();
-        prepareAndAddBinaryCall( TRANSFORMIX, args );
+        args.add( createExecutableShellScript( TRANSFORMIX ) );
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-in" );
@@ -95,7 +98,7 @@ public class ElastixBinaryRunner
     private List< String > getElastixCallArgs( )
     {
         List<String> args = new ArrayList<>();
-        prepareAndAddBinaryCall( ELASTIX, args );
+        args.add( createExecutableShellScript( ELASTIX ) );
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-f" );
@@ -132,38 +135,56 @@ public class ElastixBinaryRunner
         }
     }
 
-    private void prepareAndAddBinaryCall( String elastixOrTransformix, List< String > args )
+    private String createExecutableShellScript( String elastixOrTransformix )
     {
 
         if ( isMac() || isLinux() )
         {
-            String runTransformixPath = settings.elastixDirectory + File.separator + "runTransformix.sh";
-            String runTransformixText = "";
-            runTransformixText += "#!/bin/bash\n";
-            runTransformixText += "ELASTIX_PATH="+settings.elastixDirectory+"\n";
+            String executablePath = settings.workingDirectory + File.separator + "run_" + elastixOrTransformix + ".sh";
+            String shellScriptText = "";
+            shellScriptText += "#!/bin/bash\n";
+            shellScriptText += "ELASTIX_PATH=" + settings.elastixDirectory + "\n";
 
             if ( isMac() )
             {
-                runTransformixText += "export DYLD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
+                shellScriptText += "export DYLD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
             }
             else if ( isLinux() )
             {
-                runTransformixText += "export LD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
+                shellScriptText += "export LD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
             }
 
-            runTransformixText += "$ELASTIX_PATH/bin/" + elastixOrTransformix +" $@\n";
-            saveStringToFile( runTransformixText, runTransformixPath );
-            args.add( runTransformixPath );
+            shellScriptText += "$ELASTIX_PATH/bin/" + elastixOrTransformix +" $@\n";
+            saveStringToFile( shellScriptText, executablePath );
+
+            makeExecutable( executablePath );
+
+            return executablePath;
+
         }
         else if ( isWindows() )
         {
-            args.add(settings.elastixDirectory + "transformix.exe"); // command name
+            return settings.elastixDirectory + elastixOrTransformix + ".exe";
         }
         else
         {
             settings.logService.error( "Could not detect operating system!" );
+
+            return null;
         }
 
+    }
+
+    private void makeExecutable( String executablePath )
+    {
+        try
+        {
+            Runtime.getRuntime().exec("chmod u+x " + executablePath );
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+        }
     }
 
     private void createOrEmptyWorkingDir()

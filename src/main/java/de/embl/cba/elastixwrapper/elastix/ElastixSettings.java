@@ -32,7 +32,6 @@ public class ElastixSettings
 
     public String transformationFilePath;
 
-
     public String resultImageFileType = RESULT_IMAGE_FILE_TYPE_MHD;
 
     public String os;

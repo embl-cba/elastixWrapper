@@ -13,10 +13,10 @@ public abstract class ElastixTransformationParameters
         parameters.add("(CheckNumberOfSamples \"false\")");
 
         parameters.add("(Transform \"" + settings.transformationType + "Transform\")");
-        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length+")");
-        parameters.add("(MaximumNumberOfIterations " + settings.iterations +")");
-        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ")+")");
-        parameters.add("(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing+" )");
+        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length + ")");
+        parameters.add("(MaximumNumberOfIterations " + settings.iterations + ")");
+        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ").replace(","," ")+")");
+        parameters.add("(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace(",", " ") + " )");
 
         // Spatial Samples
         parameters.add("(NumberOfSpatialSamples " +

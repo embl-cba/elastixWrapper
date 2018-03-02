@@ -103,13 +103,18 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.scijava</groupId>
-            <artifactId>scijava-plugins-commands</artifactId>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
         </dependency>
 
         <dependency>
             <groupId>net.imagej</groupId>
-            <artifactId>ij</artifactId>
+            <artifactId>imagej-legacy</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scijava</groupId>
+            <artifactId>scijava-plugins-commands</artifactId>
         </dependency>
 
         <dependency>

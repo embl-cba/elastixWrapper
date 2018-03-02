@@ -1,7 +1,7 @@
 import de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix;
 import net.imagej.ImageJ;
 
-public class TestApplyTransformationUsingTransformixUI
+public class TestUIApplyTransformationUsingTransformix
 {
     // Main
     public static void main(final String... args) throws Exception
