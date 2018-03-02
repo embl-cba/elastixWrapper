@@ -6,7 +6,6 @@ import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
 import de.embl.cba.elastixwrapper.logging.Logger;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
-import de.embl.cba.elastixwrapper.plugins.RegistrationToolsGUI;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
@@ -24,7 +23,8 @@ import java.util.stream.IntStream;
 /**
  * Created by tischi on 30/04/17.
  */
-public class RegistrationTools {
+public class SequenceRegistration
+{
 
     ImagePlus imp, impOut = null;
     String inputImages;
@@ -32,13 +32,13 @@ public class RegistrationTools {
     ElastixSettings settings;
     Logger logger = new IJLazySwingLogger();
 
-    public RegistrationTools( String inputImages, String outputImages, ElastixSettings registrationSettings )
+    public SequenceRegistration( String inputImages, String outputImages, ElastixSettings registrationSettings )
     {
         this.inputImages = inputImages;
         this.outputImages = outputImages;
         this.settings = registrationSettings;
 
-        if ( inputImages.equals( RegistrationToolsGUI.IMAGEPLUS) )
+        if ( inputImages.equals( SequenceRegistrationGUI.IMAGEPLUS) )
         {
             this.imp = IJ.getImage();
         }
@@ -48,7 +48,7 @@ public class RegistrationTools {
     public void run()
     {
 
-        if ( outputImages.equals( RegistrationToolsGUI.IMAGEPLUS ) )
+        if ( outputImages.equals( SequenceRegistrationGUI.IMAGEPLUS ) )
         {
             impOut = imp.duplicate();
             IJ.run(impOut, "Select All", "");
@@ -58,7 +58,7 @@ public class RegistrationTools {
             impOut.show();
         }
 
-        if ( settings.transformationType.equals( RegistrationToolsGUI.ELASTIX ) )
+        if ( settings.transformationType.equals( SequenceRegistrationGUI.ELASTIX ) )
         {
             Elastix registration = new Elastix();
             registration.setReference();
@@ -74,7 +74,7 @@ public class RegistrationTools {
 
     public int getNumberOfImages()
     {
-        if( inputImages.equals(RegistrationToolsGUI.IMAGEPLUS) )
+        if( inputImages.equals( SequenceRegistrationGUI.IMAGEPLUS) )
         {
             return imp.getNFrames();
         }
@@ -194,7 +194,7 @@ public class RegistrationTools {
 
         public void setReference()
         {
-            if ( inputImages.equals( RegistrationToolsGUI.IMAGEPLUS ) )
+            if ( inputImages.equals( SequenceRegistrationGUI.IMAGEPLUS ) )
             {
                 saveFrame(settings.workingDirectory, nameReferenceImage, settings.reference, settings.background);
             }
@@ -269,7 +269,7 @@ public class RegistrationTools {
                     pathTransformation = transform( t, pathTransformation );
 
                     //applyTransformation(t, transformation);
-                    putTransformedImageToImagePlus( t, RegistrationToolsGUI.IMAGEPLUS );
+                    putTransformedImageToImagePlus( t, SequenceRegistrationGUI.IMAGEPLUS );
                 }
 
 
@@ -421,7 +421,7 @@ public class RegistrationTools {
 
                 ImagePlus impTmp = null;
 
-                if ( outputImage.equals(RegistrationToolsGUI.IMAGEPLUS) )
+                if ( outputImage.equals( SequenceRegistrationGUI.IMAGEPLUS) )
                 {
 
                     File file = new File(settings.workingDirectory + "result.0" + fileType);

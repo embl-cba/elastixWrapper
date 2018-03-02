@@ -274,6 +274,8 @@ public class MetaImage_Reader implements PlugIn {
         String strNDims = p.getProperty("NDims");
         String strDimSize = p.getProperty("DimSize");
         String strElementSize = p.getProperty("ElementSize");
+        String strElementSpacing = p.getProperty("ElementSpacing");
+
         String strElementDataFile = p.getProperty("ElementDataFile");
         String strElementByteOrderMSB = p.getProperty("ElementByteOrderMSB");
         if (null == strElementByteOrderMSB)
@@ -305,15 +307,37 @@ public class MetaImage_Reader implements PlugIn {
                 throw new IOException("Unsupported number of dimensions.");
             }
         }
+
+
+        double conversionFactorMillimeterToNanometer = 1000000D;
+
         if (strElementSize != null) {
+
+            fi.unit = "nanometer";
+
             String[] parts = strElementSize.split("\\s+");
             if (parts.length > 0)
-                fi.pixelWidth  = Double.parseDouble(parts[0]);
+                fi.pixelWidth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[0]);
             if (parts.length > 1)
-                fi.pixelHeight = Double.parseDouble(parts[1]);
+                fi.pixelHeight = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[1]);
             if (parts.length > 2)
-                fi.pixelDepth  = Double.parseDouble(parts[2]);
+                fi.pixelDepth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[2]);
         }
+
+        if (strElementSpacing != null) {
+
+            fi.unit = "nanometer";
+
+            String[] parts = strElementSpacing.split("\\s+");
+            if (parts.length > 0)
+                fi.pixelWidth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[0]);
+            if (parts.length > 1)
+                fi.pixelHeight = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[1]);
+            if (parts.length > 2)
+                fi.pixelDepth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[2]);
+        }
+
+
         int numChannels = Integer.parseInt(strElementNumberOfChannels);
         if (numChannels == 1) {
             if (strElementType.equals("MET_UCHAR"))       { fi.fileType = FileInfo.GRAY8;           }

@@ -1,12 +1,12 @@
-import de.embl.cba.elastixwrapper.plugins.RegistrationToolsPlugIn;
+import de.embl.cba.elastixwrapper.plugins.SequenceRegistrationPlugIn;
 import ij.IJ;
 
-public class TestElastixSequenceWrapper
+public class ElastixSequenceWrapper
 {
     public static void main(String[] args)
     {
         // set the plugins.dir property to make the plugin appear in the Plugins menu
-        Class<?> clazz = RegistrationToolsPlugIn.class;
+        Class<?> clazz = SequenceRegistrationPlugIn.class;
         String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
         String pluginsDir = url.substring("file:".length(), url.length() - clazz.getName().length() - ".class".length());
         System.setProperty("plugins.dir", pluginsDir);
@@ -21,7 +21,7 @@ public class TestElastixSequenceWrapper
         // run the plugin
         //
 
-        RegistrationToolsPlugIn registrationToolsPlugIn = new RegistrationToolsPlugIn();
-        registrationToolsPlugIn.run("");
+        SequenceRegistrationPlugIn sequenceRegistrationPlugIn = new SequenceRegistrationPlugIn();
+        sequenceRegistrationPlugIn.run("");
     }
 }

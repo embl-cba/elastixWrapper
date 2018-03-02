@@ -8,7 +8,7 @@
 
     <groupId>de.embl.cba</groupId>
     <artifactId>fiji_plugin_elastixWrapper</artifactId>
-    <version>0.4.0</version>
+    <version>0.1.1</version>
 
 
     <name>Fiji plugin for image registration using elastix</name>

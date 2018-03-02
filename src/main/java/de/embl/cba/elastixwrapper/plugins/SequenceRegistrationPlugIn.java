@@ -1,21 +1,20 @@
 package de.embl.cba.elastixwrapper.plugins;
 
-import de.embl.cba.elastixwrapper.plugins.RegistrationToolsGUI;
 import ij.plugin.PlugIn;
 
 import javax.swing.*;
 
-public class RegistrationToolsPlugIn implements PlugIn {
+public class SequenceRegistrationPlugIn implements PlugIn {
 
     @Override
     public void run(String s)
     {
-        RegistrationToolsGUI registrationToolsGUI = new RegistrationToolsGUI();
+        SequenceRegistrationGUI sequenceRegistrationGUI = new SequenceRegistrationGUI();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run()
             {
-                registrationToolsGUI.showDialog();
+                sequenceRegistrationGUI.showDialog();
             }
         });
 

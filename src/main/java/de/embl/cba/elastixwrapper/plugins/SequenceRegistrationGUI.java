@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by tischi on 30/04/17.
  */
-public class RegistrationToolsGUI extends JFrame implements ActionListener, FocusListener, ItemListener {
+public class SequenceRegistrationGUI extends JFrame implements ActionListener, FocusListener, ItemListener {
 
     public final static String IMAGEPLUS = "from ImageJ";
     public final static String ELASTIX = "Elastix";
@@ -52,7 +52,7 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
      * actions: [Run registration]
      *
      */
-    public RegistrationToolsGUI()
+    public SequenceRegistrationGUI()
     {
 
     }
@@ -224,11 +224,11 @@ public class RegistrationToolsGUI extends JFrame implements ActionListener, Focu
             settings.bSplineGridSpacing = tfBSplineGridSpacing.getText();
             IJ.getImage().deleteRoi(); // otherwise the duplicators later only duplicate the roi
 
-            String inputImages = RegistrationToolsGUI.IMAGEPLUS;
-            String outputImages = RegistrationToolsGUI.IMAGEPLUS;
+            String inputImages = SequenceRegistrationGUI.IMAGEPLUS;
+            String outputImages = SequenceRegistrationGUI.IMAGEPLUS;
 
-            RegistrationTools registrationTools = new RegistrationTools( inputImages, outputImages, settings );
-            registrationTools.run();
+            SequenceRegistration sequenceRegistration = new SequenceRegistration( inputImages, outputImages, settings );
+            sequenceRegistration.run();
         }
     }
 

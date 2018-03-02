@@ -283,13 +283,23 @@ public final class MetaImage_Writer implements PlugIn {
         else
             stream.println("BinaryDataByteOrderMSB = True");
 
+
+        double conversionFactorToMillimeter = getConversionFactorToMillimeter( fi.unit );
+
         if (ndims == 3) {
             stream.println("DimSize = " + fi.width + " " + fi.height + " " + fi.nImages);
-            stream.println("ElementSize = " + fi.pixelWidth + " " + fi.pixelHeight + " " + fi.pixelDepth);
+
+
+            stream.println("ElementSize = "
+                    + conversionFactorToMillimeter * fi.pixelWidth
+                    + " " + conversionFactorToMillimeter * fi.pixelHeight
+                    + " " + conversionFactorToMillimeter * fi.pixelDepth);
         }
         else {
             stream.println("DimSize = " + fi.width + " " + fi.height);
-            stream.println("ElementSize = " + fi.pixelWidth + " " + fi.pixelHeight);
+            stream.println("ElementSize = "
+                    + conversionFactorToMillimeter * fi.pixelWidth
+                    + " " +  conversionFactorToMillimeter * fi.pixelHeight);
         }
         if (numChannels != "1")
             stream.println("ElementNumberOfChannels = " + numChannels);
@@ -305,5 +315,21 @@ public final class MetaImage_Writer implements PlugIn {
         file.close();
 
         return true;
+    }
+
+    private double getConversionFactorToMillimeter( String unit )
+    {
+        double conversionFactorToMillimeter = 1.0;
+
+        if ( unit.equals( "nm" ) )
+        {
+            conversionFactorToMillimeter = 1.0 / 1000000D;
+        }
+
+        if ( unit.equals( "um" ) || unit.equals( "micrometer" ) || unit.equals( "microns" ) || unit.equals( "micron" )  )
+        {
+            conversionFactorToMillimeter = 1.0 / 1000D;
+        }
+        return conversionFactorToMillimeter;
     }
 }

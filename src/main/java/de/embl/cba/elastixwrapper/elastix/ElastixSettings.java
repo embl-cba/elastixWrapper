@@ -35,6 +35,7 @@ public class ElastixSettings
     public String resultImageFileType = RESULT_IMAGE_FILE_TYPE_MHD;
 
     public String os;
+
     public Boolean recursive = false;
     public int reference = 1, delta;
     public int[] regRange = new int[]{1,1};

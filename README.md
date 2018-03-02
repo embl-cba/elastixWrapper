@@ -81,7 +81,7 @@ You can test that everything worked by typing in your terminal window:
 ### Install the Fiji elastix wrapper plugin
 
 - download and extract below file and put it into you Fiji plugin folder: 
-	- https://github.com/tischi/fiji-plugin-registrationTools/raw/master/out/artifacts/registrationTools_.jar
+	- https://github.com/tischi/fiji-plugin-sequenceRegistration/raw/master/out/artifacts/registrationTools_.jar
 
 ## Usage instructions
 

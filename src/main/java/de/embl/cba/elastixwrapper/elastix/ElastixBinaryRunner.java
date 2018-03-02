@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper.elastix;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,10 @@ public class ElastixBinaryRunner
 {
     public static String ELASTIX = "elastix";
     public static String TRANSFORMIX = "transformix";
-    public static String TRANSFORMIX_INPUT_IMAGE_NAME = "toBeTransformed";
+    public static String ELASTIX_FIXED_IMAGE_NAME = "fixed.mhd";
+    public static String ELASTIX_MOVING_IMAGE_NAME = "moving.mhd";
+    public static String TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed.mhd";
+
 
     ElastixSettings settings;
 
@@ -33,9 +37,9 @@ public class ElastixBinaryRunner
     {
         createOrEmptyWorkingDir();
 
-        stageImageAsMhd( settings.fixedImageFilePath );
+        stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
 
-        stageImageAsMhd( settings.movingImageFilePath );
+        stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
 
         settings.parameterFilePath = getDefaultParameterFilePath();
 
@@ -52,7 +56,7 @@ public class ElastixBinaryRunner
     {
         createOrEmptyWorkingDir();
 
-        stageImageAsMhd( settings.movingImageFilePath );
+        stageImageAsMhd( settings.movingImageFilePath, TRANSFORMIX_INPUT_IMAGE_NAME );
 
         setElastixSystemPathForWindowsOS();
 
@@ -71,13 +75,13 @@ public class ElastixBinaryRunner
     private void stageImagePlusAsMhd( ImagePlus imp, String workingDirectory, String filename )
     {
         MetaImage_Writer writer = new MetaImage_Writer();
-        writer.save( imp, workingDirectory, filename + ".mhd" );
+        writer.save( imp, workingDirectory, filename );
     }
 
-    private void stageImageAsMhd( String imagePath )
+    private void stageImageAsMhd( String imagePath, String filename )
     {
         ImagePlus imp = IJ.openImage( imagePath );
-        stageImagePlusAsMhd( imp, settings.workingDirectory, TRANSFORMIX_INPUT_IMAGE_NAME );
+        stageImagePlusAsMhd( imp, settings.workingDirectory, filename );
     }
 
     private List< String > getTransformixCallArgs( )
@@ -87,7 +91,7 @@ public class ElastixBinaryRunner
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-in" );
-        args.add( settings.movingImageFilePath );
+        args.add( settings.workingDirectory + File.separator + TRANSFORMIX_INPUT_IMAGE_NAME );
         args.add( "-tp" );
         args.add( settings.transformationFilePath );
         args.add( "-threads" );
@@ -102,9 +106,9 @@ public class ElastixBinaryRunner
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-f" );
-        args.add( settings.fixedImageFilePath );
+        args.add( settings.workingDirectory + File.separator + ELASTIX_FIXED_IMAGE_NAME );
         args.add( "-m" );
-        args.add( settings.movingImageFilePath );
+        args.add( settings.workingDirectory + File.separator + ELASTIX_MOVING_IMAGE_NAME );
         args.add( "-p" );
         args.add( settings.parameterFilePath );
         args.add( "-threads" );

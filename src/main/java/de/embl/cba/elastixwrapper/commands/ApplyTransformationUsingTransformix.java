@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.utils.CommandUtils;
 import ij.ImagePlus;
@@ -15,14 +16,18 @@ import java.io.File;
 
 import static de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix.PLUGIN_NAME;
 
-@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>" + PLUGIN_NAME )
+@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Apply transformation to one image file" )
 public class ApplyTransformationUsingTransformix implements Command
 {
-    public static final String PLUGIN_NAME = "Apply transformation";
+    public static final String PLUGIN_NAME = "Apply transformation to one image file";
 
-    @Parameter( label = "Elastix directory" )
+    @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
     public static final String ELASTIX_DIRECTORY = "elastixDirectory";
+
+    @Parameter( label = "Working directory", style = "directory" )
+    public File workingDirectory;
+    public static final String WORKING_DIRECTORY = "workingDirectory";
 
     @Parameter( label = "Image" )
     public File inputImageFile;
@@ -54,7 +59,7 @@ public class ApplyTransformationUsingTransformix implements Command
             if ( settings.resultImageFileType.equals( ElastixSettings.RESULT_IMAGE_FILE_TYPE_MHD ) )
             {
                 MetaImage_Reader reader = new MetaImage_Reader();
-                result = reader.load( settings.workingDirectory, "result.0" + "." + settings.resultImageFileType, false );
+                result = reader.load( settings.workingDirectory, ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME + "." + settings.resultImageFileType, false );
             }
             else
             {
@@ -83,6 +88,7 @@ public class ApplyTransformationUsingTransformix implements Command
         settings.logService = logService;
 
         settings.elastixDirectory = elastixDirectory.toString();
+        settings.workingDirectory = workingDirectory.toString();
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
 
