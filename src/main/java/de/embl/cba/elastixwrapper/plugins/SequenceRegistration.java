@@ -202,7 +202,7 @@ public class SequenceRegistration
 
         public void setParameters()
         {
-            Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenningNo5( settings ), parameterFilePath );
+            Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenning( settings ), parameterFilePath );
         }
 
 

@@ -309,32 +309,32 @@ public class MetaImage_Reader implements PlugIn {
         }
 
 
-        double conversionFactorMillimeterToNanometer = 1000000D;
+        double conversionFactorMillimeterToMicrometer = 1000.0D;
 
-        if (strElementSize != null) {
+        if ( strElementSize != null ) {
 
-            fi.unit = "nanometer";
+            fi.unit = "micrometer";
 
             String[] parts = strElementSize.split("\\s+");
             if (parts.length > 0)
-                fi.pixelWidth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[0]);
+                fi.pixelWidth  = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[0]);
             if (parts.length > 1)
-                fi.pixelHeight = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[1]);
+                fi.pixelHeight = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[1]);
             if (parts.length > 2)
-                fi.pixelDepth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[2]);
+                fi.pixelDepth  = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[2]);
         }
 
-        if (strElementSpacing != null) {
+        if ( strElementSpacing != null ) {
 
-            fi.unit = "nanometer";
+            fi.unit = "micrometer";
 
             String[] parts = strElementSpacing.split("\\s+");
             if (parts.length > 0)
-                fi.pixelWidth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[0]);
+                fi.pixelWidth  = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[0]);
             if (parts.length > 1)
-                fi.pixelHeight = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[1]);
+                fi.pixelHeight = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[1]);
             if (parts.length > 2)
-                fi.pixelDepth  = conversionFactorMillimeterToNanometer * Double.parseDouble(parts[2]);
+                fi.pixelDepth  = conversionFactorMillimeterToMicrometer * Double.parseDouble(parts[2]);
         }
 
 

@@ -17,6 +17,9 @@ public class ElastixSettings
     public static final String SPLINE = "BSpline";
     public static final String RESULT_IMAGE_FILE_TYPE_MHD = "mhd";
 
+    public static final String PARAMETERS_HENNING = "Henning";
+    public static final String PARAMETERS_DETLEV = "Detlev";
+
     // variables
 
     public LogService logService;
@@ -29,6 +32,8 @@ public class ElastixSettings
     public String parameterFilePath;
     public String initialTransformationFilePath;
     public String maskImageFilePath;
+
+    public String elastixParameters;
 
     public String transformationFilePath;
 

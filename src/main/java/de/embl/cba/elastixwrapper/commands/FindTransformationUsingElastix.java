@@ -25,19 +25,29 @@ public class FindTransformationUsingElastix implements Command
 
     @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
-    public static final String ELASTIX_DIRECTORY = "elastixDirectory";
 
     @Parameter( label = "Working directory", style = "directory" )
     public File workingDirectory;
-    public static final String WORKING_DIRECTORY = "workingDirectory";
 
-    @Parameter( label = "Fixed Image" )
+    @Parameter( label = "Fixed image" )
     public File fixedImageFile;
-    public static final String FIXED_IMAGE_FILE = "fixedImageFile";
 
-    @Parameter( label = "Moving Image" )
+    @Parameter( label = "Moving image" )
     public File movingImageFile;
-    public static final String MOVING_IMAGE_FILE = "movingImageFile";
+
+    @Parameter( label = "Elastix parameters", choices =
+            {
+                    ElastixSettings.PARAMETERS_HENNING,
+                    ElastixSettings.PARAMETERS_DETLEV
+            })
+
+    public String elastixParameters;
+
+    @Parameter( label = "Use initial transformation" )
+    public boolean useInitialTransformation;
+
+    @Parameter( label = "Initial transformation", required = false )
+    public File initialTransformationFile;
 
     @Parameter( label = "Transformation type", choices = {
             ElastixSettings.TRANSLATION,
@@ -45,30 +55,24 @@ public class FindTransformationUsingElastix implements Command
             ElastixSettings.AFFINE,
             ElastixSettings.SPLINE } )
     public String transformationType;
-    public static final String TRANSFORMATION_TYPE = "transformationType";
 
     @Parameter( label = "Number of iterations" )
     public int numIterations = 1000;
-    public static final String NUMBER_OF_ITERATIONS = "numIterations";
 
     @Parameter( label = "Number of spatial samples" )
-    public String numSpatialSamples = "3000;3000";
-    public static final String NUMBER_OF_SPATIAL_SAMPLES = "numSpatialSamples";
+    public String numSpatialSamples = "10000;10000";
 
     @Parameter( label = "Resolution pyramid" )
     public String resolutionPyramid = "10,10,10;1,1,1";
-    public static final String RESOLUTION_PYRAMID = "resolutionPyramid";
 
-    @Parameter( label = "Spline grid spacing", required = false )
+    @Parameter( label = "BSpline grid spacing [voxels]", required = false )
     public String bSplineGridSpacing = "50,50,50";
-    public static final String SPLINE_GRID_SPACING = "bSplineGridSpacing";
 
     @Parameter( label = "Output modality", choices = {
             CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES,
             CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE
     } )
     public String outputModality;
-    public static final String OUTPUT_MODALITY = "outputModality";
 
     @Parameter
     public LogService logService;
@@ -92,8 +96,7 @@ public class FindTransformationUsingElastix implements Command
 
     private void handleOutput( ElastixSettings settings )
     {
-        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) ||
-                outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
+        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) || outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
         {
             ImagePlus result, fixed, moving;
 
@@ -109,11 +112,18 @@ public class FindTransformationUsingElastix implements Command
             fixed = IJ.openImage( fixedImageFile.toString() );
             moving = IJ.openImage( movingImageFile.toString() );
 
-            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) )
+            fixed.show();
+            fixed.setTitle( "fixed" );
+
+            moving.show();
+            moving.setTitle( "moving" );
+
+            result.show();
+            result.setTitle( "result" );
+
+            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
             {
-                fixed.show();
-                moving.show();
-                result.show();
+                IJ.run( fixed, "Merge Channels...", "c2=fixed c6=result create" );
             }
 
         }
@@ -128,7 +138,17 @@ public class FindTransformationUsingElastix implements Command
         settings.workingDirectory = workingDirectory.toString();
         settings.elastixDirectory = elastixDirectory.toString();
 
-        settings.initialTransformationFilePath = "";
+        if ( useInitialTransformation )
+        {
+            settings.initialTransformationFilePath = initialTransformationFile.toString();
+        }
+        else
+        {
+            settings.initialTransformationFilePath = "";
+        }
+
+        settings.elastixParameters = elastixParameters;
+
         settings.maskImageFilePath = "";
 
         settings.fixedImageFilePath = fixedImageFile.toString();

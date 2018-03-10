@@ -2,7 +2,6 @@ package de.embl.cba.elastixwrapper.elastix;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +40,7 @@ public class ElastixBinaryRunner
 
         stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
 
-        settings.parameterFilePath = getDefaultParameterFilePath();
-
-        Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenningNo5( settings ), settings.parameterFilePath );
+        setParameters();
 
         setElastixSystemPathForWindowsOS();
 
@@ -52,6 +49,21 @@ public class ElastixBinaryRunner
         Utils.executeCommand( args, settings.logService );
 
     }
+
+    private void setParameters()
+    {
+        settings.parameterFilePath = getDefaultParameterFilePath();
+
+        if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_HENNING ) )
+        {
+            Utils.saveStringListToFile( ElastixTransformationParameters.getParametersHenning( settings ), settings.parameterFilePath );
+        }
+        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DETLEV ) )
+        {
+            Utils.saveStringListToFile( ElastixTransformationParameters.getParametersDetlev( settings ), settings.parameterFilePath );
+        }
+    }
+
     public void runTransformix()
     {
         createOrEmptyWorkingDir();
