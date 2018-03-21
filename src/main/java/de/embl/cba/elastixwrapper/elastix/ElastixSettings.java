@@ -15,6 +15,8 @@ public class ElastixSettings
     public static final String EULER = "Euler";
     public static final String AFFINE = "Affine";
     public static final String SPLINE = "BSpline";
+    public static final String SIMILARITY = "Similarity";
+
     public static final String RESULT_IMAGE_FILE_TYPE_MHD = "mhd";
 
     public static final String PARAMETERS_HENNING = "Henning";

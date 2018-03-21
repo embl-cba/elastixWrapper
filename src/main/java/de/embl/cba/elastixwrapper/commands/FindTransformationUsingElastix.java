@@ -52,6 +52,7 @@ public class FindTransformationUsingElastix implements Command
     @Parameter( label = "Transformation type", choices = {
             ElastixSettings.TRANSLATION,
             ElastixSettings.EULER,
+            ElastixSettings.SIMILARITY,
             ElastixSettings.AFFINE,
             ElastixSettings.SPLINE } )
     public String transformationType;

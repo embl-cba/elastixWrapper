@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UIFindTransformationUsingElastix
+public class GuiFindTransformationUsingElastix
 {
     // Main
     public static void main(final String... args) throws Exception
