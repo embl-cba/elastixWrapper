@@ -58,4 +58,7 @@ public class ElastixSettings
 
     public String transformationType;
 
+    public int numChannels = 1;
+    public double[] channelWeights;
+
 }

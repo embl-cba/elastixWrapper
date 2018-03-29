@@ -80,7 +80,7 @@
     <orderEntry type="library" name="Maven: com.esotericsoftware.minlog:minlog:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.objenesis:objenesis:2.1" level="project" />
     <orderEntry type="library" name="Maven: ch.systems.cisd:jhdf5:14.12.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.ssgpers:java-utils-embl:master-30f858aba1-1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ssgpers:java-utils-embl:master-572a856481-1" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej:2.0.0-rc-64" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej-notebook:0.2.3" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej-ops:0.39.0" level="project" />

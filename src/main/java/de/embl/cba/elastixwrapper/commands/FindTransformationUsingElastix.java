@@ -2,8 +2,6 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
-import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.utils.CommandUtils;
 import ij.IJ;
 import ij.ImagePlus;
@@ -15,8 +13,6 @@ import org.scijava.plugin.Plugin;
 import org.scijava.thread.ThreadService;
 
 import java.io.File;
-
-import static de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix.PLUGIN_NAME;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Register two image files" )
 public class FindTransformationUsingElastix implements Command
@@ -84,7 +80,7 @@ public class FindTransformationUsingElastix implements Command
     public void run()
     {
         ElastixSettings settings = runElastix();
-        handleOutput( settings );
+        showInput( settings );
     }
 
     private ElastixSettings runElastix()
@@ -95,20 +91,11 @@ public class FindTransformationUsingElastix implements Command
         return settings;
     }
 
-    private void handleOutput( ElastixSettings settings )
+    private void showInput( ElastixSettings settings )
     {
         if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) || outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
         {
-            ImagePlus result, fixed, moving;
-
-            if ( settings.resultImageFileType.equals( ElastixSettings.RESULT_IMAGE_FILE_TYPE_MHD ) )
-            {
-                MetaImage_Reader reader = new MetaImage_Reader();
-                result = reader.load( settings.workingDirectory, ElastixUtils.DEFAULT_ELASTIX_OUTPUT_FILENAME + "." + settings.resultImageFileType, false );
-            } else
-            {
-                result = null;
-            }
+            ImagePlus fixed, moving;
 
             fixed = IJ.openImage( fixedImageFile.toString() );
             moving = IJ.openImage( movingImageFile.toString() );
@@ -119,13 +106,11 @@ public class FindTransformationUsingElastix implements Command
             moving.show();
             moving.setTitle( "moving" );
 
-            result.show();
-            result.setTitle( "result" );
-
+            /*
             if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
             {
                 IJ.run( fixed, "Merge Channels...", "c2=fixed c6=result create" );
-            }
+            }*/
 
         }
     }
@@ -161,6 +146,8 @@ public class FindTransformationUsingElastix implements Command
         settings.workers = Prefs.getThreads(); // TODO
         settings.resolutionPyramid = resolutionPyramid;
         settings.bSplineGridSpacing = bSplineGridSpacing;
+
+        settings.channelWeights = new double[]{0.125, 0.125, 0.125, 0.125, 0.125};
 
         return settings;
     }
