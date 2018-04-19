@@ -16,7 +16,7 @@ import java.io.File;
 
 import static de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix.PLUGIN_NAME;
 
-@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Apply transformation to one image file" )
+@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Apply Transformation (transformix)" )
 public class ApplyTransformationUsingTransformix implements Command
 {
     public static final String PLUGIN_NAME = "Apply transformation to one image file";

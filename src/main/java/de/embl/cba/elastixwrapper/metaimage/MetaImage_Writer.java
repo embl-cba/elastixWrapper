@@ -330,6 +330,7 @@ public final class MetaImage_Writer implements PlugIn {
         {
             conversionFactorToMillimeter = 1.0 / 1000D;
         }
+
         return conversionFactorToMillimeter;
     }
 }

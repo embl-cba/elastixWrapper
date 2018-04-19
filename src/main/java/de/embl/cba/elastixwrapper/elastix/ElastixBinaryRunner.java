@@ -25,7 +25,7 @@ public class ElastixBinaryRunner
     public static String ELASTIX_FIXED_IMAGE_NAME = "fixed";
     public static String ELASTIX_MOVING_IMAGE_NAME = "moving";
     public static String MHD_SUFFIX = ".mhd";
-    public static String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed.mhd";
+    public static String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed";
 
     ElastixSettings settings;
 
@@ -48,7 +48,7 @@ public class ElastixBinaryRunner
 
         callTransformix();
 
-        mergeOutputChannels();
+        // mergeOutputChannels();
 
     }
 
@@ -75,7 +75,7 @@ public class ElastixBinaryRunner
         {
             List< String > args = getTransformixCallArgs( movingImageFilenames.get( c - 1 ) );
             Utils.executeCommand( args, settings.logService );
-            String imageTitle = "result-C" + c;
+            String imageTitle = "C" + c + "-result";
             showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, imageTitle );
         }
     }
@@ -141,11 +141,11 @@ public class ElastixBinaryRunner
     {
         createOrEmptyWorkingDir();
 
-        stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
+        ArrayList< String > fileNames = stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
 
         setElastixSystemPathForWindowsOS();
 
-        List< String > args = getTransformixCallArgs( DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
+        List< String > args = getTransformixCallArgs( fileNames.get( 0 ) );
 
         Utils.executeCommand( args, settings.logService );
 
@@ -197,6 +197,8 @@ public class ElastixBinaryRunner
 
     private List< String > getTransformixCallArgs( String filename )
     {
+        int iFile = 0;
+
         List<String> args = new ArrayList<>();
         args.add( createExecutableShellScript( TRANSFORMIX ) );
         args.add( "-out" );

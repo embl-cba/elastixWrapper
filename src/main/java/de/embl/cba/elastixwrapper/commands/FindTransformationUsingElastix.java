@@ -6,6 +6,7 @@ import de.embl.cba.elastixwrapper.utils.CommandUtils;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
+import ij.plugin.ChannelSplitter;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -14,7 +15,7 @@ import org.scijava.thread.ThreadService;
 
 import java.io.File;
 
-@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Register two image files" )
+@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Compute Transformation (elastix)" )
 public class FindTransformationUsingElastix implements Command
 {
     public static final String PLUGIN_NAME = "Register two image files";
@@ -80,7 +81,15 @@ public class FindTransformationUsingElastix implements Command
     public void run()
     {
         ElastixSettings settings = runElastix();
+
         showInput( settings );
+
+
+        IJ.run("Merge Channels...", "c2=C1-fixed c6=C1-result create ignore");
+        IJ.getImage().setTitle( "channel01-fixed-moving" );
+        IJ.run("Merge Channels...", "c2=C2-fixed c6=C2-result create ignore");
+        IJ.getImage().setTitle( "channel02-fixed-moving" );
+
     }
 
     private ElastixSettings runElastix()
@@ -95,16 +104,22 @@ public class FindTransformationUsingElastix implements Command
     {
         if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) || outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
         {
-            ImagePlus fixed, moving;
+            ImagePlus fixed;
 
             fixed = IJ.openImage( fixedImageFile.toString() );
-            moving = IJ.openImage( movingImageFile.toString() );
+            //moving = IJ.openImage( movingImageFile.toString() );
 
             fixed.show();
             fixed.setTitle( "fixed" );
 
-            moving.show();
-            moving.setTitle( "moving" );
+            if ( fixed.getNChannels() > 1 )
+            {
+                IJ.run("Split Channels");
+            }
+
+
+            //moving.show();
+            //moving.setTitle( "moving" );
 
             /*
             if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
