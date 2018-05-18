@@ -52,6 +52,7 @@ public class FindTransformationUsingElastix implements Command
             ElastixSettings.SIMILARITY,
             ElastixSettings.AFFINE,
             ElastixSettings.SPLINE } )
+
     public String transformationType;
 
     @Parameter( label = "Number of iterations" )
@@ -80,19 +81,22 @@ public class FindTransformationUsingElastix implements Command
 
     public void run()
     {
-        ElastixSettings settings = runElastix();
+        ElastixSettings settings = runElastix( );
 
         showInput( settings );
 
+        // TODO: show output
 
+        /*
         IJ.run("Merge Channels...", "c2=C1-fixed c6=C1-result create ignore");
         IJ.getImage().setTitle( "channel01-fixed-moving" );
         IJ.run("Merge Channels...", "c2=C2-fixed c6=C2-result create ignore");
         IJ.getImage().setTitle( "channel02-fixed-moving" );
+        */
 
     }
 
-    private ElastixSettings runElastix()
+    private ElastixSettings runElastix( )
     {
         ElastixSettings settings = getSettingsFromUI();
         ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
@@ -107,26 +111,10 @@ public class FindTransformationUsingElastix implements Command
             ImagePlus fixed;
 
             fixed = IJ.openImage( fixedImageFile.toString() );
-            //moving = IJ.openImage( movingImageFile.toString() );
 
             fixed.show();
+
             fixed.setTitle( "fixed" );
-
-            if ( fixed.getNChannels() > 1 )
-            {
-                IJ.run("Split Channels");
-            }
-
-
-            //moving.show();
-            //moving.setTitle( "moving" );
-
-            /*
-            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
-            {
-                IJ.run( fixed, "Merge Channels...", "c2=fixed c6=result create" );
-            }*/
-
         }
     }
 

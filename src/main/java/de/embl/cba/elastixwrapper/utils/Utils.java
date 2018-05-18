@@ -147,17 +147,40 @@ public abstract class Utils {
 
         logService.info("Command launched:" + cmd);
 
+        int numAttempts = 0;
+        int maxAttempts = 5;
+
+        while ( numAttempts < maxAttempts )
+        {
+            try
+            {
+                pb.redirectErrorStream( true );
+                final Process process = pb.start();
+                InputStream myIS = process.getInputStream();
+                String tempOut = convertStreamToStr( myIS );
+                logService.info( tempOut );
+                break;
+            }
+            catch ( Exception e )
+            {
+                logService.error( "Error occured during system call" );
+                logService.error( "" + e );
+                logService.error( "/nTrying again.../n" );
+                waitOneSecond();
+                numAttempts++;
+            }
+        }
+
+    }
+
+    public static void waitOneSecond()
+    {
         try
         {
-            pb.redirectErrorStream( true );
-            final Process process = pb.start();
-            InputStream myIS = process.getInputStream();
-            String tempOut = convertStreamToStr( myIS );
-            logService.info( tempOut );
-        }
-        catch (Exception e)
+            Thread.sleep( 1000 );
+        } catch ( InterruptedException e )
         {
-            logService.error("" + e);
+            e.printStackTrace();
         }
     }
 }

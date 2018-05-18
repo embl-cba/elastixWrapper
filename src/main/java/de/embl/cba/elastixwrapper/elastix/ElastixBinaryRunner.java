@@ -48,36 +48,46 @@ public class ElastixBinaryRunner
 
         callTransformix();
 
-        // mergeOutputChannels();
+        mergeOutputChannels();
 
     }
 
     private void mergeOutputChannels()
     {
-        String mergeCmd = "";
-
-        for ( int c = 1; c <= settings.numChannels; ++c )
+        if ( settings.numChannels > 1 )
         {
-            mergeCmd += "c" + c + "=result-C" + c + " ";
+            String mergeCmd = "";
+
+            for ( int c = 1; c <= settings.numChannels; ++c )
+            {
+                mergeCmd += "c" + c + "=" + getResultImageTitle( c ) + " ";
+            }
+            mergeCmd += "create";
+
+            IJ.run( "Merge Channels...", mergeCmd );
+
+            IJ.getImage().setTitle( "result" );
         }
-        mergeCmd += "create";
-
-        IJ.run("Merge Channels...", mergeCmd );
-        IJ.getImage().setTitle( "result" );
-
     }
 
     private void callTransformix()
     {
         settings.transformationFilePath = settings.workingDirectory + File.separator + "TransformParameters.0.txt";
 
+        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
+
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
-            List< String > args = getTransformixCallArgs( movingImageFilenames.get( c - 1 ) );
-            Utils.executeCommand( args, settings.logService );
-            String imageTitle = "C" + c + "-result";
+            List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
+            Utils.executeCommand( transformixCallArgs, settings.logService );
+            String imageTitle = getResultImageTitle( c );
             showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, imageTitle );
         }
+    }
+
+    private String getResultImageTitle( int channel )
+    {
+        return "C" + channel + "-result";
     }
 
     private void showMhd( String filename, String imageTitle )
@@ -103,8 +113,6 @@ public class ElastixBinaryRunner
     private void callElastix()
     {
         setParameters();
-
-        setElastixSystemPathForWindowsOS();
 
         List< String > args = getElastixCallArgs();
 
@@ -143,11 +151,11 @@ public class ElastixBinaryRunner
 
         ArrayList< String > fileNames = stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
 
-        setElastixSystemPathForWindowsOS();
+        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
-        List< String > args = getTransformixCallArgs( fileNames.get( 0 ) );
+        List< String > transformixCallArgs = getTransformixCallArgs( fileNames.get( 0 ), executableShellScript );
 
-        Utils.executeCommand( args, settings.logService );
+        Utils.executeCommand( transformixCallArgs, settings.logService );
 
     }
 
@@ -195,20 +203,20 @@ public class ElastixBinaryRunner
         return filenames;
     }
 
-    private List< String > getTransformixCallArgs( String filename )
+    private List< String > getTransformixCallArgs( String filenameMoving, String executableShellScript )
     {
-        int iFile = 0;
 
         List<String> args = new ArrayList<>();
-        args.add( createExecutableShellScript( TRANSFORMIX ) );
+        args.add( executableShellScript );
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-in" );
-        args.add( settings.workingDirectory + File.separator + filename );
+        args.add( settings.workingDirectory + File.separator + filenameMoving );
         args.add( "-tp" );
         args.add( settings.transformationFilePath );
         args.add( "-threads" );
         args.add( "" + settings.workers );
+
         return args;
     }
 
@@ -264,36 +272,15 @@ public class ElastixBinaryRunner
         }
     }
 
-    private void setElastixSystemPathForWindowsOS()
-    {
-        if ( isWindows() )
-        {
-            ProcessBuilder pb = new ProcessBuilder();
-            Map<String, String> env = pb.environment();
-            env.put( "PATH", settings.elastixDirectory + ":$PATH");
-        }
-    }
-
     private String createExecutableShellScript( String elastixOrTransformix )
     {
 
         if ( isMac() || isLinux() )
         {
             String executablePath = settings.workingDirectory + File.separator + "run_" + elastixOrTransformix + ".sh";
-            String shellScriptText = "";
-            shellScriptText += "#!/bin/bash\n";
-            shellScriptText += "ELASTIX_PATH=" + settings.elastixDirectory + "\n";
 
-            if ( isMac() )
-            {
-                shellScriptText += "export DYLD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
-            }
-            else if ( isLinux() )
-            {
-                shellScriptText += "export LD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
-            }
+            String shellScriptText = getScriptText( elastixOrTransformix );
 
-            shellScriptText += "$ELASTIX_PATH/bin/" + elastixOrTransformix +" $@\n";
             saveStringToFile( shellScriptText, executablePath );
 
             makeExecutable( executablePath );
@@ -303,6 +290,7 @@ public class ElastixBinaryRunner
         }
         else if ( isWindows() )
         {
+            setElastixSystemPathForWindowsOS();
             return settings.elastixDirectory + elastixOrTransformix + ".exe";
         }
         else
@@ -314,14 +302,47 @@ public class ElastixBinaryRunner
 
     }
 
+    private String getScriptText( String elastixOrTransformix )
+    {
+        String shellScriptText = "";
+        shellScriptText += "#!/bin/bash\n";
+        shellScriptText += "ELASTIX_PATH=" + settings.elastixDirectory + "\n";
+
+        if ( isMac() )
+        {
+            shellScriptText += "export DYLD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
+        }
+        else if ( isLinux() )
+        {
+            shellScriptText += "export LD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
+        }
+
+        shellScriptText += "$ELASTIX_PATH/bin/" + elastixOrTransformix +" $@\n";
+        return shellScriptText;
+    }
+
+    private void setElastixSystemPathForWindowsOS()
+    {
+        ProcessBuilder pb = new ProcessBuilder();
+        Map<String, String> env = pb.environment();
+        env.put( "PATH", settings.elastixDirectory + ":$PATH");
+    }
+
     private void makeExecutable( String executablePath )
     {
         try
         {
-            Runtime.getRuntime().exec("chmod u+x " + executablePath );
+            Utils.waitOneSecond();
+
+            Runtime.getRuntime().exec("chmod +x " + executablePath );
+
+            Utils.waitOneSecond();
         }
         catch ( IOException e )
         {
+
+            IJ.log( "Could not make file executable: " + executablePath );
+
             e.printStackTrace();
         }
     }
@@ -335,6 +356,7 @@ public class ElastixBinaryRunner
     private static void createOrEmptyDir( String directoryString )
     {
         File directory = new File( directoryString );
+
         if (! directory.exists() )
         {
             directory.mkdir();
@@ -342,8 +364,12 @@ public class ElastixBinaryRunner
         else
         {
             for( File file : directory.listFiles() )
+            {
                 if ( !file.isDirectory() )
+                {
                     file.delete();
+                }
+            }
         }
     }
 
