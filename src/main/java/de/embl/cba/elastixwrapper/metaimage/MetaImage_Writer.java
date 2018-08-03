@@ -323,7 +323,7 @@ public final class MetaImage_Writer implements PlugIn {
     private double getConversionFactorToMillimeter( String unit )
     {
         double conversionFactorToMillimeter = 1.0;
-        
+
         if ( unit.equals( "nm" ) ||  unit.equals( "nanometer" ) || unit.equals( "nanometers" ) )
         {
             conversionFactorToMillimeter = 1.0 / 1000000D;

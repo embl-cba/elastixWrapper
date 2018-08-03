@@ -88,15 +88,14 @@ public class FindTransformationUsingElastixCommand implements Command
 
     public void run()
     {
-        ElastixSettings settings = runElastix( );
+        runElastix( );
     }
 
-    private ElastixSettings runElastix( )
+    private void runElastix( )
     {
         ElastixSettings settings = getSettingsFromUI();
         ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
         elastixBinaryRunner.runElastix();
-        return settings;
     }
 
 
