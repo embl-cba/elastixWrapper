@@ -67,7 +67,7 @@ public class ElastixTransformationParameters
     }
 
 
-    public List<String> getDetlevStyle( )
+    public List<String> getDetlevStyleParameters( )
     {
         parameters = new ArrayList<>();
 
@@ -75,42 +75,33 @@ public class ElastixTransformationParameters
         {
             addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
             addChannelWeights();
-        }
-        else
+        } else
         {
-            parameters.add("(Registration \"MultiResolutionRegistration\")");
+            parameters.add( "(Registration \"MultiResolutionRegistration\")" );
         }
 
         addParameter( "CheckNumberOfSamples", "false", false, false );
 
-        parameters.add("(Transform \"" + settings.transformationType + "Transform\")");
-        parameters.add("(MaximumNumberOfIterations " + settings.iterations + ")");
+        parameters.add( "(Transform \"" + settings.transformationType + "Transform\")" );
+        parameters.add( "(MaximumNumberOfIterations " + settings.iterations + ")" );
 
         // Pyramid
-        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length + ")");
-        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ").replace(","," ")+")");
+        parameters.add( "(NumberOfResolutions " + settings.resolutionPyramid.split( ";" ).length + ")" );
+        parameters.add( "(ImagePyramidSchedule " + settings.resolutionPyramid.replace( ";", " " ).replace( ",", " " ) + ")" );
         addParameter( "FixedImagePyramid", "FixedSmoothingImagePyramid", true, false );
         addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
-        parameters.add("(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace(",", " ") + " )");
+        parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
 
         // Initialisation
-        parameters.add("(AutomaticTransformInitialization \"true\")");
-        parameters.add("(AutomaticTransformInitializationMethod \"CenterOfGravity\")");
+        parameters.add( "(AutomaticTransformInitialization \"true\")" );
+        parameters.add( "(AutomaticTransformInitializationMethod \"CenterOfGravity\")" );
 
         // Samples
-        parameters.add("(NumberOfSpatialSamples " + settings.spatialSamples.replace(";"," ") +")");
+        parameters.add( "(NumberOfSpatialSamples " + settings.spatialSamples.replace( ";", " " ) + ")" );
         addParameter( "ImageSampler", "RandomCoordinate", true, false );
-        parameters.add("(NewSamplesEveryIteration \"true\")");
+        parameters.add( "(NewSamplesEveryIteration \"true\")" );
 
-        if ( settings.bitDepth == 8 )
-            parameters.add("(ResultImagePixelType \"unsigned char\")");
-        else if ( settings.bitDepth == 16 )
-            parameters.add("(ResultImagePixelType \"unsigned short\")");
-        else
-        {
-            settings.logService.error("Bit depth " + settings.bitDepth + " not supported.");
-            return null;
-        }
+        if ( setResultImageBitDepth() ) return null;
 
         parameters.add("(DefaultPixelValue 0)");
         parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
@@ -143,8 +134,7 @@ public class ElastixTransformationParameters
         return( parameters );
     }
 
-
-    public List<String> getHenningStyle()
+    public List<String> getHenningStyleParameters()
     {
         parameters = new ArrayList<>();
 
@@ -172,15 +162,7 @@ public class ElastixTransformationParameters
         imageSampler += ")";
         parameters.add(imageSampler);
 
-        if ( settings.bitDepth == 8 )
-            parameters.add("(ResultImagePixelType \"unsigned char\")");
-        else if ( settings.bitDepth == 16 )
-            parameters.add("(ResultImagePixelType \"unsigned short\")");
-        else
-        {
-            settings.logService.error("Bit depth " + settings.bitDepth + " not supported.");
-            return null;
-        }
+        if ( setResultImageBitDepth() ) return null;
 
         parameters.add("(DefaultPixelValue 0)");
         parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
@@ -209,6 +191,91 @@ public class ElastixTransformationParameters
         parameters.add("(FinalBSplineInterpolationOrder 3)");
         parameters.add("(WriteResultImage \"true\")");
         parameters.add("(ResultImageFormat \"" + settings.resultImageFileType + "\")");
+
+        return( parameters );
+    }
+
+    private boolean setResultImageBitDepth()
+    {
+        if ( settings.movingImageBitDepth == 8 )
+        {
+            parameters.add( "(ResultImagePixelType \"unsigned char\")" );
+        }
+        else if ( settings.movingImageBitDepth == 16 )
+        {
+            parameters.add( "(ResultImagePixelType \"unsigned short\")" );
+        }
+        else
+        {
+            settings.logService.error("Bit depth " + settings.movingImageBitDepth + " not supported.");
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> getGiuliaMizzonStyleParameters()
+    {
+        parameters = new ArrayList<>();
+
+        if ( settings.numChannels > 1 )
+        {
+            addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
+            addChannelWeights();
+        }
+        else
+        {
+            parameters.add("(Registration \"MultiResolutionRegistration\")");
+        }
+
+        addParameter( "CheckNumberOfSamples", "false", false, false );
+
+        parameters.add("(Transform \"" + settings.transformationType + "Transform\")");
+        parameters.add("(MaximumNumberOfIterations " + settings.iterations + ")");
+
+        // Pyramid
+        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length + ")");
+        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ").replace(","," ")+")");
+
+        // TODO: different pyramids for fixed and moving due to different resolution?
+        // or re-save fluorescence image with same resolution as fixed image?
+        addParameter( "FixedImagePyramid", "FixedSmoothingImagePyramid", true, false );
+        addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
+        parameters.add("(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace(",", " ") + " )");
+
+        // Samples
+        parameters.add("(NumberOfSpatialSamples " + settings.spatialSamples.replace(";"," ") +")");
+        addParameter( "ImageSampler", "RandomCoordinate", true, false );
+        parameters.add("(NewSamplesEveryIteration \"true\")");
+
+        if ( setResultImageBitDepth() ) return null;
+
+        parameters.add("(DefaultPixelValue 0)");
+        parameters.add("(Optimizer \"AdaptiveStochasticGradientDescent\")");
+
+        parameters.add("(WriteTransformParametersEachIteration \"false\")");
+        parameters.add("(WriteTransformParametersEachResolution \"false\")");
+        parameters.add("(WriteResultImageAfterEachResolution \"false\")");
+        parameters.add("(WritePyramidImagesAfterEachResolution \"false\")");
+        parameters.add("(FixedInternalImagePixelType \"float\")");
+        parameters.add("(MovingInternalImagePixelType \"float\")");
+        parameters.add("(UseDirectionCosines \"false\")");
+
+        addParameter( "Interpolator", "LinearInterpolator", true, false );
+        parameters.add("(ResampleInterpolator \"FinalLinearInterpolator\")");
+        parameters.add("(AutomaticParameterEstimation \"true\")");
+        parameters.add("(AutomaticScalesEstimation \"true\")");
+
+        // Metric
+        addParameter( "Metric", "AdvancedMattesMutualInformation", true, false );
+        parameters.add("(NumberOfHistogramBins 32)"); // needed for AdvancedMattesMutualInformation
+
+        parameters.add("(HowToCombineTransforms \"Compose\")");
+        parameters.add("(ErodeMask \"false\")");
+
+        //parameters.add("(BSplineInterpolationOrder 1)");
+        //parameters.add("(FinalBSplineInterpolationOrder 3)");
+        //parameters.add("(WriteResultImage \"true\")");
+        //parameters.add("(ResultImageFormat \"" + settings.resultImageFileType + "\")");
 
         return( parameters );
     }

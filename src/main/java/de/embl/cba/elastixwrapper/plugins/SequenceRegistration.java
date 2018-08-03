@@ -203,7 +203,7 @@ public class SequenceRegistration
         public void setParameters()
         {
             ElastixTransformationParameters parameters = new ElastixTransformationParameters( settings );
-            Utils.saveStringListToFile( parameters.getHenningStyle(), parameterFilePath );
+            Utils.saveStringListToFile( parameters.getHenningStyleParameters(), parameterFilePath );
         }
 
         public void saveFrame(String folder, String file, int t, double background)

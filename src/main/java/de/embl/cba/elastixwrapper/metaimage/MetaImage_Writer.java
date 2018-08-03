@@ -241,9 +241,11 @@ public final class MetaImage_Writer implements PlugIn {
     }
 
 
-    private boolean writeHeader(ImagePlus imp, String path, String dataFile)
+    private boolean writeHeader( ImagePlus imp, String path, String dataFile)
             throws IOException
     {
+        
+        
         FileInfo fi = imp.getFileInfo();
         String numChannels = "1", type = "MET_NONE";
 
@@ -286,16 +288,17 @@ public final class MetaImage_Writer implements PlugIn {
 
         double conversionFactorToMillimeter = getConversionFactorToMillimeter( fi.unit );
 
-        if (ndims == 3) {
+        if (ndims == 3)
+        {
             stream.println("DimSize = " + fi.width + " " + fi.height + " " + fi.nImages);
-
 
             stream.println("ElementSize = "
                     + conversionFactorToMillimeter * fi.pixelWidth
                     + " " + conversionFactorToMillimeter * fi.pixelHeight
                     + " " + conversionFactorToMillimeter * fi.pixelDepth);
         }
-        else {
+        else
+            {
             stream.println("DimSize = " + fi.width + " " + fi.height);
             stream.println("ElementSize = "
                     + conversionFactorToMillimeter * fi.pixelWidth
@@ -320,13 +323,13 @@ public final class MetaImage_Writer implements PlugIn {
     private double getConversionFactorToMillimeter( String unit )
     {
         double conversionFactorToMillimeter = 1.0;
-
-        if ( unit.equals( "nm" ) )
+        
+        if ( unit.equals( "nm" ) ||  unit.equals( "nanometer" ) || unit.equals( "nanometers" ) )
         {
             conversionFactorToMillimeter = 1.0 / 1000000D;
         }
 
-        if ( unit.equals( "um" ) || unit.equals( "micrometer" ) || unit.equals( "microns" ) || unit.equals( "micron" )  )
+        if (  unit.equals( "\u00B5m" ) || unit.equals( "um" ) || unit.equals( "micrometer" ) || unit.equals( "micrometers" ) || unit.equals( "microns" ) || unit.equals( "micron" )  )
         {
             conversionFactorToMillimeter = 1.0 / 1000D;
         }

@@ -24,6 +24,8 @@ public class ElastixBinaryRunner
     public static String TRANSFORMIX = "transformix";
     public static String ELASTIX_FIXED_IMAGE_NAME = "fixed";
     public static String ELASTIX_MOVING_IMAGE_NAME = "moving";
+    public static String ELASTIX_MASK_IMAGE_NAME = "mask";
+
     public static String MHD_SUFFIX = ".mhd";
     public static String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed";
 
@@ -31,6 +33,8 @@ public class ElastixBinaryRunner
 
     private ArrayList< String > fixedImageFilenames;
     private ArrayList< String > movingImageFilenames;
+
+    private int movingImageBitDepth;
 
     public ElastixBinaryRunner( ElastixSettings settings )
     {
@@ -48,20 +52,45 @@ public class ElastixBinaryRunner
 
         callTransformix();
 
-        mergeOutputChannels();
+        showTransformedImages();
+
+        showInputImage();
+
+        showTransformationFile();
 
     }
 
-    private void mergeOutputChannels()
+    private void showTransformationFile()
     {
+        IJ.open( settings.workingDirectory + "TransformParameters.0.txt");
+    }
+
+
+    private void showInputImage( )
+    {
+        ImagePlus fixed;
+
+        fixed = IJ.openImage( settings.fixedImageFilePath );
+
+        fixed.show();
+
+        fixed.setTitle( "fixed" );
+    }
+
+    private void mergeAndShowOutputChannels()
+    {
+
+        // TODO: does not work
+
         if ( settings.numChannels > 1 )
         {
             String mergeCmd = "";
 
             for ( int c = 1; c <= settings.numChannels; ++c )
             {
-                mergeCmd += "c" + c + "=" + getResultImageTitle( c ) + " ";
+                mergeCmd += "c" + c + "=" + createTransformedImageTitle( c ) + " ";
             }
+
             mergeCmd += "create";
 
             IJ.run( "Merge Channels...", mergeCmd );
@@ -80,14 +109,20 @@ public class ElastixBinaryRunner
         {
             List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
             Utils.executeCommand( transformixCallArgs, settings.logService );
-            String imageTitle = getResultImageTitle( c );
-            showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, imageTitle );
         }
     }
 
-    private String getResultImageTitle( int channel )
+    private void showTransformedImages( )
     {
-        return "C" + channel + "-result";
+        for ( int c = 1; c <= settings.numChannels; ++c )
+        {
+            showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, createTransformedImageTitle( c ) );
+        }
+    }
+
+    private String createTransformedImageTitle( int channel )
+    {
+        return "transformed-channel_" + channel;
     }
 
     private void showMhd( String filename, String imageTitle )
@@ -104,9 +139,15 @@ public class ElastixBinaryRunner
 
         movingImageFilenames = stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
 
+        if ( ! settings.maskImageFilePath.equals( "" ) )
+        {
+            stageImageAsMhd( settings.maskImageFilePath, ELASTIX_MASK_IMAGE_NAME );
+        }
+
         if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) ) return true;
 
         settings.numChannels = fixedImageFilenames.size();
+
         return false;
     }
 
@@ -131,18 +172,25 @@ public class ElastixBinaryRunner
 
     private void setParameters()
     {
+        settings.movingImageBitDepth = movingImageBitDepth;
         settings.parameterFilePath = getDefaultParameterFilePath();
 
         ElastixTransformationParameters parameters = new ElastixTransformationParameters( settings );
 
         if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_HENNING ) )
         {
-            Utils.saveStringListToFile( parameters.getHenningStyle( ), settings.parameterFilePath );
+            Utils.saveStringListToFile( parameters.getHenningStyleParameters( ), settings.parameterFilePath );
+        }
+        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_GIULIA ) )
+        {
+            Utils.saveStringListToFile( parameters.getGiuliaMizzonStyleParameters(), settings.parameterFilePath );
         }
         else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DETLEV ) )
         {
-            Utils.saveStringListToFile( parameters.getDetlevStyle( ), settings.parameterFilePath );
+            Utils.saveStringListToFile( parameters.getDetlevStyleParameters( ), settings.parameterFilePath );
         }
+
+
     }
 
     public void runTransformix()
@@ -176,6 +224,18 @@ public class ElastixBinaryRunner
     {
         ImagePlus imp = IJ.openImage( imagePath );
 
+        if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
+        {
+            movingImageBitDepth = imp.getBitDepth();
+        }
+
+        if ( filename.equals( ELASTIX_MASK_IMAGE_NAME ) )
+        {
+            IJ.setRawThreshold( imp, 0.5, Double.MAX_VALUE, null );
+            IJ.run( imp, "Convert to Mask", "");
+            IJ.run( imp, "Divide...", "value=255");
+        }
+
         if ( imp.getNChannels() > 1 )
         {
             return stageMultiChannelImagePlusAsMhd( imp, filename );
@@ -186,7 +246,6 @@ public class ElastixBinaryRunner
             filenames.add( stageImagePlusAsMhd( imp, filename ) );
             return filenames;
         }
-
     }
 
     private ArrayList< String > stageMultiChannelImagePlusAsMhd( ImagePlus imp, String filename )
@@ -243,7 +302,7 @@ public class ElastixBinaryRunner
         if ( ! settings.maskImageFilePath.equals( "" ) )
         {
             args.add( "-fMask" );
-            args.add( settings.maskImageFilePath );
+            args.add( settings.workingDirectory + ELASTIX_MASK_IMAGE_NAME + MHD_SUFFIX );
         }
 
         return args;

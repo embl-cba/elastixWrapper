@@ -16,7 +16,7 @@ import org.scijava.thread.ThreadService;
 import java.io.File;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Compute Transformation (elastix)" )
-public class FindTransformationUsingElastix implements Command
+public class FindTransformationUsingElastixCommand implements Command
 {
     public static final String PLUGIN_NAME = "Register two image files";
 
@@ -35,15 +35,22 @@ public class FindTransformationUsingElastix implements Command
     @Parameter( label = "Elastix parameters", choices =
             {
                     ElastixSettings.PARAMETERS_HENNING,
-                    ElastixSettings.PARAMETERS_DETLEV
+                    ElastixSettings.PARAMETERS_DETLEV,
+                    ElastixSettings.PARAMETERS_GIULIA
             })
 
     public String elastixParameters;
 
+    @Parameter( label = "Use fixed image mask" )
+    public boolean useMask;
+
+    @Parameter( label = "Fixed image mask file", required = false )
+    public File maskFile;
+
     @Parameter( label = "Use initial transformation" )
     public boolean useInitialTransformation;
 
-    @Parameter( label = "Initial transformation", required = false )
+    @Parameter( label = "Initial transformation file", required = false )
     public File initialTransformationFile;
 
     @Parameter( label = "Transformation type", choices = {
@@ -67,11 +74,11 @@ public class FindTransformationUsingElastix implements Command
     @Parameter( label = "BSpline grid spacing [voxels]", required = false )
     public String bSplineGridSpacing = "50,50,50";
 
-    @Parameter( label = "Output modality", choices = {
-            CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES,
-            CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE
-    } )
-    public String outputModality;
+//    @Parameter( label = "Output modality", choices = {
+//            CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES,
+//            CommandUtils.OUTPUT_MODALITY_DO_NOT_SHOW_IMAGES
+//    } )
+//    public String outputModality;
 
     @Parameter
     public LogService logService;
@@ -82,18 +89,6 @@ public class FindTransformationUsingElastix implements Command
     public void run()
     {
         ElastixSettings settings = runElastix( );
-
-        showInput( settings );
-
-        // TODO: show output
-
-        /*
-        IJ.run("Merge Channels...", "c2=C1-fixed c6=C1-result create ignore");
-        IJ.getImage().setTitle( "channel01-fixed-moving" );
-        IJ.run("Merge Channels...", "c2=C2-fixed c6=C2-result create ignore");
-        IJ.getImage().setTitle( "channel02-fixed-moving" );
-        */
-
     }
 
     private ElastixSettings runElastix( )
@@ -104,19 +99,6 @@ public class FindTransformationUsingElastix implements Command
         return settings;
     }
 
-    private void showInput( ElastixSettings settings )
-    {
-        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES ) || outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE ) )
-        {
-            ImagePlus fixed;
-
-            fixed = IJ.openImage( fixedImageFile.toString() );
-
-            fixed.show();
-
-            fixed.setTitle( "fixed" );
-        }
-    }
 
     private ElastixSettings getSettingsFromUI()
     {
@@ -125,6 +107,12 @@ public class FindTransformationUsingElastix implements Command
         settings.logService = logService;
 
         settings.workingDirectory = workingDirectory.toString();
+
+        if ( ! settings.workingDirectory.endsWith( "/" ) )
+        {
+            settings.workingDirectory += "/";
+        }
+
         settings.elastixDirectory = elastixDirectory.toString();
 
         if ( useInitialTransformation )
@@ -136,9 +124,18 @@ public class FindTransformationUsingElastix implements Command
             settings.initialTransformationFilePath = "";
         }
 
+//        settings.outputModality = outputModality;
+
         settings.elastixParameters = elastixParameters;
 
-        settings.maskImageFilePath = "";
+        if ( useMask )
+        {
+            settings.maskImageFilePath = maskFile.toString();
+        }
+        else
+        {
+            settings.maskImageFilePath = "";
+        }
 
         settings.fixedImageFilePath = fixedImageFile.toString();
         settings.movingImageFilePath = movingImageFile.toString();

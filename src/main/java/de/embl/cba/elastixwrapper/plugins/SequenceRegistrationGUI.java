@@ -77,7 +77,7 @@ public class SequenceRegistrationGUI extends JFrame implements ActionListener, F
             settings.bSplineGridSpacing = imp.getNSlices() > 1 ?
                     ""+bsgsX+" "+bsgsY+" "+bsgsZ : ""+bsgsX+" "+bsgsY;
 
-            settings.bitDepth = imp.getBitDepth();
+            settings.movingImageBitDepth = imp.getBitDepth();
 
             settings.regRange[0] = 1;
             settings.regRange[1] = imp.getNFrames();

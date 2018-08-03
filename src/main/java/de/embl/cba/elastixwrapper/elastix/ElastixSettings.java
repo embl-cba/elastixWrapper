@@ -21,6 +21,8 @@ public class ElastixSettings
 
     public static final String PARAMETERS_HENNING = "Henning";
     public static final String PARAMETERS_DETLEV = "Detlev";
+    public static final String PARAMETERS_GIULIA = "Giulia";
+
 
     // variables
 
@@ -34,6 +36,8 @@ public class ElastixSettings
     public String parameterFilePath;
     public String initialTransformationFilePath;
     public String maskImageFilePath;
+
+    public String outputModality;
 
     public String elastixParameters;
 
@@ -52,7 +56,7 @@ public class ElastixSettings
     public String spatialSamples = "100; 100";
     public int workers = Runtime.getRuntime().availableProcessors();
     public String resolutionPyramid = "10 10; 2 2";
-    public int bitDepth = 8;
+    public int movingImageBitDepth = 8;
     public Roi roi = null;
     public String bSplineGridSpacing = "30 30";
 
