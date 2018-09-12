@@ -274,10 +274,16 @@ public final class MetaImage_Writer implements PlugIn {
         int ndims = (imp.getStackSize() > 1) ? 3 : 2;
 
         stream.println("ObjectType = Image");
+
         if (ndims == 3)
-            stream.println("NDims = 3");
+        {
+            stream.println( "NDims = 3" );
+        }
         else
-            stream.println("NDims = 2");
+        {
+            stream.println( "NDims = 2" );
+        }
+
         stream.println("BinaryData = True");
 
         if (fi.intelByteOrder)
@@ -304,8 +310,7 @@ public final class MetaImage_Writer implements PlugIn {
                     + conversionFactorToMillimeter * fi.pixelWidth
                     + " " +  conversionFactorToMillimeter * fi.pixelHeight);
         }
-        if (numChannels != "1")
-            stream.println("ElementNumberOfChannels = " + numChannels);
+        if (numChannels != "1") stream.println("ElementNumberOfChannels = " + numChannels);
         stream.println("ElementType = " + type);
 
 
@@ -324,14 +329,16 @@ public final class MetaImage_Writer implements PlugIn {
     {
         double conversionFactorToMillimeter = 1.0;
 
-        if ( unit.equals( "nm" ) ||  unit.equals( "nanometer" ) || unit.equals( "nanometers" ) )
+        if ( unit != null )
         {
-            conversionFactorToMillimeter = 1.0 / 1000000D;
-        }
-
-        if (  unit.equals( "\u00B5m" ) || unit.equals( "um" ) || unit.equals( "micrometer" ) || unit.equals( "micrometers" ) || unit.equals( "microns" ) || unit.equals( "micron" )  )
-        {
-            conversionFactorToMillimeter = 1.0 / 1000D;
+            if ( unit.equals( "nm" ) || unit.equals( "nanometer" ) || unit.equals( "nanometers" ) )
+            {
+                conversionFactorToMillimeter = 1.0 / 1000000D;
+            }
+            else if ( unit.equals( "\u00B5m" ) || unit.equals( "um" ) || unit.equals( "micrometer" ) || unit.equals( "micrometers" ) || unit.equals( "microns" ) || unit.equals( "micron" ) )
+            {
+                conversionFactorToMillimeter = 1.0 / 1000D;
+            }
         }
 
         return conversionFactorToMillimeter;

@@ -302,7 +302,7 @@ public class ElastixBinaryRunner
         if ( ! settings.maskImageFilePath.equals( "" ) )
         {
             args.add( "-fMask" );
-            args.add( settings.workingDirectory + ELASTIX_MASK_IMAGE_NAME + MHD_SUFFIX );
+            args.add( settings.workingDirectory + File.separator +  ELASTIX_MASK_IMAGE_NAME + MHD_SUFFIX );
         }
 
         return args;
@@ -350,12 +350,19 @@ public class ElastixBinaryRunner
         else if ( isWindows() )
         {
             setElastixSystemPathForWindowsOS();
-            return settings.elastixDirectory + elastixOrTransformix + ".exe";
+
+            String binaryPath = settings.elastixDirectory + File.separator + elastixOrTransformix + ".exe";
+
+            if( ! new File( binaryPath ).exists() )
+            {
+                IJ.showMessage( "Elastix file does not exist: " +  binaryPath );
+            }
+
+            return binaryPath;
         }
         else
         {
             settings.logService.error( "Could not detect operating system!" );
-
             return null;
         }
 
