@@ -2,11 +2,7 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.utils.CommandUtils;
-import ij.IJ;
-import ij.ImagePlus;
 import ij.Prefs;
-import ij.plugin.ChannelSplitter;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -95,7 +91,7 @@ public class FindTransformationUsingElastixCommand implements Command
     {
         ElastixSettings settings = getSettingsFromUI();
         ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
-        elastixBinaryRunner.runElastix();
+        elastixBinaryRunner.run();
     }
 
 
@@ -146,7 +142,8 @@ public class FindTransformationUsingElastixCommand implements Command
         settings.resolutionPyramid = resolutionPyramid;
         settings.bSplineGridSpacing = bSplineGridSpacing;
 
-        settings.channelWeights = new double[]{0.125, 0.125, 0.125, 0.125, 0.125};
+        // TODO: make this a UI
+        settings.channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
 
         return settings;
     }

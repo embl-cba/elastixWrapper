@@ -11,8 +11,11 @@ import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
+import ij.Prefs;
+import ij.plugin.ChannelSplitter;
 import ij.plugin.Duplicator;
 
+import static de.embl.cba.elastixwrapper.utils.Utils.delimitedStringToIntegerArray;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.isLinux;
 import static org.scijava.util.PlatformUtils.isMac;
@@ -33,6 +36,8 @@ public class ElastixBinaryRunner
 
     private ArrayList< String > fixedImageFilenames;
     private ArrayList< String > movingImageFilenames;
+    private ArrayList< String > maskImageFilenames;
+
 
     private int movingImageBitDepth;
 
@@ -41,18 +46,16 @@ public class ElastixBinaryRunner
         this.settings = settings;
     }
 
-    public void runElastix()
+    public void run()
     {
 
         createOrEmptyWorkingDir();
 
-        if ( stageImages() ) return;
+        if ( ! stageImages() ) return;
 
         callElastix();
 
         callTransformix();
-
-        showTransformedImages();
 
         showInputImage();
 
@@ -75,6 +78,8 @@ public class ElastixBinaryRunner
         fixed.show();
 
         fixed.setTitle( "fixed" );
+
+        IJ.run("Split Channels" );
     }
 
     private void mergeAndShowOutputChannels()
@@ -109,6 +114,7 @@ public class ElastixBinaryRunner
         {
             List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
             Utils.executeCommand( transformixCallArgs, settings.logService );
+            showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, createTransformedImageTitle( c ) );
         }
     }
 
@@ -122,7 +128,7 @@ public class ElastixBinaryRunner
 
     private String createTransformedImageTitle( int channel )
     {
-        return "transformed-channel_" + channel;
+        return "C" + channel + "-moving-aligned";
     }
 
     private void showMhd( String filename, String imageTitle )
@@ -141,14 +147,14 @@ public class ElastixBinaryRunner
 
         if ( ! settings.maskImageFilePath.equals( "" ) )
         {
-            stageImageAsMhd( settings.maskImageFilePath, ELASTIX_MASK_IMAGE_NAME );
+            maskImageFilenames = stageImageAsMhd( settings.maskImageFilePath, ELASTIX_MASK_IMAGE_NAME );
         }
 
-        if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) ) return true;
+        if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) ) return false;
 
         settings.numChannels = fixedImageFilenames.size();
 
-        return false;
+        return true;
     }
 
     private void callElastix()
@@ -229,13 +235,6 @@ public class ElastixBinaryRunner
             movingImageBitDepth = imp.getBitDepth();
         }
 
-        if ( filename.equals( ELASTIX_MASK_IMAGE_NAME ) )
-        {
-            IJ.setRawThreshold( imp, 0.5, Double.MAX_VALUE, null );
-            IJ.run( imp, "Convert to Mask", "");
-            IJ.run( imp, "Divide...", "value=255");
-        }
-
         if ( imp.getNChannels() > 1 )
         {
             return stageMultiChannelImagePlusAsMhd( imp, filename );
@@ -248,6 +247,15 @@ public class ElastixBinaryRunner
         }
     }
 
+    public static void convertToMask( ImagePlus imp )
+    {
+        IJ.setRawThreshold( imp, 0.5, Double.MAX_VALUE, null );
+        Prefs.blackBackground = true;
+        IJ.run( imp, "Convert to Mask", "method=Default background=Dark black" );
+        IJ.run( imp, "Divide...", "value=255 stack" );
+        IJ.wait( 100 );
+    }
+
     private ArrayList< String > stageMultiChannelImagePlusAsMhd( ImagePlus imp, String filename )
     {
         ArrayList< String > filenames = new ArrayList<>( );
@@ -255,7 +263,14 @@ public class ElastixBinaryRunner
         for ( int channel = 1; channel <= imp.getNChannels(); ++channel )
         {
             Duplicator duplicator = new Duplicator();
+
             ImagePlus channelImage = duplicator.run( imp, channel, channel, 1 ,imp.getNSlices(), 1, 1 );
+
+            if ( filename.equals( ELASTIX_MASK_IMAGE_NAME ) )
+            {
+                convertToMask( channelImage );
+            }
+
             filenames.add( stageImagePlusAsMhd( channelImage, filename + "-C" + channel ) );
         }
 
@@ -286,7 +301,7 @@ public class ElastixBinaryRunner
         args.add( "-out" );
         args.add( settings.workingDirectory );
 
-        addFixedAndMovingImages( args );
+        addFixedAndMovingAndMaskImages( args );
 
         args.add( "-p" );
         args.add( settings.parameterFilePath );
@@ -299,19 +314,19 @@ public class ElastixBinaryRunner
             args.add( settings.initialTransformationFilePath );
         }
 
-        if ( ! settings.maskImageFilePath.equals( "" ) )
-        {
-            args.add( "-fMask" );
-            args.add( settings.workingDirectory + File.separator +  ELASTIX_MASK_IMAGE_NAME + MHD_SUFFIX );
-        }
-
         return args;
     }
 
-    private void addFixedAndMovingImages( List< String > args )
+    private void addFixedAndMovingAndMaskImages( List< String > args )
     {
         addImages( args, "f", fixedImageFilenames );
         addImages( args, "m", movingImageFilenames );
+
+        if ( maskImageFilenames != null )
+        {
+            addImages( args, "fMask", maskImageFilenames );
+        }
+
     }
 
     private void addImages( List< String > args, String fixedOrMoving, ArrayList< String > filenames )
