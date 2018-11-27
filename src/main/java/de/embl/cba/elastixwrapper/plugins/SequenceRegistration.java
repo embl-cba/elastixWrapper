@@ -139,7 +139,7 @@ public class SequenceRegistration
 
             // show mask to user
             /*
-            IJ.run(impMask, "Multiply...", "value=255 stack");
+            IJ.runElastix(impMask, "Multiply...", "value=255 stack");
             impMask.setTitle("Mask");
             impMask.show();
             */

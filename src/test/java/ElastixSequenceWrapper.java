@@ -18,7 +18,7 @@ public class ElastixSequenceWrapper
         IJ.openImage("/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/ellipsoid-horizontal-and-at45degrees.tif.zip").show();
         IJ.wait(2000);
 
-        // run the plugin
+        // runElastix the plugin
         //
 
         SequenceRegistrationPlugIn sequenceRegistrationPlugIn = new SequenceRegistrationPlugIn();

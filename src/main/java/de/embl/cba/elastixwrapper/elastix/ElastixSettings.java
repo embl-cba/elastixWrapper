@@ -17,11 +17,14 @@ public class ElastixSettings
     public static final String SPLINE = "BSpline";
     public static final String SIMILARITY = "Similarity";
 
+    public static final String FINAL_RESAMPLER_LINEAR = "FinalLinearInterpolator";
+    public static final String FINAL_RESAMPLER_NEAREST_NEIGHBOR = "FinalNearestNeighborInterpolator";
+
     public static final String RESULT_IMAGE_FILE_TYPE_MHD = "mhd";
 
     public static final String PARAMETERS_HENNING = "Henning";
-    public static final String PARAMETERS_DETLEV = "Detlev";
-    public static final String PARAMETERS_GIULIA = "Giulia";
+    public static final String PARAMETERS_DETLEV = "Default";
+    public static final String PARAMETERS_GIULIA = "CLEM";
 
 
     // variables
@@ -34,7 +37,7 @@ public class ElastixSettings
     public String fixedImageFilePath;
     public String movingImageFilePath;
     public String parameterFilePath;
-    public String initialTransformationFilePath;
+    public String initialTransformationFilePath = "";
     public String maskImageFilePath;
 
     public String outputModality;
@@ -65,4 +68,5 @@ public class ElastixSettings
     public int numChannels = 1;
     public double[] channelWeights;
 
+    public String finalResampler;
 }

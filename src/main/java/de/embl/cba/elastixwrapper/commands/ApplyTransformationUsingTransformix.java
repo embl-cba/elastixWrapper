@@ -1,6 +1,6 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixAndTransformixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
@@ -13,8 +13,6 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import java.io.File;
-
-import static de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix.PLUGIN_NAME;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Apply Transformation (transformix)" )
 public class ApplyTransformationUsingTransformix implements Command
@@ -76,8 +74,8 @@ public class ApplyTransformationUsingTransformix implements Command
     private ElastixSettings runTransformix()
     {
         ElastixSettings settings = getSettingsFromUI();
-        ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
-        elastixBinaryRunner.runTransformix();
+        ElastixAndTransformixBinaryRunner elastixAndTransformixBinaryRunner = new ElastixAndTransformixBinaryRunner( settings );
+        elastixAndTransformixBinaryRunner.runTransformix();
         return settings;
     }
 

@@ -71,33 +71,37 @@ public class ElastixTransformationParameters
     {
         parameters = new ArrayList<>();
 
+        // User defined
+        parameters.add( "(Transform \"" + settings.transformationType + "Transform\")" );
+        parameters.add( "(MaximumNumberOfIterations " + settings.iterations + ")" );
+        parameters.add( "(ImagePyramidSchedule " + settings.resolutionPyramid.replace( ";", " " ).replace( ",", " " ) + ")" );
+        parameters.add( "(NumberOfSpatialSamples " + settings.spatialSamples.replace( ";", " " ) + ")" );
+        parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
+
+
         if ( settings.numChannels > 1 )
         {
             addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
             addChannelWeights();
-        } else
+        }
+        else
         {
             parameters.add( "(Registration \"MultiResolutionRegistration\")" );
         }
 
         addParameter( "CheckNumberOfSamples", "false", false, false );
 
-        parameters.add( "(Transform \"" + settings.transformationType + "Transform\")" );
-        parameters.add( "(MaximumNumberOfIterations " + settings.iterations + ")" );
 
         // Pyramid
         parameters.add( "(NumberOfResolutions " + settings.resolutionPyramid.split( ";" ).length + ")" );
-        parameters.add( "(ImagePyramidSchedule " + settings.resolutionPyramid.replace( ";", " " ).replace( ",", " " ) + ")" );
         addParameter( "FixedImagePyramid", "FixedSmoothingImagePyramid", true, false );
         addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
-        parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
 
         // Initialisation
         parameters.add( "(AutomaticTransformInitialization \"true\")" );
         parameters.add( "(AutomaticTransformInitializationMethod \"CenterOfGravity\")" );
 
         // Samples
-        parameters.add( "(NumberOfSpatialSamples " + settings.spatialSamples.replace( ";", " " ) + ")" );
         addParameter( "ImageSampler", "RandomCoordinate", true, false );
         parameters.add( "(NewSamplesEveryIteration \"true\")" );
 
@@ -115,7 +119,7 @@ public class ElastixTransformationParameters
         parameters.add("(UseDirectionCosines \"false\")");
 
         addParameter( "Interpolator", "LinearInterpolator", true, false );
-        parameters.add("(ResampleInterpolator \"FinalLinearInterpolator\")");
+        parameters.add("(ResampleInterpolator \"" + settings.finalResampler + "\")");
         parameters.add("(AutomaticParameterEstimation \"true\")");
         parameters.add("(AutomaticScalesEstimation \"true\")");
 

@@ -18,7 +18,7 @@ public class DetlevNuclei
         IJ.openImage("/Volumes/cba/tischer/projects/detlev-arendt-clem-registration--data/Nuclei-ProsPr6-asMovie-scale0.2.tif").show();
         IJ.wait(2000);
 
-        // run the plugin
+        // runElastix the plugin
         //
         SequenceRegistrationPlugIn sequenceRegistrationPlugIn = new SequenceRegistrationPlugIn();
         sequenceRegistrationPlugIn.run("");

@@ -12,16 +12,14 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
-import ij.plugin.ChannelSplitter;
 import ij.plugin.Duplicator;
 
-import static de.embl.cba.elastixwrapper.utils.Utils.delimitedStringToIntegerArray;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.isLinux;
 import static org.scijava.util.PlatformUtils.isMac;
 import static org.scijava.util.PlatformUtils.isWindows;
 
-public class ElastixBinaryRunner
+public class ElastixAndTransformixBinaryRunner
 {
     public static String ELASTIX = "elastix";
     public static String TRANSFORMIX = "transformix";
@@ -41,35 +39,41 @@ public class ElastixBinaryRunner
 
     private int movingImageBitDepth;
 
-    public ElastixBinaryRunner( ElastixSettings settings )
+    public ElastixAndTransformixBinaryRunner( ElastixSettings settings )
     {
         this.settings = settings;
     }
 
-    public void run()
+    public void runElastix()
     {
-
         createOrEmptyWorkingDir();
 
         if ( ! stageImages() ) return;
 
         callElastix();
+    }
 
-        callTransformix();
+    public void runTransformix()
+    {
+        createOrEmptyWorkingDir();
 
-        showInputImage();
+        ArrayList< String > fileNames = stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
 
-        showTransformationFile();
+        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
+
+        List< String > transformixCallArgs = getTransformixCallArgs( fileNames.get( 0 ), executableShellScript );
+
+        Utils.executeCommand( transformixCallArgs, settings.logService );
 
     }
 
-    private void showTransformationFile()
+    public void showTransformationFile()
     {
         IJ.open( settings.workingDirectory + "TransformParameters.0.txt");
     }
 
 
-    private void showInputImage( )
+    public void showInputImage( )
     {
         ImagePlus fixed;
 
@@ -79,7 +83,7 @@ public class ElastixBinaryRunner
 
         fixed.setTitle( "fixed" );
 
-        IJ.run("Split Channels" );
+        if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
 
     private void mergeAndShowOutputChannels()
@@ -104,7 +108,7 @@ public class ElastixBinaryRunner
         }
     }
 
-    private void callTransformix()
+    public void createTransformedImages()
     {
         settings.transformationFilePath = settings.workingDirectory + File.separator + "TransformParameters.0.txt";
 
@@ -114,11 +118,10 @@ public class ElastixBinaryRunner
         {
             List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
             Utils.executeCommand( transformixCallArgs, settings.logService );
-            showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, createTransformedImageTitle( c ) );
         }
     }
 
-    private void showTransformedImages( )
+    public void showTransformedImages( )
     {
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
@@ -199,19 +202,6 @@ public class ElastixBinaryRunner
 
     }
 
-    public void runTransformix()
-    {
-        createOrEmptyWorkingDir();
-
-        ArrayList< String > fileNames = stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
-
-        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
-
-        List< String > transformixCallArgs = getTransformixCallArgs( fileNames.get( 0 ), executableShellScript );
-
-        Utils.executeCommand( transformixCallArgs, settings.logService );
-
-    }
 
     private String getDefaultParameterFilePath()
     {

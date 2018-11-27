@@ -125,7 +125,7 @@ public class SequenceRegistrationGUI extends JFrame implements ActionListener, F
         addComboBox(panels, tabs, comboTransformationType, "Transform");
         addTextField(panels, tabs, tfNumIterations, "Iterations", "" + settings.iterations);
         addTextField(panels, tabs, tfNumSpatialSamples, "Spatial samples", "" + settings.spatialSamples);
-        addTextField(panels, tabs, tfResolutionPyramid, "Resolution pyramid", settings.resolutionPyramid);
+        addTextField(panels, tabs, tfResolutionPyramid, "Smoothing sigma [voxels]", settings.resolutionPyramid);
         addTextField(panels, tabs, tfBSplineGridSpacing, "BSpline grid spacing", settings.bSplineGridSpacing);
         addTextField(panels, tabs, tfNumWorkers, "Threads", "" + settings.workers);
         addTextField(panels, tabs, tfReference, "Reference frame", "" + settings.reference);

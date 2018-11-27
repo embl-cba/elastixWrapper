@@ -1,7 +1,8 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixAndTransformixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import ij.IJ;
 import ij.Prefs;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
@@ -30,12 +31,11 @@ public class FindTransformationUsingElastixCommand implements Command
 
     @Parameter( label = "Elastix parameters", choices =
             {
-                    ElastixSettings.PARAMETERS_HENNING,
                     ElastixSettings.PARAMETERS_DETLEV,
                     ElastixSettings.PARAMETERS_GIULIA
             })
 
-    public String elastixParameters;
+    public String elastixParameters = ElastixSettings.PARAMETERS_DETLEV;
 
     @Parameter( label = "Use fixed image mask" )
     public boolean useMask;
@@ -64,36 +64,47 @@ public class FindTransformationUsingElastixCommand implements Command
     @Parameter( label = "Number of spatial samples" )
     public String numSpatialSamples = "10000;10000";
 
-    @Parameter( label = "Resolution pyramid" )
-    public String resolutionPyramid = "10,10,10;1,1,1";
+    @Parameter( label = "Gaussian smoothing sigma [voxels]" )
+    public String gaussianSmoothingSigmas = "10,10,10;1,1,1";
 
     @Parameter( label = "BSpline grid spacing [voxels]", required = false )
     public String bSplineGridSpacing = "50,50,50";
 
-//    @Parameter( label = "Output modality", choices = {
-//            CommandUtils.OUTPUT_MODALITY_SHOW_AS_INDIVIDUAL_IMAGES,
-//            CommandUtils.OUTPUT_MODALITY_DO_NOT_SHOW_IMAGES
-//    } )
-//    public String outputModality;
+    @Parameter( label = "Final resampler",
+            choices = {
+                    ElastixSettings.FINAL_RESAMPLER_LINEAR,
+                    ElastixSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
+            } )
+    public String finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
 
     @Parameter
     public LogService logService;
 
     @Parameter
     public ThreadService threadService;
+    private ElastixAndTransformixBinaryRunner elastixAndTransformixBinaryRunner;
 
     public void run()
     {
-        runElastix( );
+        runElastix();
+        createAndShowTransformedImage();
     }
 
     private void runElastix( )
     {
         ElastixSettings settings = getSettingsFromUI();
-        ElastixBinaryRunner elastixBinaryRunner = new ElastixBinaryRunner( settings );
-        elastixBinaryRunner.run();
+        elastixAndTransformixBinaryRunner = new ElastixAndTransformixBinaryRunner( settings );
+        elastixAndTransformixBinaryRunner.runElastix();
     }
 
+    private void createAndShowTransformedImage( )
+    {
+        elastixAndTransformixBinaryRunner.showInputImage();
+        elastixAndTransformixBinaryRunner.showTransformationFile();
+        elastixAndTransformixBinaryRunner.createTransformedImages();
+        elastixAndTransformixBinaryRunner.showTransformedImages();
+        IJ.run("Synchronize Windows", "");
+    }
 
     private ElastixSettings getSettingsFromUI()
     {
@@ -101,36 +112,23 @@ public class FindTransformationUsingElastixCommand implements Command
 
         settings.logService = logService;
 
-        settings.workingDirectory = workingDirectory.toString();
-
-        if ( ! settings.workingDirectory.endsWith( "/" ) )
-        {
-            settings.workingDirectory += "/";
-        }
-
         settings.elastixDirectory = elastixDirectory.toString();
 
-        if ( useInitialTransformation )
-        {
-            settings.initialTransformationFilePath = initialTransformationFile.toString();
-        }
-        else
-        {
-            settings.initialTransformationFilePath = "";
-        }
+        settings.workingDirectory = workingDirectory.toString();
+        if ( ! settings.workingDirectory.endsWith( File.separator ) )
+            settings.workingDirectory += File.separator;
 
-//        settings.outputModality = outputModality;
+        if ( useInitialTransformation )
+            settings.initialTransformationFilePath = initialTransformationFile.toString();
+        else
+            settings.initialTransformationFilePath = "";
 
         settings.elastixParameters = elastixParameters;
 
         if ( useMask )
-        {
             settings.maskImageFilePath = maskFile.toString();
-        }
         else
-        {
             settings.maskImageFilePath = "";
-        }
 
         settings.fixedImageFilePath = fixedImageFile.toString();
         settings.movingImageFilePath = movingImageFile.toString();
@@ -138,12 +136,14 @@ public class FindTransformationUsingElastixCommand implements Command
         settings.transformationType = transformationType;
         settings.iterations = numIterations;
         settings.spatialSamples = numSpatialSamples;
-        settings.workers = Prefs.getThreads(); // TODO
-        settings.resolutionPyramid = resolutionPyramid;
+        settings.workers = Prefs.getThreads();
+        settings.resolutionPyramid = gaussianSmoothingSigmas;
         settings.bSplineGridSpacing = bSplineGridSpacing;
 
         // TODO: make this a UI
-        settings.channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0};
+        settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
+
+        settings.finalResampler = finalResampler;
 
         return settings;
     }
