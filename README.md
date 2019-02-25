@@ -32,11 +32,9 @@ For questions please contact: christian.tischer@embl.de
 
 ## Usage instructions
 
-- Open the time-series that you want to register in Fiji
-- Run this tool: [Plugins > Registration > Elastix > Compute Transformation (elastix)]
-	- Note: Elastix is not Elastic, which is also a registration plugin :-)
+- Run: [Plugins > Registration > Elastix > Compute Transformation (elastix)]
 - Installation folder: point to the folder where you installed elastix, e.g.
-	- C:\Program Files\elastix_v4.8
+	- C:\Program Files\elastix_v4.8, or
 	- /Applications/elastix_macosx64_v4.8/
 - Transform:
 	- Translation: 3-D shift
@@ -56,6 +54,3 @@ For questions please contact: christian.tischer@embl.de
 
 - Using the Windows OS, there sometimes is an error pop-up window during the running, which you can ignore.
 - Multi-channel images are currently not supported
-
-
-
