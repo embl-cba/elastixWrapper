@@ -1,12 +1,8 @@
-# Fiji wrapper plugin around elastix for 2-D and 3-D registration
+# Fiji plugins for running elastix and transformix
 
 This repository contains a Fiji plugin to run elastix registration algorithms via a GUI.
 
 Fiji handles image the data, provides the GUI and runs elastix via system calls.
-
-## Question
-
-For questions please contact: christian.tischer@embl.de
 
 ## Learn more
 
@@ -18,7 +14,7 @@ For questions please contact: christian.tischer@embl.de
 
 - Install Fiji: https://fiji.sc/
 - Add the update site: EMBL-CBA
-	- The plugin will be available here: [ Plugins > Registration > Elastix ]
+	- The plugins will be available here: [ Plugins > Registration > Elastix ]
 
 ### Install elastix binary
 
@@ -32,7 +28,7 @@ For questions please contact: christian.tischer@embl.de
 
 ## Usage instructions
 
-- Run: [Plugins > Registration > Elastix > Compute Transformation (elastix)]
+- Run: [Plugins > Registration > Elastix > Elastix]
 - Installation folder: point to the folder where you installed elastix, e.g.
 	- C:\Program Files\elastix_v4.8, or
 	- /Applications/elastix_macosx64_v4.8/
