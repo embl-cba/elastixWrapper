@@ -77,7 +77,7 @@ The parameters, given as a comma separated key value pair list, are:
 ### Example call for running on EMBL Slurm cluster
 
 ```
-/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test',outputModality='Save as Tiff stack'"
+/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test/out',outputModality='Save as Tiff stack'"
 ```
 
 Above command should run on all cluster nodes.
