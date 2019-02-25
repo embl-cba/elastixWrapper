@@ -29,18 +29,11 @@
  */
 
 package de.embl.cba.elastixwrapper.utils;
-import de.embl.cba.elastixwrapper.logging.IJLazySwingLogger;
-import de.embl.cba.utils.logging.Logger;
 
-import ij.IJ;
-import ij.ImagePlus;
-import javafx.geometry.Point3D;
 import org.scijava.log.LogService;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by tischi on 06/11/16.
@@ -51,7 +44,8 @@ public abstract class Utils {
     public static boolean verbose = false;
     public static String LOAD_CHANNELS_FROM_FOLDERS = "from sub-folders";
 
-    public static double[] delimitedStringToDoubleArray(String s, String delimiter) {
+    public static double[] delimitedStringToDoubleArray(
+            String s, String delimiter) {
 
         String[] sA = s.split(delimiter);
         double[] nums = new double[sA.length];
@@ -62,7 +56,8 @@ public abstract class Utils {
         return nums;
     }
 
-    public static int[] delimitedStringToIntegerArray(String s, String delimiter) {
+    public static int[] delimitedStringToIntegerArray(
+            String s, String delimiter) {
 
         String[] sA = s.split(delimiter);
         int[] nums = new int[sA.length];

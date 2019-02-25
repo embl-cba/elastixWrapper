@@ -1,11 +1,5 @@
 package de.embl.cba.elastixwrapper.elastix;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -15,13 +9,15 @@ import ij.Prefs;
 import ij.io.FileSaver;
 import ij.plugin.Duplicator;
 
-import javax.jnlp.FileSaveService;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static de.embl.cba.elastixwrapper.elastix.ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
-import static org.scijava.util.PlatformUtils.isLinux;
-import static org.scijava.util.PlatformUtils.isMac;
-import static org.scijava.util.PlatformUtils.isWindows;
+import static org.scijava.util.PlatformUtils.*;
 
 public class ElastixAndTransformixBinaryRunner
 {
