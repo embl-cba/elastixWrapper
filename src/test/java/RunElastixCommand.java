@@ -1,7 +1,7 @@
 import de.embl.cba.elastixwrapper.commands.ElastixCommand;
 import net.imagej.ImageJ;
 
-public class GuiFindTransformationUsingElastix
+public class RunElastixCommand
 {
     // Main
     public static void main(final String... args) throws Exception

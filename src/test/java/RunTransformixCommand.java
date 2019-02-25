@@ -1,16 +1,14 @@
 import de.embl.cba.elastixwrapper.commands.TransformixCommand;
 import net.imagej.ImageJ;
 
-public class GuiApplyTransformationUsingTransformix
+public class RunTransformixCommand
 {
-    // Main
-    public static void main(final String... args) throws Exception
-    {
 
+    public static void main(final String... args)
+    {
         final ImageJ ij = new ImageJ();
         ij.ui().showUI();
         ij.command().run( TransformixCommand.class, true );
-
     }
 
 }

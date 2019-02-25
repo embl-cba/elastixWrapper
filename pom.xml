@@ -138,6 +138,13 @@
             <artifactId>formats-gpl</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>de.embl.cba</groupId>
+            <artifactId>bdv-utils</artifactId>
+            <version>0.2.02</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

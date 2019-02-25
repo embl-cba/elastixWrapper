@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.commands;
 
+import de.embl.cba.bdv.utils.io.BdvWriter;
 import de.embl.cba.elastixwrapper.elastix.ElastixAndTransformixBinaryRunner;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
@@ -36,7 +37,10 @@ public class TransformixCommand implements Command
 
     @Parameter( label = "Output modality", choices = {
             CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE,
-            CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK } )
+            CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK,
+            CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV
+    } )
+
     public String outputModality;
 
     @Parameter( label = "Output directory", style = "directory" )
@@ -57,16 +61,29 @@ public class TransformixCommand implements Command
         {
             result.show();
         }
-        else if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK ) )
+        else if ( outputModality.equals(
+                CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK ) )
         {
 
             String outputPath =
                     outputDirectory.getPath()
-                    + File.separator
-                    + inputImageFile.getName()
-                    + "-transformed.tif";
+                            + File.separator
+                            + inputImageFile.getName()
+                            + "-transformed.tif";
 
             new FileSaver( result ).saveAsTiff( outputPath );
+        }
+        else if ( outputModality.equals(
+                CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV ) )
+        {
+
+            String outputPath =
+                    outputDirectory.getPath()
+                            + File.separator
+                            + inputImageFile.getName()
+                            + "-transformed.xml";
+
+            BdvWriter.saveAsBdv( result, new File( outputPath ) );
         }
 
     }
