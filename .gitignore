@@ -3,5 +3,6 @@
 /.idea
 /.settings/
 /target/
+/lib
 *.iml
 .DS_Store
