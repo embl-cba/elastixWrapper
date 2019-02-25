@@ -87,7 +87,7 @@ public class FindTransformationUsingElastixCommand implements Command
     public void run()
     {
         runElastix();
-        createAndShowTransformedImage();
+        handleOutput();
     }
 
     private void runElastix( )
@@ -97,12 +97,12 @@ public class FindTransformationUsingElastixCommand implements Command
         elastixAndTransformixBinaryRunner.runElastix();
     }
 
-    private void createAndShowTransformedImage( )
+    private void handleOutput( )
     {
         elastixAndTransformixBinaryRunner.showInputImage();
-        elastixAndTransformixBinaryRunner.showTransformationFile();
         elastixAndTransformixBinaryRunner.createTransformedImages();
         elastixAndTransformixBinaryRunner.showTransformedImages();
+        elastixAndTransformixBinaryRunner.showTransformationFile();
         IJ.run("Synchronize Windows", "");
     }
 
@@ -113,6 +113,8 @@ public class FindTransformationUsingElastixCommand implements Command
         settings.logService = logService;
 
         settings.elastixDirectory = elastixDirectory.toString();
+        if ( ! settings.elastixDirectory.endsWith( File.separator ) )
+            settings.elastixDirectory += File.separator;
 
         settings.workingDirectory = workingDirectory.toString();
         if ( ! settings.workingDirectory.endsWith( File.separator ) )

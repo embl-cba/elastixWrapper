@@ -12,8 +12,12 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
+import ij.io.FileSaver;
 import ij.plugin.Duplicator;
 
+import javax.jnlp.FileSaveService;
+
+import static de.embl.cba.elastixwrapper.elastix.ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.isLinux;
 import static org.scijava.util.PlatformUtils.isMac;
@@ -118,6 +122,8 @@ public class ElastixAndTransformixBinaryRunner
         {
             List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
             Utils.executeCommand( transformixCallArgs, settings.logService );
+            ImagePlus result = loadResultImage( settings.workingDirectory, DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, settings.resultImageFileType );
+            new FileSaver( result ).saveAsTiff( settings.workingDirectory + File.separator + createTransformedImageTitle( c ) + ".tif" );
         }
     }
 
@@ -125,21 +131,21 @@ public class ElastixAndTransformixBinaryRunner
     {
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
-            showMhd( ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, createTransformedImageTitle( c ) );
+            IJ.open( settings.workingDirectory + File.separator + createTransformedImageTitle( c ) + ".tif"  );
         }
     }
+
 
     private String createTransformedImageTitle( int channel )
     {
         return "C" + channel + "-moving-aligned";
     }
 
-    private void showMhd( String filename, String imageTitle )
+
+    public ImagePlus loadResultImage( String directory, String filename, String fileType )
     {
         MetaImage_Reader reader = new MetaImage_Reader();
-        ImagePlus result = reader.load( settings.workingDirectory,  filename + "." + settings.resultImageFileType, false );
-        result.show();
-        result.setTitle( imageTitle );
+        return reader.load( directory,  filename + "." + fileType, false );
     }
 
     private boolean stageImages()
@@ -219,6 +225,11 @@ public class ElastixAndTransformixBinaryRunner
     private ArrayList< String > stageImageAsMhd( String imagePath, String filename )
     {
         ImagePlus imp = IJ.openImage( imagePath );
+
+        if ( imp == null )
+        {
+            settings.logService.error( "Could not open image file: " + imagePath );
+        }
 
         if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
         {
