@@ -54,3 +54,28 @@ For questions please contact: christian.tischer@embl.de
 
 - Using the Windows OS, there sometimes is an error pop-up window during the running, which you can ignore.
 - Multi-channel images are currently not supported
+
+## Running transformix from command line
+
+Transformix can be called via ImageJ on the command line, as in this example:
+
+```
+/Applications/Fiji.app/Contents/MacOS/ImageJ-macosx --ij2 --headless --run "Apply Transformation (transformix)"  "elastixDirectory='/Applications/elastix_macosx64_v4.8', workingDirectory='/Users/tischer/Desktop/elastix-tmp', inputImageFile='/Users/tischer/Documents/detlev-arendt-clem-registration--data/data/prospr-new/muscles.tif',transformationFile='/Users/tischer/Documents/detlev-arendt-clem-registration/transformations-new/TransformParameters.Similarity-3Channels.0.txt',outputDirectory='/Users/tischer/Desktop/elastix-output',outputModality='Save as Tiff stack'"
+```
+
+The parameters, given as a comma separated list, are:
+
+- elastixDirectory
+    - installation directory of elastix
+- workingDirectory
+    - temporary directory
+- inputImageFile
+- transformationFile
+- outputDirectory
+- outputModality
+
+### Example call for running on EMBL Slurm cluster
+
+```
+/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test',outputModality='Save as Tiff stack'"
+```

@@ -32,7 +32,10 @@ public class SequenceRegistration
     ElastixSettings settings;
     Logger logger = new IJLazySwingLogger();
 
-    public SequenceRegistration( String inputImages, String outputImages, ElastixSettings registrationSettings )
+    public SequenceRegistration(
+            String inputImages,
+            String outputImages,
+            ElastixSettings registrationSettings )
     {
         this.inputImages = inputImages;
         this.outputImages = outputImages;

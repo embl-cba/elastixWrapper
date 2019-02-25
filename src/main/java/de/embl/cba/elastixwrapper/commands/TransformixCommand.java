@@ -15,13 +15,14 @@ import org.scijava.plugin.Plugin;
 
 import java.io.File;
 
-@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Apply Transformation (transformix)" )
-public class ApplyTransformationUsingTransformix implements Command
+@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Transformix" )
+public class TransformixCommand implements Command
 {
     @Parameter
     public LogService logService;
 
-    @Parameter( label = "Elastix installation directory", style = "directory" )
+    @Parameter( label = "Elastix installation directory",
+            style = "directory" )
     public File elastixDirectory;
 
     @Parameter( label = "Working directory", style = "directory" )

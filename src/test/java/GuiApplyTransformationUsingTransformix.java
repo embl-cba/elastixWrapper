@@ -1,4 +1,4 @@
-import de.embl.cba.elastixwrapper.commands.ApplyTransformationUsingTransformix;
+import de.embl.cba.elastixwrapper.commands.TransformixCommand;
 import net.imagej.ImageJ;
 
 public class GuiApplyTransformationUsingTransformix
@@ -9,7 +9,7 @@ public class GuiApplyTransformationUsingTransformix
 
         final ImageJ ij = new ImageJ();
         ij.ui().showUI();
-        ij.command().run( ApplyTransformationUsingTransformix.class, true );
+        ij.command().run( TransformixCommand.class, true );
 
     }
 

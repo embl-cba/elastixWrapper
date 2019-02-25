@@ -12,8 +12,8 @@ import org.scijava.thread.ThreadService;
 
 import java.io.File;
 
-@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Compute Transformation (elastix)" )
-public class FindTransformationUsingElastixCommand implements Command
+@Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Elastix" )
+public class ElastixCommand implements Command
 {
     public static final String PLUGIN_NAME = "Register two image files";
 

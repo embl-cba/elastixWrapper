@@ -9,7 +9,8 @@ public class SequenceRegistrationPlugIn implements PlugIn {
     @Override
     public void run(String s)
     {
-        SequenceRegistrationGUI sequenceRegistrationGUI = new SequenceRegistrationGUI();
+        SequenceRegistrationGUI
+                sequenceRegistrationGUI = new SequenceRegistrationGUI();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run()

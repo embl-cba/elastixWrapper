@@ -1,4 +1,4 @@
-import de.embl.cba.elastixwrapper.commands.FindTransformationUsingElastixCommand;
+import de.embl.cba.elastixwrapper.commands.ElastixCommand;
 import net.imagej.ImageJ;
 
 public class GuiFindTransformationUsingElastix
@@ -9,7 +9,7 @@ public class GuiFindTransformationUsingElastix
 
         final ImageJ ij = new ImageJ();
         ij.ui().showUI();
-        ij.command().run( FindTransformationUsingElastixCommand.class, true );
+        ij.command().run( ElastixCommand.class, true );
 
     }
 }
