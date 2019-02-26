@@ -16,7 +16,8 @@ import java.io.File;
 public class ElastixCommand implements Command
 {
     public static final String SHOW_OUTPUT = "Show output";
-    public static final String SAVE_OUTPUT_AS_TIFF = "Save output as Tiff";
+    public static final String SAVE_TRANSFORMED_AS_TIFF =
+            "Save transformed image as Tiff";
     @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
 
@@ -80,7 +81,7 @@ public class ElastixCommand implements Command
     @Parameter( label = "Output modality",
             choices = {
                     SHOW_OUTPUT,
-                    SAVE_OUTPUT_AS_TIFF
+                    SAVE_TRANSFORMED_AS_TIFF
             } )
     public String outputModality;
 
@@ -112,7 +113,7 @@ public class ElastixCommand implements Command
         {
             showOutput();
         }
-        else if ( outputModality.equals( SAVE_OUTPUT_AS_TIFF ) )
+        else if ( outputModality.equals( SAVE_TRANSFORMED_AS_TIFF ) )
         {
             elastixAndTransformixBinaryRunner.createTransformedImagesAndSaveAsTiff();
         }
