@@ -108,18 +108,31 @@ public class ElastixAndTransformixBinaryRunner
         }
     }
 
-    public void createTransformedImages()
+    public void createTransformedImagesAndSaveAsTiff()
     {
-        settings.transformationFilePath = settings.workingDirectory + File.separator + "TransformParameters.0.txt";
+        settings.transformationFilePath =
+                settings.workingDirectory + File.separator + "TransformParameters.0.txt";
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
-            List< String > transformixCallArgs = getTransformixCallArgs( movingImageFilenames.get( c - 1 ), executableShellScript );
+            List< String > transformixCallArgs =
+                    getTransformixCallArgs(
+                            movingImageFilenames.get( c - 1 ), executableShellScript );
             Utils.executeCommand( transformixCallArgs, settings.logService );
-            ImagePlus result = loadResultImage( settings.workingDirectory, DEFAULT_TRANSFORMIX_OUTPUT_FILENAME, settings.resultImageFileType );
-            new FileSaver( result ).saveAsTiff( settings.workingDirectory + File.separator + createTransformedImageTitle( c ) + ".tif" );
+            ImagePlus result = loadResultImage(
+                    settings.workingDirectory,
+                    DEFAULT_TRANSFORMIX_OUTPUT_FILENAME,
+                    settings.resultImageFileType );
+
+            final String path = settings.workingDirectory
+                    + File.separator
+                    + createTransformedImageTitle( c ) + ".tif";
+
+            settings.logService.info( "\nSaving transformed image: " + path );
+
+            new FileSaver( result ).saveAsTiff( path );
         }
     }
 
@@ -127,7 +140,8 @@ public class ElastixAndTransformixBinaryRunner
     {
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
-            IJ.open( settings.workingDirectory + File.separator + createTransformedImageTitle( c ) + ".tif"  );
+            IJ.open( settings.workingDirectory
+                    + File.separator + createTransformedImageTitle( c ) + ".tif"  );
         }
     }
 
@@ -138,7 +152,8 @@ public class ElastixAndTransformixBinaryRunner
     }
 
 
-    public ImagePlus loadResultImage( String directory, String filename, String fileType )
+    public ImagePlus loadResultImage(
+            String directory, String filename, String fileType )
     {
         MetaImage_Reader reader = new MetaImage_Reader();
         return reader.load( directory,  filename + "." + fileType, false );
@@ -146,7 +161,8 @@ public class ElastixAndTransformixBinaryRunner
 
     private boolean stageImages()
     {
-        fixedImageFilenames = stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
+        fixedImageFilenames =
+                stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
 
         movingImageFilenames = stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
 
@@ -196,7 +212,7 @@ public class ElastixAndTransformixBinaryRunner
         {
             Utils.saveStringListToFile( parameters.getGiuliaMizzonStyleParameters(), settings.parameterFilePath );
         }
-        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DETLEV ) )
+        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DEFAULT ) )
         {
             Utils.saveStringListToFile( parameters.getDetlevStyleParameters( ), settings.parameterFilePath );
         }

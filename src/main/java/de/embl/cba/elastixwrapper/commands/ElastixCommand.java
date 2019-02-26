@@ -15,8 +15,8 @@ import java.io.File;
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Elastix" )
 public class ElastixCommand implements Command
 {
-    public static final String PLUGIN_NAME = "Register two image files";
-
+    public static final String SHOW_OUTPUT = "Show output";
+    public static final String SAVE_OUTPUT_AS_TIFF = "Save output as Tiff";
     @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
 
@@ -31,11 +31,11 @@ public class ElastixCommand implements Command
 
     @Parameter( label = "Elastix parameters", choices =
             {
-                    ElastixSettings.PARAMETERS_DETLEV,
+                    ElastixSettings.PARAMETERS_DEFAULT,
                     ElastixSettings.PARAMETERS_GIULIA
             })
 
-    public String elastixParameters = ElastixSettings.PARAMETERS_DETLEV;
+    public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
 
     @Parameter( label = "Use fixed image mask" )
     public boolean useMask;
@@ -62,10 +62,10 @@ public class ElastixCommand implements Command
     public int numIterations = 1000;
 
     @Parameter( label = "Number of spatial samples" )
-    public String numSpatialSamples = "10000;10000";
+    public String numSpatialSamples = "10000";
 
     @Parameter( label = "Gaussian smoothing sigma [voxels]" )
-    public String gaussianSmoothingSigmas = "10,10,10;1,1,1";
+    public String gaussianSmoothingSigmas = "10,10,10";
 
     @Parameter( label = "BSpline grid spacing [voxels]", required = false )
     public String bSplineGridSpacing = "50,50,50";
@@ -76,6 +76,14 @@ public class ElastixCommand implements Command
                     ElastixSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
             } )
     public String finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
+
+    @Parameter( label = "Output modality",
+            choices = {
+                    SHOW_OUTPUT,
+                    SAVE_OUTPUT_AS_TIFF
+            } )
+    public String outputModality;
+
 
     @Parameter
     public LogService logService;
@@ -93,17 +101,30 @@ public class ElastixCommand implements Command
     private void runElastix( )
     {
         ElastixSettings settings = getSettingsFromUI();
-        elastixAndTransformixBinaryRunner = new ElastixAndTransformixBinaryRunner( settings );
+        elastixAndTransformixBinaryRunner =
+                new ElastixAndTransformixBinaryRunner( settings );
         elastixAndTransformixBinaryRunner.runElastix();
     }
 
     private void handleOutput( )
     {
+        if ( outputModality.equals( SHOW_OUTPUT ) )
+        {
+            showOutput();
+        }
+        else if ( outputModality.equals( SAVE_OUTPUT_AS_TIFF ) )
+        {
+            elastixAndTransformixBinaryRunner.createTransformedImagesAndSaveAsTiff();
+        }
+    }
+
+    private void showOutput()
+    {
         elastixAndTransformixBinaryRunner.showInputImage();
-        elastixAndTransformixBinaryRunner.createTransformedImages();
+        elastixAndTransformixBinaryRunner.createTransformedImagesAndSaveAsTiff();
         elastixAndTransformixBinaryRunner.showTransformedImages();
         elastixAndTransformixBinaryRunner.showTransformationFile();
-        IJ.run("Synchronize Windows", "");
+        IJ.run( "Synchronize Windows", "" );
     }
 
     private ElastixSettings getSettingsFromUI()

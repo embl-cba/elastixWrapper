@@ -3,8 +3,7 @@ import net.imagej.ImageJ;
 
 public class RunElastixCommand
 {
-    // Main
-    public static void main(final String... args) throws Exception
+    public static void main(final String... args)
     {
 
         final ImageJ ij = new ImageJ();

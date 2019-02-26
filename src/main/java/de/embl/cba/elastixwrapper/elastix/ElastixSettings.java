@@ -23,7 +23,7 @@ public class ElastixSettings
     public static final String RESULT_IMAGE_FILE_TYPE_MHD = "mhd";
 
     public static final String PARAMETERS_HENNING = "Henning";
-    public static final String PARAMETERS_DETLEV = "Default";
+    public static final String PARAMETERS_DEFAULT = "Default";
     public static final String PARAMETERS_GIULIA = "CLEM";
 
 
