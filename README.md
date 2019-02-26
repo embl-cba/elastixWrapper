@@ -68,7 +68,7 @@ The transformed output images will be stored in the specified `workingDirectory`
 Example call:
 
 ```
-/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Elastix" "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/elastix-tmp', fixedImageFile='/g/almf/software/elastix-test/muscles.tif', movingImageFile='/g/almf/software/elastix-test/muscles.tif', elastixParameters='Default',useMask='false',useInitialTransformation='false', transformationType='Translation',numIterations='1',numSpatialSamples='100', gaussianSmoothingSigmas='10,10,10',finalResampler='FinalLinearInterpolator', outputModality='Save transformed image as Tiff'"
+/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Elastix" "elastixDirectory='/g/almf/software/elastix_v4.8',workingDirectory='/g/almf/software/elastix-test/elastix-tmp',fixedImageFile='/g/almf/software/elastix-test/muscles.tif',movingImageFile='/g/almf/software/elastix-test/muscles.tif',elastixParameters='Default',useMask='false',useInitialTransformation='false', transformationType='Translation',numIterations='1',numSpatialSamples='100', gaussianSmoothingSigmas='10,10,10',finalResampler='FinalLinearInterpolator', outputModality='Save transformed image as Tiff'"
 ```
 
 Above command should run on all cluster nodes.
@@ -97,6 +97,8 @@ To adapt it to your own application, the following parameters should be adapted:
         - for intensity images
     - FinalNearestNeighborInterpolator
         - for binary or label masks
+- gaussianSmoothingSigmas
+    - specify how much you want to smooth in pixels (my experience is that rather smoothing more is better than less)
 - outputModality
     - 'Save output as Tiff'
 
