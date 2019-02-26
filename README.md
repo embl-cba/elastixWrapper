@@ -87,7 +87,7 @@ To adapt it to your own application, the following parameters should be adapted:
 - gaussianSmoothingSigmas
     - specify how much you want to smooth in pixels (my experience is that rather smoothing more is better than less)
 - outputModality
-    - 'Save transformed image as Tiff'
+    - Save transformed image as Tiff
         - This will save the transformed output image into the `workingDirectory` 
 
 And just a reminder: Elastix works in physical units and it is thus important that your images are properly calibrated.
