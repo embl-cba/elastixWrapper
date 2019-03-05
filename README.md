@@ -141,6 +141,17 @@ To adapt it to your own application, the following parameters should be adapted:
 
 And just a reminder: Elastix works in physical units and it is thus important that your images are properly calibrated.
 
+### Running elastix via API
 
+Below link(s) point to example java code for using the API.
+It should, hopefully, be rather straightforward to convert the java code into groovy or jython scripts.
+
+- [ExampleElastixAPI](https://github.com/tischi/fiji-plugin-elastixWrapper/blob/master/src/test/java/ExampleElastixAPI.java#L11)
+
+The example data that is used in above script(s) can be found here:
+
+- [ellipsoid-at45degrees](https://github.com/tischi/fiji-plugin-elastixWrapper/blob/master/src/test/resources/ellipsoid-at45degrees-dxyz200nm.tif)
+- [ellipsoid-horizontal](https://github.com/tischi/fiji-plugin-elastixWrapper/blob/master/src/test/resources/ellipsoid-horizontal-dxyz200nm.tif)
+ 
 
 
