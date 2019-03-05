@@ -48,9 +48,7 @@ Fiji handles image the data, provides the GUI and runs elastix via system calls.
 
 ## Further notes
 
-- Using the Windows OS, there sometimes is an error pop-up window during the running, which you can ignore.
-- Multi-channel images are currently not supported
-
+- Using Windows OS, there sometimes is an error pop-up window during the running, which you can ignore.
 
 ## Running elastix from command line
 
@@ -61,17 +59,6 @@ Elastix can be called via ImageJ on the command line, as in this example:
 ```
 
 The transformed output images will be stored in the specified `workingDirectory`. 
-
-
-### Running elastix on EMBL slurm cluster
-
-Example call:
-
-```
-/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Elastix" "elastixDirectory='/g/almf/software/elastix_v4.8',workingDirectory='/g/almf/software/elastix-test/elastix-tmp',fixedImageFile='/g/almf/software/elastix-test/muscles.tif',movingImageFile='/g/almf/software/elastix-test/muscles.tif',elastixParameters='Default',useMask='false',useInitialTransformation='false', transformationType='Translation',numIterations='1',numSpatialSamples='100', gaussianSmoothingSigmas='10,10,10',finalResampler='FinalLinearInterpolator', outputModality='Save transformed image as Tiff'"
-```
-
-Above command should run on all cluster nodes.
 
 To adapt it to your own application, the following parameters should be adapted:
 
@@ -100,10 +87,18 @@ To adapt it to your own application, the following parameters should be adapted:
 - gaussianSmoothingSigmas
     - specify how much you want to smooth in pixels (my experience is that rather smoothing more is better than less)
 - outputModality
-    - 'Save transformed image as Tiff'
+    - Save transformed image as Tiff
         - This will save the transformed output image into the `workingDirectory` 
 
 And just a reminder: Elastix works in physical units and it is thus important that your images are properly calibrated.
+
+### Running elastix on EMBL slurm cluster
+
+```
+/g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Elastix" "elastixDirectory='/g/almf/software/elastix_v4.8',workingDirectory='/g/almf/software/elastix-test/elastix-tmp',fixedImageFile='/g/almf/software/elastix-test/muscles.tif',movingImageFile='/g/almf/software/elastix-test/muscles.tif',elastixParameters='Default',useMask='false',useInitialTransformation='false', transformationType='Translation',numIterations='1',numSpatialSamples='100', gaussianSmoothingSigmas='10,10,10',finalResampler='FinalLinearInterpolator', outputModality='Save transformed image as Tiff'"
+```
+
+Above command should run on all cluster nodes; please adapt parameters as explained above.
 
 ## Running transformix from command line
 
