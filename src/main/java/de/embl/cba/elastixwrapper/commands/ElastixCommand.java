@@ -4,6 +4,7 @@ import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import ij.IJ;
 import ij.Prefs;
+import org.scijava.ItemVisibility;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -23,19 +24,44 @@ public class ElastixCommand implements Command
     @Parameter( label = "Working directory", style = "directory" )
     public File workingDirectory;
 
+    @Parameter( visibility = ItemVisibility.MESSAGE )
+    private String space00 = "\n";
+
     @Parameter( label = "Fixed image" )
     public File fixedImageFile;
 
     @Parameter( label = "Moving image" )
     public File movingImageFile;
 
-    @Parameter( label = "Elastix parameters", choices =
-            {
-                    ElastixSettings.PARAMETERS_DEFAULT,
-                    ElastixSettings.PARAMETERS_GIULIA
-            })
+    @Parameter( label = "Transformation type", choices = {
+            ElastixSettings.TRANSLATION,
+            ElastixSettings.EULER,
+            ElastixSettings.SIMILARITY,
+            ElastixSettings.AFFINE,
+            ElastixSettings.SPLINE } )
+    public String transformationType;
 
-    public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
+    @Parameter( label = "Grid spacing for BSpline transformation [voxels]", required = false )
+    public String bSplineGridSpacing = "50,50,50";
+
+    @Parameter( label = "Number of iterations" )
+    public int numIterations = 1000;
+
+    @Parameter( label = "Number of spatial samples" )
+    public String numSpatialSamples = "10000";
+
+    @Parameter( label = "Gaussian smoothing sigma [voxels]" )
+    public String gaussianSmoothingSigmas = "10,10,10";
+
+    @Parameter( label = "Output modality",
+            choices = {
+                    SHOW_OUTPUT,
+                    SAVE_TRANSFORMED_AS_TIFF
+            } )
+    public String outputModality;
+
+    @Parameter( visibility = ItemVisibility.MESSAGE )
+    private String space02 = "\n";
 
     @Parameter( label = "Use fixed image mask" )
     public boolean useFixedMask;
@@ -55,26 +81,16 @@ public class ElastixCommand implements Command
     @Parameter( label = "Initial transformation file", required = false )
     public File initialTransformationFile;
 
-    @Parameter( label = "Transformation type", choices = {
-            ElastixSettings.TRANSLATION,
-            ElastixSettings.EULER,
-            ElastixSettings.SIMILARITY,
-            ElastixSettings.AFFINE,
-            ElastixSettings.SPLINE } )
+    @Parameter( visibility = ItemVisibility.MESSAGE )
+    private String space03 = "\n";
 
-    public String transformationType;
+    @Parameter( label = "Elastix parameters", choices =
+            {
+                    ElastixSettings.PARAMETERS_DEFAULT,
+                    ElastixSettings.PARAMETERS_GIULIA
+            })
+    public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
 
-    @Parameter( label = "Number of iterations" )
-    public int numIterations = 1000;
-
-    @Parameter( label = "Number of spatial samples" )
-    public String numSpatialSamples = "10000";
-
-    @Parameter( label = "Gaussian smoothing sigma [voxels]" )
-    public String gaussianSmoothingSigmas = "10,10,10";
-
-    @Parameter( label = "BSpline grid spacing [voxels]", required = false )
-    public String bSplineGridSpacing = "50,50,50";
 
     @Parameter( label = "Final resampler",
             choices = {
@@ -82,13 +98,6 @@ public class ElastixCommand implements Command
                     ElastixSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
             } )
     public String finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
-
-    @Parameter( label = "Output modality",
-            choices = {
-                    SHOW_OUTPUT,
-                    SAVE_TRANSFORMED_AS_TIFF
-            } )
-    public String outputModality;
 
     @Parameter
     public LogService logService;

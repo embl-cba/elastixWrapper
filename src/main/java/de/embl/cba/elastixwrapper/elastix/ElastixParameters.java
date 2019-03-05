@@ -4,13 +4,13 @@ package de.embl.cba.elastixwrapper.elastix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElastixTransformationParameters
+public class ElastixParameters
 {
 
     private ElastixSettings settings;
     List<String> parameters;
 
-    public ElastixTransformationParameters( ElastixSettings settings )
+    public ElastixParameters( ElastixSettings settings )
     {
         this.settings = settings;
     }

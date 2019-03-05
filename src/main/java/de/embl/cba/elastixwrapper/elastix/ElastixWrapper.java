@@ -203,7 +203,7 @@ public class ElastixWrapper
         settings.movingImageBitDepth = movingImageBitDepth;
         settings.parameterFilePath = getDefaultParameterFilePath();
 
-        ElastixTransformationParameters parameters = new ElastixTransformationParameters( settings );
+        ElastixParameters parameters = new ElastixParameters( settings );
 
         if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_HENNING ) )
         {
