@@ -1,6 +1,6 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixAndTransformixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import ij.IJ;
 import ij.Prefs;
@@ -8,7 +8,6 @@ import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-import org.scijava.thread.ThreadService;
 
 import java.io.File;
 
@@ -39,10 +38,16 @@ public class ElastixCommand implements Command
     public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
 
     @Parameter( label = "Use fixed image mask" )
-    public boolean useMask;
+    public boolean useFixedMask;
 
     @Parameter( label = "Fixed image mask file", required = false )
-    public File maskFile;
+    public File fixedMaskFile;
+
+    @Parameter( label = "Use moving image mask" )
+    public boolean useMovingMask;
+
+    @Parameter( label = "Moving image mask file", required = false )
+    public File movingMaskFile;
 
     @Parameter( label = "Use initial transformation" )
     public boolean useInitialTransformation;
@@ -85,13 +90,10 @@ public class ElastixCommand implements Command
             } )
     public String outputModality;
 
-
     @Parameter
     public LogService logService;
 
-    @Parameter
-    public ThreadService threadService;
-    private ElastixAndTransformixBinaryRunner elastixAndTransformixBinaryRunner;
+    private ElastixWrapper elastixWrapper;
 
     public void run()
     {
@@ -101,10 +103,11 @@ public class ElastixCommand implements Command
 
     private void runElastix( )
     {
-        ElastixSettings settings = getSettingsFromUI();
-        elastixAndTransformixBinaryRunner =
-                new ElastixAndTransformixBinaryRunner( settings );
-        elastixAndTransformixBinaryRunner.runElastix();
+        ElastixSettings settings = getSettings();
+
+        elastixWrapper = new ElastixWrapper( settings );
+
+        elastixWrapper.runElastix();
     }
 
     private void handleOutput( )
@@ -115,20 +118,20 @@ public class ElastixCommand implements Command
         }
         else if ( outputModality.equals( SAVE_TRANSFORMED_AS_TIFF ) )
         {
-            elastixAndTransformixBinaryRunner.createTransformedImagesAndSaveAsTiff();
+            elastixWrapper.createTransformedImagesAndSaveAsTiff();
         }
     }
 
     private void showOutput()
     {
-        elastixAndTransformixBinaryRunner.showInputImage();
-        elastixAndTransformixBinaryRunner.createTransformedImagesAndSaveAsTiff();
-        elastixAndTransformixBinaryRunner.showTransformedImages();
-        elastixAndTransformixBinaryRunner.showTransformationFile();
+        elastixWrapper.showInputImage();
+        elastixWrapper.createTransformedImagesAndSaveAsTiff();
+        elastixWrapper.showTransformedImages();
+        elastixWrapper.showTransformationFile();
         IJ.run( "Synchronize Windows", "" );
     }
 
-    private ElastixSettings getSettingsFromUI()
+    private ElastixSettings getSettings()
     {
         ElastixSettings settings = new ElastixSettings();
 
@@ -149,10 +152,15 @@ public class ElastixCommand implements Command
 
         settings.elastixParameters = elastixParameters;
 
-        if ( useMask )
-            settings.maskImageFilePath = maskFile.toString();
+        if ( useFixedMask )
+            settings.fixedMaskPath = fixedMaskFile.toString();
         else
-            settings.maskImageFilePath = "";
+            settings.fixedMaskPath = "";
+
+        if ( useMovingMask )
+            settings.movingMaskPath = movingMaskFile.toString();
+        else
+            settings.movingMaskPath = "";
 
         settings.fixedImageFilePath = fixedImageFile.toString();
         settings.movingImageFilePath = movingImageFile.toString();

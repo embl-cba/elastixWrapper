@@ -1,7 +1,7 @@
 package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.bdv.utils.io.BdvWriter;
-import de.embl.cba.elastixwrapper.elastix.ElastixAndTransformixBinaryRunner;
+import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
@@ -114,8 +114,8 @@ public class TransformixCommand implements Command
     private ElastixSettings runTransformix()
     {
         ElastixSettings settings = getSettingsFromUI();
-        ElastixAndTransformixBinaryRunner elastixAndTransformixBinaryRunner = new ElastixAndTransformixBinaryRunner( settings );
-        elastixAndTransformixBinaryRunner.runTransformix();
+        ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
+        elastixWrapper.runTransformix();
         return settings;
     }
 

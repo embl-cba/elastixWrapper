@@ -19,27 +19,28 @@ import static de.embl.cba.elastixwrapper.elastix.ElastixUtils.DEFAULT_TRANSFORMI
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.*;
 
-public class ElastixAndTransformixBinaryRunner
+public class ElastixWrapper
 {
-    public static String ELASTIX = "elastix";
-    public static String TRANSFORMIX = "transformix";
-    public static String ELASTIX_FIXED_IMAGE_NAME = "fixed";
-    public static String ELASTIX_MOVING_IMAGE_NAME = "moving";
-    public static String ELASTIX_MASK_IMAGE_NAME = "mask";
+    public static final String ELASTIX = "elastix";
+    public static final String TRANSFORMIX = "transformix";
+    public static final String ELASTIX_FIXED_IMAGE_NAME = "fixed";
+    public static final String ELASTIX_MOVING_IMAGE_NAME = "moving";
+    public static final String ELASTIX_FIXED_MASK_IMAGE_NAME = "fixedMask";
+    public static final String ELASTIX_MOVING_MASK_IMAGE_NAME = "movingMask";
 
-    public static String MHD_SUFFIX = ".mhd";
-    public static String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed";
+    public static final String MHD_SUFFIX = ".mhd";
+    public static final String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed";
 
     ElastixSettings settings;
 
     private ArrayList< String > fixedImageFilenames;
     private ArrayList< String > movingImageFilenames;
-    private ArrayList< String > maskImageFilenames;
-
+    private ArrayList< String > fixedMaskFilenames;
+    private ArrayList< String > movingMaskFilenames;
 
     private int movingImageBitDepth;
 
-    public ElastixAndTransformixBinaryRunner( ElastixSettings settings )
+    public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
     }
@@ -161,15 +162,15 @@ public class ElastixAndTransformixBinaryRunner
 
     private boolean stageImages()
     {
-        fixedImageFilenames =
-                stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
+        fixedImageFilenames = stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
 
         movingImageFilenames = stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
 
-        if ( ! settings.maskImageFilePath.equals( "" ) )
-        {
-            maskImageFilenames = stageImageAsMhd( settings.maskImageFilePath, ELASTIX_MASK_IMAGE_NAME );
-        }
+        if ( ! settings.fixedMaskPath.equals( "" ) )
+            fixedMaskFilenames = stageImageAsMhd( settings.fixedMaskPath, ELASTIX_FIXED_MASK_IMAGE_NAME );
+
+        if ( ! settings.movingMaskPath.equals( "" ) )
+            movingMaskFilenames = stageImageAsMhd( settings.movingMaskPath, ELASTIX_MOVING_MASK_IMAGE_NAME );
 
         if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) ) return false;
 
@@ -279,7 +280,7 @@ public class ElastixAndTransformixBinaryRunner
 
             ImagePlus channelImage = duplicator.run( imp, channel, channel, 1 ,imp.getNSlices(), 1, 1 );
 
-            if ( filename.equals( ELASTIX_MASK_IMAGE_NAME ) )
+            if ( filename.equals( ELASTIX_FIXED_MASK_IMAGE_NAME ) )
             {
                 convertToMask( channelImage );
             }
@@ -314,7 +315,7 @@ public class ElastixAndTransformixBinaryRunner
         args.add( "-out" );
         args.add( settings.workingDirectory );
 
-        addFixedAndMovingAndMaskImages( args );
+        addAllImagesAndMasksImages( args );
 
         args.add( "-p" );
         args.add( settings.parameterFilePath );
@@ -330,16 +331,18 @@ public class ElastixAndTransformixBinaryRunner
         return args;
     }
 
-    private void addFixedAndMovingAndMaskImages( List< String > args )
+    private void addAllImagesAndMasksImages( List< String > args )
     {
         addImages( args, "f", fixedImageFilenames );
+
         addImages( args, "m", movingImageFilenames );
 
-        if ( maskImageFilenames != null )
-        {
-            addImages( args, "fMask", maskImageFilenames );
-        }
+        if ( fixedMaskFilenames != null )
+            addImages( args, "fMask", fixedMaskFilenames );
 
+
+        if ( movingMaskFilenames != null )
+            addImages( args, "mMask", movingMaskFilenames );
     }
 
     private void addImages( List< String > args, String fixedOrMoving, ArrayList< String > filenames )

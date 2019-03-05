@@ -25,9 +25,7 @@
         <name>EMBL</name>
         <url>https://embl.de/</url>
     </organization>
-
-
-
+    
     <developers>
         <developer>
             <id>tischi</id>

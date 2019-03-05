@@ -38,7 +38,7 @@ public class ElastixSettings
     public String movingImageFilePath;
     public String parameterFilePath;
     public String initialTransformationFilePath = "";
-    public String maskImageFilePath;
+    public String fixedMaskPath;
 
     public String outputModality;
 
@@ -69,4 +69,5 @@ public class ElastixSettings
     public double[] channelWeights;
 
     public String finalResampler;
+    public String movingMaskPath;
 }
