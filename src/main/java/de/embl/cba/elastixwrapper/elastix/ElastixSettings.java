@@ -34,40 +34,31 @@ public class ElastixSettings
     public String elastixDirectory = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
     public String workingDirectory = "/Users/tischi/Desktop/tmp/";
 
-    public String fixedImageFilePath;
-    public String movingImageFilePath;
-    public String parameterFilePath;
+    public String fixedImageFilePath = "";
+    public String movingImageFilePath = "";
+    public String parameterFilePath = "";
     public String initialTransformationFilePath = "";
-    public String fixedMaskPath;
-
-    public String outputModality;
-
-    public String elastixParameters;
-
-    public String transformationFilePath;
-
+    public String fixedMaskPath = "";
+    public String movingMaskPath = "";
+    public String transformationFilePath = "";
+    public String elastixParameters = PARAMETERS_DEFAULT;
     public String resultImageFileType = RESULT_IMAGE_FILE_TYPE_MHD;
 
-    public String os;
-
-    public Boolean recursive = false;
-    public int reference = 1, delta;
-    public int[] regRange = new int[]{1,1};
-    public int[] zRange = new int[]{1,1};
-    public double background = 0;
-    public int iterations = 100;
-    public String spatialSamples = "100; 100";
-    public int workers = Runtime.getRuntime().availableProcessors();
-    public String resolutionPyramid = "10 10; 2 2";
+    public int iterations = 1000;
+    public String spatialSamples = "10000";
+    public int numWorkers = Runtime.getRuntime().availableProcessors();
+    public String downSamplingFactors = "10 10 10";
     public int movingImageBitDepth = 8;
-    public Roi roi = null;
-    public String bSplineGridSpacing = "30 30";
-
+    public String bSplineGridSpacing = "50 50 50";
     public String transformationType;
 
     public int numChannels = 1;
-    public double[] channelWeights;
+    public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
 
-    public String finalResampler;
-    public String movingMaskPath;
+    public String finalResampler = FINAL_RESAMPLER_LINEAR;
+
+    public ElastixSettings()
+    {
+    }
+
 }

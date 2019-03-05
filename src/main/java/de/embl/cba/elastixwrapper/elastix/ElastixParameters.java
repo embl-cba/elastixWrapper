@@ -74,7 +74,7 @@ public class ElastixParameters
         // User defined
         parameters.add( "(Transform \"" + settings.transformationType + "Transform\")" );
         parameters.add( "(MaximumNumberOfIterations " + settings.iterations + ")" );
-        parameters.add( "(ImagePyramidSchedule " + settings.resolutionPyramid.replace( ";", " " ).replace( ",", " " ) + ")" );
+        parameters.add( "(ImagePyramidSchedule " + settings.downSamplingFactors.replace( ";", " " ).replace( ",", " " ) + ")" );
         parameters.add( "(NumberOfSpatialSamples " + settings.spatialSamples.replace( ";", " " ) + ")" );
         parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
 
@@ -93,7 +93,7 @@ public class ElastixParameters
 
 
         // Pyramid
-        parameters.add( "(NumberOfResolutions " + settings.resolutionPyramid.split( ";" ).length + ")" );
+        parameters.add( "(NumberOfResolutions " + settings.downSamplingFactors.split( ";" ).length + ")" );
         addParameter( "FixedImagePyramid", "FixedSmoothingImagePyramid", true, false );
         addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
 
@@ -145,9 +145,9 @@ public class ElastixParameters
         parameters.add("(CheckNumberOfSamples \"false\")");
 
         parameters.add("(Transform \"" + settings.transformationType + "Transform\")");
-        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length + ")");
+        parameters.add("(NumberOfResolutions " + settings.downSamplingFactors.split(";").length + ")");
         parameters.add("(MaximumNumberOfIterations " + settings.iterations + ")");
-        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ").replace(","," ")+")");
+        parameters.add("(ImagePyramidSchedule " + settings.downSamplingFactors.replace(";"," ").replace(","," ")+")");
         parameters.add("(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace(",", " ") + " )");
 
         // Spatial Samples
@@ -237,8 +237,8 @@ public class ElastixParameters
         parameters.add("(MaximumNumberOfIterations " + settings.iterations + ")");
 
         // Pyramid
-        parameters.add("(NumberOfResolutions " + settings.resolutionPyramid.split(";").length + ")");
-        parameters.add("(ImagePyramidSchedule " + settings.resolutionPyramid.replace(";"," ").replace(","," ")+")");
+        parameters.add("(NumberOfResolutions " + settings.downSamplingFactors.split(";").length + ")");
+        parameters.add("(ImagePyramidSchedule " + settings.downSamplingFactors.replace(";"," ").replace(","," ")+")");
 
         // TODO: different pyramids for fixed and moving due to different resolution?
         // or re-save fluorescence image with same resolution as fixed image?

@@ -16,15 +16,15 @@ import java.io.File;
 public class ElastixCommand implements Command
 {
     public static final String SHOW_OUTPUT = "Show output";
-    public static final String SAVE_TRANSFORMED_AS_TIFF =
-            "Save transformed image as Tiff";
+    public static final String SAVE_TRANSFORMED_AS_TIFF = "Save transformed image as Tiff";
+
     @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
 
     @Parameter( label = "Working directory", style = "directory" )
     public File workingDirectory;
 
-    @Parameter( visibility = ItemVisibility.MESSAGE )
+    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false  )
     private String space00 = "\n";
 
     @Parameter( label = "Fixed image" )
@@ -60,7 +60,7 @@ public class ElastixCommand implements Command
             } )
     public String outputModality;
 
-    @Parameter( visibility = ItemVisibility.MESSAGE )
+    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false )
     private String space02 = "\n";
 
     @Parameter( label = "Use fixed image mask" )
@@ -81,7 +81,7 @@ public class ElastixCommand implements Command
     @Parameter( label = "Initial transformation file", required = false )
     public File initialTransformationFile;
 
-    @Parameter( visibility = ItemVisibility.MESSAGE )
+    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false  )
     private String space03 = "\n";
 
     @Parameter( label = "Elastix parameters", choices =
@@ -147,12 +147,8 @@ public class ElastixCommand implements Command
         settings.logService = logService;
 
         settings.elastixDirectory = elastixDirectory.toString();
-        if ( ! settings.elastixDirectory.endsWith( File.separator ) )
-            settings.elastixDirectory += File.separator;
 
         settings.workingDirectory = workingDirectory.toString();
-        if ( ! settings.workingDirectory.endsWith( File.separator ) )
-            settings.workingDirectory += File.separator;
 
         if ( useInitialTransformation )
             settings.initialTransformationFilePath = initialTransformationFile.toString();
@@ -177,8 +173,8 @@ public class ElastixCommand implements Command
         settings.transformationType = transformationType;
         settings.iterations = numIterations;
         settings.spatialSamples = numSpatialSamples;
-        settings.workers = Prefs.getThreads();
-        settings.resolutionPyramid = gaussianSmoothingSigmas;
+        settings.numWorkers = Prefs.getThreads();
+        settings.downSamplingFactors = gaussianSmoothingSigmas;
         settings.bSplineGridSpacing = bSplineGridSpacing;
 
         // TODO: make this a UI

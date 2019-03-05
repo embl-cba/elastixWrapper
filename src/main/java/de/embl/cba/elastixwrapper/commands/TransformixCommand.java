@@ -130,7 +130,7 @@ public class TransformixCommand implements Command
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
 
-        settings.workers = Prefs.getThreads(); // TODO
+        settings.numWorkers = Prefs.getThreads(); // TODO
 
         return settings;
     }

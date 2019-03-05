@@ -47,11 +47,23 @@ public class ElastixWrapper
 
     public void runElastix()
     {
+
+        processSettings();
+
         createOrEmptyWorkingDir();
 
         if ( ! stageImages() ) return;
 
         callElastix();
+    }
+
+    private void processSettings()
+    {
+        if ( ! settings.elastixDirectory.endsWith( File.separator ) )
+            settings.elastixDirectory += File.separator;
+
+        if ( ! settings.workingDirectory.endsWith( File.separator ) )
+            settings.workingDirectory += File.separator;
     }
 
     public void runTransformix()
@@ -303,7 +315,7 @@ public class ElastixWrapper
         args.add( "-tp" );
         args.add( settings.transformationFilePath );
         args.add( "-threads" );
-        args.add( "" + settings.workers );
+        args.add( "" + settings.numWorkers );
 
         return args;
     }
@@ -320,7 +332,7 @@ public class ElastixWrapper
         args.add( "-p" );
         args.add( settings.parameterFilePath );
         args.add( "-threads" );
-        args.add( "" + settings.workers );
+        args.add( "" + settings.numWorkers );
 
         if ( ! settings.initialTransformationFilePath.equals( "" ) )
         {
