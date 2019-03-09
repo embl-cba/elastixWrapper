@@ -12,6 +12,7 @@ import ij.plugin.Duplicator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,8 @@ public class ElastixWrapper
 
     public static final String MHD_SUFFIX = ".mhd";
     public static final String DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME = "to_be_transformed";
+    public static final String FIXED = "f";
+    public static final String MOVING = "m";
 
     ElastixSettings settings;
 
@@ -40,6 +43,7 @@ public class ElastixWrapper
 
     private int movingImageBitDepth;
 
+
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
@@ -47,7 +51,6 @@ public class ElastixWrapper
 
     public void runElastix()
     {
-
         processSettings();
 
         createOrEmptyWorkingDir();
@@ -149,13 +152,19 @@ public class ElastixWrapper
         }
     }
 
-    public void showTransformedImages( )
+    public ArrayList< ImagePlus > openTransformedImages()
     {
+        ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
+
         for ( int c = 1; c <= settings.numChannels; ++c )
         {
-            IJ.open( settings.workingDirectory
-                    + File.separator + createTransformedImageTitle( c ) + ".tif"  );
+            final ImagePlus imagePlus = IJ.openImage( settings.workingDirectory
+                    + File.separator + createTransformedImageTitle( c ) + ".tif" );
+
+            transformedImages.add( imagePlus );
         }
+
+        return transformedImages;
     }
 
 
@@ -174,17 +183,26 @@ public class ElastixWrapper
 
     private boolean stageImages()
     {
-        fixedImageFilenames = stageImageAsMhd( settings.fixedImageFilePath, ELASTIX_FIXED_IMAGE_NAME );
+        fixedImageFilenames = stageImageAsMhd(
+                settings.fixedImageFilePath,
+                ELASTIX_FIXED_IMAGE_NAME );
 
-        movingImageFilenames = stageImageAsMhd( settings.movingImageFilePath, ELASTIX_MOVING_IMAGE_NAME );
+        movingImageFilenames = stageImageAsMhd(
+                settings.movingImageFilePath,
+                ELASTIX_MOVING_IMAGE_NAME );
 
         if ( ! settings.fixedMaskPath.equals( "" ) )
-            fixedMaskFilenames = stageImageAsMhd( settings.fixedMaskPath, ELASTIX_FIXED_MASK_IMAGE_NAME );
+            fixedMaskFilenames = stageImageAsMhd(
+                    settings.fixedMaskPath,
+                    ELASTIX_FIXED_MASK_IMAGE_NAME );
 
         if ( ! settings.movingMaskPath.equals( "" ) )
-            movingMaskFilenames = stageImageAsMhd( settings.movingMaskPath, ELASTIX_MOVING_MASK_IMAGE_NAME );
+            movingMaskFilenames = stageImageAsMhd(
+                    settings.movingMaskPath,
+                    ELASTIX_MOVING_MASK_IMAGE_NAME );
 
-        if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) ) return false;
+        if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) )
+            return false;
 
         settings.numChannels = fixedImageFilenames.size();
 
@@ -195,16 +213,18 @@ public class ElastixWrapper
     {
         setParameters();
 
-        List< String > args = getElastixCallArgs();
+        List< String > args = createElastixCallArgs();
 
         Utils.executeCommand( args, settings.logService );
     }
 
     private boolean checkChannelNumber( int nChannelsFixedImage, int nChannelsMovingImage )
     {
+
         if ( nChannelsFixedImage != nChannelsMovingImage )
         {
-            settings.logService.error( "Number of channels in fixed and moving image do not match." );
+            settings.logService.error( "Number of channels " +
+                    "in fixed and moving image do not match." );
             return false;
         }
         return true;
@@ -290,7 +310,14 @@ public class ElastixWrapper
         {
             Duplicator duplicator = new Duplicator();
 
-            ImagePlus channelImage = duplicator.run( imp, channel, channel, 1 ,imp.getNSlices(), 1, 1 );
+            ImagePlus channelImage = duplicator.run(
+                    imp,
+                    channel,
+                    channel,
+                    1,
+                    imp.getNSlices(),
+                    1,
+                    1 );
 
             if ( filename.equals( ELASTIX_FIXED_MASK_IMAGE_NAME ) )
             {
@@ -320,14 +347,14 @@ public class ElastixWrapper
         return args;
     }
 
-    private List< String > getElastixCallArgs( )
+    private List< String > createElastixCallArgs( )
     {
         List<String> args = new ArrayList<>();
         args.add( createExecutableShellScript( ELASTIX ) );
         args.add( "-out" );
         args.add( settings.workingDirectory );
 
-        addAllImagesAndMasksImages( args );
+        addImagesAndMasksToArguments( args );
 
         args.add( "-p" );
         args.add( settings.parameterFilePath );
@@ -343,35 +370,58 @@ public class ElastixWrapper
         return args;
     }
 
-    private void addAllImagesAndMasksImages( List< String > args )
+    private void addImagesAndMasksToArguments( List< String > args )
     {
-        addImages( args, "f", fixedImageFilenames );
+        addImages( args, FIXED, fixedImageFilenames );
 
-        addImages( args, "m", movingImageFilenames );
+        addImages( args, MOVING, movingImageFilenames );
 
         if ( fixedMaskFilenames != null )
             addImages( args, "fMask", fixedMaskFilenames );
-
 
         if ( movingMaskFilenames != null )
             addImages( args, "mMask", movingMaskFilenames );
     }
 
-    private void addImages( List< String > args, String fixedOrMoving, ArrayList< String > filenames )
+    private void addImages( List< String > args,
+                            String fixedOrMoving,
+                            ArrayList< String > filenames )
     {
-        for ( int c = 0; c < settings.numChannels; ++c )
-        {
-            if ( settings.numChannels == 1 )
-            {
-                args.add( "-" + fixedOrMoving );
-            }
-            else
-            {
-                args.add( "-" + fixedOrMoving + c );
-            }
 
-            args.add( settings.workingDirectory + File.separator + filenames.get( c ) );
+        if ( settings.fixedToMovingChannel.size() == 0 )
+            for ( int c = 0; c < filenames.size(); c++ )
+                settings.fixedToMovingChannel.put( c, c );
+
+        int elastixChannelIndex = 0;
+        for ( int fixedChannelIndex :  settings.fixedToMovingChannel.keySet() )
+        {
+            if (  settings.fixedToMovingChannel.size() == 1 )
+                args.add( "-" + fixedOrMoving );
+            else
+                args.add( "-" + fixedOrMoving + elastixChannelIndex );
+
+            final String filename = getFileName(
+                    fixedOrMoving, filenames, fixedChannelIndex );
+
+            args.add( settings.workingDirectory + File.separator + filename );
+
+            elastixChannelIndex++;
         }
+    }
+
+    private String getFileName(
+            String fixedOrMoving,
+            ArrayList< String > filenames,
+            int fixedChannelIndex )
+    {
+        int filenameIndex;
+
+        if ( fixedOrMoving.equals( FIXED ) )
+			filenameIndex = fixedChannelIndex;
+		else // Moving
+			filenameIndex = settings.fixedToMovingChannel.get( fixedChannelIndex );
+
+        return filenames.get( filenameIndex );
     }
 
     private String createExecutableShellScript( String elastixOrTransformix )
@@ -379,7 +429,8 @@ public class ElastixWrapper
 
         if ( isMac() || isLinux() )
         {
-            String executablePath = settings.workingDirectory + File.separator + "run_" + elastixOrTransformix + ".sh";
+            String executablePath = settings.workingDirectory
+                    + File.separator + "run_" + elastixOrTransformix + ".sh";
 
             String shellScriptText = getScriptText( elastixOrTransformix );
 

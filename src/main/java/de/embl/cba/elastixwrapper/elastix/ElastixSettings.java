@@ -3,6 +3,9 @@ package de.embl.cba.elastixwrapper.elastix;
 import ij.gui.Roi;
 import org.scijava.log.LogService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by tischi on 30/04/17.
  */
@@ -51,6 +54,8 @@ public class ElastixSettings
     public int movingImageBitDepth = 8;
     public String bSplineGridSpacing = "50 50 50";
     public String transformationType;
+
+    public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
 
     public int numChannels = 1;
     public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};

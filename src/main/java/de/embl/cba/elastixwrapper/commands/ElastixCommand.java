@@ -3,6 +3,7 @@ package de.embl.cba.elastixwrapper.commands;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import ij.IJ;
+import ij.ImagePlus;
 import ij.Prefs;
 import org.scijava.ItemVisibility;
 import org.scijava.command.Command;
@@ -11,6 +12,7 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Elastix" )
 public class ElastixCommand implements Command
@@ -135,7 +137,12 @@ public class ElastixCommand implements Command
     {
         elastixWrapper.showInputImage();
         elastixWrapper.createTransformedImagesAndSaveAsTiff();
-        elastixWrapper.showTransformedImages();
+
+        final ArrayList< ImagePlus > transformedImages = elastixWrapper.openTransformedImages();
+
+        for ( ImagePlus transformedImage : transformedImages )
+            transformedImage.show();
+
         elastixWrapper.showTransformationFile();
         IJ.run( "Synchronize Windows", "" );
     }
