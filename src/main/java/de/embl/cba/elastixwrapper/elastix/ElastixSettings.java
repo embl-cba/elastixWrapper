@@ -1,6 +1,5 @@
 package de.embl.cba.elastixwrapper.elastix;
 
-import ij.gui.Roi;
 import org.scijava.log.LogService;
 
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class ElastixSettings
     public static final String FINAL_RESAMPLER_LINEAR = "FinalLinearInterpolator";
     public static final String FINAL_RESAMPLER_NEAREST_NEIGHBOR = "FinalNearestNeighborInterpolator";
 
-    public static final String RESULT_IMAGE_FILE_TYPE_MHD = "mhd";
+    public static final String STAGING_FILE_TYPE = "mhd";
 
     public static final String PARAMETERS_HENNING = "Henning";
     public static final String PARAMETERS_DEFAULT = "Default";
@@ -45,7 +44,7 @@ public class ElastixSettings
     public String movingMaskPath = "";
     public String transformationFilePath = "";
     public String elastixParameters = PARAMETERS_DEFAULT;
-    public String resultImageFileType = RESULT_IMAGE_FILE_TYPE_MHD;
+    public String resultImageFileType = STAGING_FILE_TYPE;
 
     public int iterations = 1000;
     public String spatialSamples = "10000";

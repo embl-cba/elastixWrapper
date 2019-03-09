@@ -129,9 +129,8 @@ public class MetaImage_Reader implements PlugIn {
         //IJ.showStatus(baseName + " opened");
     }
 
-    public ImagePlus load( String  dir, String  name, boolean local )
+    public ImagePlus load( String dir, String name, boolean local )
     {
-
         dir = dir + File.separator;
 
         String headerName = name;

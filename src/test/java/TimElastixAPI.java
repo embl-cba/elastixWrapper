@@ -1,13 +1,6 @@
-import bdv.util.*;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
-import ij.IJ;
-import ij.ImagePlus;
 import net.imagej.ImageJ;
-import net.imglib2.RandomAccessibleInterval;
-import net.imglib2.img.display.imagej.ImageJFunctions;
-
-import java.util.ArrayList;
 
 public class TimElastixAPI
 {
@@ -38,7 +31,7 @@ public class TimElastixAPI
 		// settings.fixedMaskPath = "";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
-		settings.iterations = 1000;
+		settings.iterations = 1;
 		settings.spatialSamples = "3000";
 		// settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
 		// settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
@@ -46,7 +39,7 @@ public class TimElastixAPI
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
 
-		elastixWrapper.showFixedAndTransformedImagesInBdv();
+		elastixWrapper.reviewResults();
 
 		settings.logService.info( "Done!" );
 	}

@@ -94,7 +94,7 @@ public class TransformixCommand implements Command
         ImagePlus result;
 
         if ( settings.resultImageFileType.equals(
-                ElastixSettings.RESULT_IMAGE_FILE_TYPE_MHD ) )
+                ElastixSettings.STAGING_FILE_TYPE ) )
         {
             MetaImage_Reader reader = new MetaImage_Reader();
             result = reader.load(

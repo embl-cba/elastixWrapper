@@ -39,13 +39,13 @@ public class ElastixWrapper
 
     ElastixSettings settings;
 
-    private ArrayList< String > fixedImageFilenames;
-    private ArrayList< String > movingImageFilenames;
-    private ArrayList< String > fixedMaskFilenames;
-    private ArrayList< String > movingMaskFilenames;
+    private ArrayList< String > fixedImageFileNames;
+    private ArrayList< String > movingImageFileNames;
+    private ArrayList< String > fixedMaskFileNames;
+    private ArrayList< String > movingMaskFileNames;
+    private ArrayList< String > transformedImageFileNames;
 
     private int movingImageBitDepth;
-    private ArrayList< String > transformedImagePaths;
     private ArrayList< ARGBType > colors;
     private Bdv bdv;
 
@@ -53,7 +53,7 @@ public class ElastixWrapper
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
-        this.transformedImagePaths = new ArrayList<>(  );
+        this.transformedImageFileNames = new ArrayList<>(  );
     }
 
     public void runElastix()
@@ -111,22 +111,42 @@ public class ElastixWrapper
         if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
 
-    public void showFixedAndTransformedImagesInBdv()
+    public void reviewResults()
     {
+
+        createTransformedImagesAndSaveAsTiff();
 
         initColors();
         int colorIndex = 0;
 
-        // TODO: currently only works for single channel fixed input
-        final BdvStackSource templateSource = showTemplateInBdv();
-        bdv = templateSource.getBdvHandle();
-        templateSource.setColor( colors.get( colorIndex++ ) );
-
-        final ArrayList< ImagePlus > transformedImages = getTransformedImages();
-        for ( ImagePlus transformedImage : transformedImages )
+        for ( int index : settings.fixedToMovingChannel.keySet() )
         {
-            final BdvStackSource bdvStackSource = showImagePlusInBdv( transformedImage );
+            ImagePlus imagePlus = loadMetaImage(
+                    settings.workingDirectory,
+                    fixedImageFileNames.get( index ) );
+            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
+            bdv = bdvStackSource.getBdvHandle();
+        }
+
+        for ( int index : settings.fixedToMovingChannel.values() )
+        {
+            ImagePlus imagePlus = loadMetaImage(
+                    settings.workingDirectory,
+                    movingImageFileNames.get( index ) );
+            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
+            bdvStackSource.setColor( colors.get( colorIndex++ )  );
+            bdv = bdvStackSource.getBdvHandle();
+        }
+
+        for ( int index : settings.fixedToMovingChannel.values() )
+        {
+            ImagePlus imagePlus = loadMetaImage(
+                    settings.workingDirectory,
+                    transformedImageFileNames.get( index ) );
+            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
+            bdvStackSource.setColor( colors.get( colorIndex++ )  );
+            bdv = bdvStackSource.getBdvHandle();
         }
 
     }
@@ -144,11 +164,20 @@ public class ElastixWrapper
     {
         colors = new ArrayList<>();
         colors.add( new ARGBType( ARGBType.rgba( 0, 255, 0, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 0, 255 ) ) );
         colors.add( new ARGBType( ARGBType.rgba( 255, 0, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 0, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 0, 0, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
     }
 
-    private BdvStackSource showTemplateInBdv()
+    private BdvStackSource showFixedInBdv()
     {
         final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
 
@@ -158,28 +187,30 @@ public class ElastixWrapper
     public void createTransformedImagesAndSaveAsTiff()
     {
         settings.transformationFilePath =
-                settings.workingDirectory + File.separator + "TransformParameters.0.txt";
+                getPath( "TransformParameters.0.txt" );
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
-        for ( int c = 0; c < movingImageFilenames.size(); ++c )
+        for ( int c = 0; c < movingImageFileNames.size(); ++c )
         {
             List< String > transformixCallArgs =
                     getTransformixCallArgs(
-                            movingImageFilenames.get( c ), executableShellScript );
+                            movingImageFileNames.get( c ), executableShellScript );
 
             Utils.executeCommand( transformixCallArgs, settings.logService );
 
-            ImagePlus result = loadResultImage(
+            ImagePlus result = loadMetaImage(
                     settings.workingDirectory,
-                    DEFAULT_TRANSFORMIX_OUTPUT_FILENAME,
-                    settings.resultImageFileType );
+                    DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+                            + "."
+                            + settings.resultImageFileType );
 
-            final String path = settings.workingDirectory
-                    + File.separator
-                    + createTransformedImageTitle( c ) + ".tif";
+            final String fileName = createTransformedImageTitle( c ) + ".tif";
 
-            transformedImagePaths.add( path );
+            transformedImageFileNames.add( fileName );
+
+            final String path = getPath( fileName );
+
 
             settings.logService.info( "\nSaving transformed image: " + path );
 
@@ -189,15 +220,20 @@ public class ElastixWrapper
 
     public ArrayList< ImagePlus > getTransformedImages()
     {
-        if ( transformedImagePaths.size() == 0 )
+        if ( transformedImageFileNames.size() == 0 )
             createTransformedImagesAndSaveAsTiff();
 
         ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
 
-        for ( String path : transformedImagePaths )
-            transformedImages.add( IJ.openImage( path ) );
+        for ( String fileName : transformedImageFileNames )
+            transformedImages.add( IJ.openImage( getPath( fileName ) ) );
 
         return transformedImages;
+    }
+
+    private String getPath( String fileName )
+    {
+        return settings.workingDirectory + File.separator + fileName;
     }
 
 
@@ -207,34 +243,33 @@ public class ElastixWrapper
     }
 
 
-    public ImagePlus loadResultImage(
-            String directory, String filename, String fileType )
+    public ImagePlus loadMetaImage( String directory, String filename )
     {
         MetaImage_Reader reader = new MetaImage_Reader();
-        return reader.load( directory,  filename + "." + fileType, false );
+        return reader.load( directory, filename, false );
     }
 
     private boolean stageImages()
     {
-        fixedImageFilenames = stageImageAsMhd(
+        fixedImageFileNames = stageImageAsMhd(
                 settings.fixedImageFilePath,
                 ELASTIX_FIXED_IMAGE_NAME );
 
-        movingImageFilenames = stageImageAsMhd(
+        movingImageFileNames = stageImageAsMhd(
                 settings.movingImageFilePath,
                 ELASTIX_MOVING_IMAGE_NAME );
 
         if ( ! settings.fixedMaskPath.equals( "" ) )
-            fixedMaskFilenames = stageImageAsMhd(
+            fixedMaskFileNames = stageImageAsMhd(
                     settings.fixedMaskPath,
                     ELASTIX_FIXED_MASK_IMAGE_NAME );
 
         if ( ! settings.movingMaskPath.equals( "" ) )
-            movingMaskFilenames = stageImageAsMhd(
+            movingMaskFileNames = stageImageAsMhd(
                     settings.movingMaskPath,
                     ELASTIX_MOVING_MASK_IMAGE_NAME );
 
-        settings.numChannels = fixedImageFilenames.size();
+        settings.numChannels = fixedImageFileNames.size();
 
         return true;
     }
@@ -286,7 +321,7 @@ public class ElastixWrapper
 
     private String getDefaultParameterFilePath()
     {
-        return settings.workingDirectory + File.separator + "elastix_parameters.txt";
+        return getPath( "elastix_parameters.txt" );
     }
 
     private String stageImagePlusAsMhd( ImagePlus imp, String filename )
@@ -342,8 +377,8 @@ public class ElastixWrapper
 
             ImagePlus channelImage = duplicator.run(
                     imp,
-                    channel,
-                    channel,
+                    channel + 1,
+                    channel + 1,
                     1,
                     imp.getNSlices(),
                     1,
@@ -369,7 +404,7 @@ public class ElastixWrapper
         args.add( "-out" );
         args.add( settings.workingDirectory );
         args.add( "-in" );
-        args.add( settings.workingDirectory + File.separator + filenameMoving );
+        args.add( getPath( filenameMoving ) );
         args.add( "-tp" );
         args.add( settings.transformationFilePath );
         args.add( "-threads" );
@@ -403,15 +438,15 @@ public class ElastixWrapper
 
     private void addImagesAndMasksToArguments( List< String > args )
     {
-        addImages( args, FIXED, fixedImageFilenames );
+        addImages( args, FIXED, fixedImageFileNames );
 
-        addImages( args, MOVING, movingImageFilenames );
+        addImages( args, MOVING, movingImageFileNames );
 
-        if ( fixedMaskFilenames != null )
-            addImages( args, "fMask", fixedMaskFilenames );
+        if ( fixedMaskFileNames != null )
+            addImages( args, "fMask", fixedMaskFileNames );
 
-        if ( movingMaskFilenames != null )
-            addImages( args, "mMask", movingMaskFilenames );
+        if ( movingMaskFileNames != null )
+            addImages( args, "mMask", movingMaskFileNames );
     }
 
     private void addImages( List< String > args,
@@ -434,7 +469,7 @@ public class ElastixWrapper
             final String filename = getFileName(
                     fixedOrMoving, filenames, fixedChannelIndex );
 
-            args.add( settings.workingDirectory + File.separator + filename );
+            args.add( getPath( filename ) );
 
             elastixChannelIndex++;
         }
