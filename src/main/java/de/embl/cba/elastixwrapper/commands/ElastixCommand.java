@@ -135,7 +135,7 @@ public class ElastixCommand implements Command
 
     private void showOutput()
     {
-        elastixWrapper.showInputImage();
+        elastixWrapper.showInputImagePlus();
 
         final ArrayList< ImagePlus > transformedImages = elastixWrapper.getTransformedImages();
 

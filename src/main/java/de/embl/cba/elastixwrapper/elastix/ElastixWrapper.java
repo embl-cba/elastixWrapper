@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.elastix;
 
+import bdv.util.*;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -8,6 +9,9 @@ import ij.ImagePlus;
 import ij.Prefs;
 import ij.io.FileSaver;
 import ij.plugin.Duplicator;
+import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.img.display.imagej.ImageJFunctions;
+import net.imglib2.type.numeric.ARGBType;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +46,8 @@ public class ElastixWrapper
 
     private int movingImageBitDepth;
     private ArrayList< String > transformedImagePaths;
+    private ArrayList< ARGBType > colors;
+    private Bdv bdv;
 
 
     public ElastixWrapper( ElastixSettings settings )
@@ -92,7 +98,7 @@ public class ElastixWrapper
     }
 
 
-    public void showInputImage( )
+    public void showInputImagePlus( )
     {
         ImagePlus fixed;
 
@@ -103,6 +109,50 @@ public class ElastixWrapper
         fixed.setTitle( "fixed" );
 
         if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
+    }
+
+    public void showFixedAndTransformedImagesInBdv()
+    {
+
+        initColors();
+        int colorIndex = 0;
+
+        // TODO: currently only works for single channel fixed input
+        final BdvStackSource templateSource = showTemplateInBdv();
+        bdv = templateSource.getBdvHandle();
+        templateSource.setColor( colors.get( colorIndex++ ) );
+
+        final ArrayList< ImagePlus > transformedImages = getTransformedImages();
+        for ( ImagePlus transformedImage : transformedImages )
+        {
+            final BdvStackSource bdvStackSource = showImagePlusInBdv( transformedImage );
+            bdvStackSource.setColor( colors.get( colorIndex++ )  );
+        }
+
+    }
+
+    private BdvStackSource showImagePlusInBdv(
+            ImagePlus transformedImage )
+    {
+        return BdvFunctions.show(
+                ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( transformedImage ),
+                transformedImage.getTitle(),
+                BdvOptions.options().is2D().addTo( bdv ) );
+    }
+
+    private void initColors()
+    {
+        colors = new ArrayList<>();
+        colors.add( new ARGBType( ARGBType.rgba( 0, 255, 0, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 0, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 255, 255 ) ) );
+    }
+
+    private BdvStackSource showTemplateInBdv()
+    {
+        final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
+
+        return showImagePlusInBdv( templateImp );
     }
 
     public void createTransformedImagesAndSaveAsTiff()

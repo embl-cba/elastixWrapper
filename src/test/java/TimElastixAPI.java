@@ -6,7 +6,6 @@ import ij.ImagePlus;
 import net.imagej.ImageJ;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.type.numeric.ARGBType;
 
 import java.util.ArrayList;
 
@@ -47,22 +46,7 @@ public class TimElastixAPI
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
 
-		final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
-		final Bdv bdv = BdvFunctions.show(
-				(RandomAccessibleInterval) ImageJFunctions.wrapReal( templateImp ),
-				templateImp.getTitle(),
-				BdvOptions.options().is2D() ).getBdvHandle();
-
-		final ArrayList< ImagePlus > transformedImages = elastixWrapper.getTransformedImages();
-
-		for ( ImagePlus transformedImage : transformedImages )
-		{
-			final BdvStackSource show = BdvFunctions.show(
-					( RandomAccessibleInterval ) ImageJFunctions.wrapReal( transformedImage ),
-					transformedImage.getTitle(),
-					BdvOptions.options().is2D().addTo( bdv )
-			);
-		}
+		elastixWrapper.showFixedAndTransformedImagesInBdv();
 
 		settings.logService.info( "Done!" );
 	}
