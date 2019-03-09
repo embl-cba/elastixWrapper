@@ -31,7 +31,7 @@ public class TimElastixAPI
 		// settings.fixedMaskPath = "";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
-		settings.iterations = 1;
+		settings.iterations = 1000;
 		settings.spatialSamples = "3000";
 		// settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
 		// settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;

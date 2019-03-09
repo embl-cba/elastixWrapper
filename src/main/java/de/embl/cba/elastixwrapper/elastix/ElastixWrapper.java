@@ -48,6 +48,7 @@ public class ElastixWrapper
     private int movingImageBitDepth;
     private ArrayList< ARGBType > colors;
     private Bdv bdv;
+    private int colorIndex;
 
 
     public ElastixWrapper( ElastixSettings settings )
@@ -113,22 +114,31 @@ public class ElastixWrapper
 
     public void reviewResults()
     {
-
         createTransformedImagesAndSaveAsTiff();
 
         initColors();
-        int colorIndex = 0;
 
-        for ( int index : settings.fixedToMovingChannel.keySet() )
+        showFixedImages();
+
+        showMovingImages();
+
+        showTransformedImages();
+    }
+
+    private void showTransformedImages()
+    {
+        for ( int index : settings.fixedToMovingChannel.values() )
         {
-            ImagePlus imagePlus = loadMetaImage(
-                    settings.workingDirectory,
-                    fixedImageFileNames.get( index ) );
+            ImagePlus imagePlus = IJ.openImage(
+                    getPath( transformedImageFileNames.get( index ) ) );
             final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
         }
+    }
 
+    private void showMovingImages()
+    {
         for ( int index : settings.fixedToMovingChannel.values() )
         {
             ImagePlus imagePlus = loadMetaImage(
@@ -138,17 +148,19 @@ public class ElastixWrapper
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
         }
+    }
 
-        for ( int index : settings.fixedToMovingChannel.values() )
+    private void showFixedImages(  )
+    {
+        for ( int index : settings.fixedToMovingChannel.keySet() )
         {
             ImagePlus imagePlus = loadMetaImage(
                     settings.workingDirectory,
-                    transformedImageFileNames.get( index ) );
+                    fixedImageFileNames.get( index ) );
             final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
         }
-
     }
 
     private BdvStackSource showImagePlusInBdv(
@@ -175,6 +187,7 @@ public class ElastixWrapper
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
+        colorIndex = 0;
     }
 
     private BdvStackSource showFixedInBdv()
@@ -239,7 +252,7 @@ public class ElastixWrapper
 
     private String createTransformedImageTitle( int channel )
     {
-        return "C" + channel + "-moving-aligned";
+        return "C" + channel + "-transformed";
     }
 
 
