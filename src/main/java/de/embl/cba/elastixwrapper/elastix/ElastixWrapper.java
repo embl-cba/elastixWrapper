@@ -12,7 +12,6 @@ import ij.plugin.Duplicator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +41,13 @@ public class ElastixWrapper
     private ArrayList< String > movingMaskFilenames;
 
     private int movingImageBitDepth;
+    private boolean transformedImageAreAvailable;
 
 
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
+        this.transformedImageAreAvailable = false;
     }
 
     public void runElastix()
@@ -73,11 +74,13 @@ public class ElastixWrapper
     {
         createOrEmptyWorkingDir();
 
-        ArrayList< String > fileNames = stageImageAsMhd( settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
+        ArrayList< String > fileNames = stageImageAsMhd(
+                settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
-        List< String > transformixCallArgs = getTransformixCallArgs( fileNames.get( 0 ), executableShellScript );
+        List< String > transformixCallArgs = getTransformixCallArgs(
+                fileNames.get( 0 ), executableShellScript );
 
         Utils.executeCommand( transformixCallArgs, settings.logService );
 
@@ -150,10 +153,15 @@ public class ElastixWrapper
 
             new FileSaver( result ).saveAsTiff( path );
         }
+
+        transformedImageAreAvailable = true;
     }
 
-    public ArrayList< ImagePlus > openTransformedImages()
+    public ArrayList< ImagePlus > getTransformedImages()
     {
+        if ( ! transformedImageAreAvailable )
+            createTransformedImagesAndSaveAsTiff();
+
         ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
 
         for ( int c = 1; c <= settings.numChannels; ++c )
