@@ -41,13 +41,13 @@ public class ElastixWrapper
     private ArrayList< String > movingMaskFilenames;
 
     private int movingImageBitDepth;
-    private boolean transformedImageAreAvailable;
+    private ArrayList< String > transformedImagePaths;
 
 
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
-        this.transformedImageAreAvailable = false;
+        this.transformedImagePaths = new ArrayList<>(  );
     }
 
     public void runElastix()
@@ -105,28 +105,6 @@ public class ElastixWrapper
         if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
 
-    private void mergeAndShowOutputChannels()
-    {
-
-        // TODO: does not work
-
-        if ( settings.numChannels > 1 )
-        {
-            String mergeCmd = "";
-
-            for ( int c = 1; c <= settings.numChannels; ++c )
-            {
-                mergeCmd += "c" + c + "=" + createTransformedImageTitle( c ) + " ";
-            }
-
-            mergeCmd += "create";
-
-            IJ.run( "Merge Channels...", mergeCmd );
-
-            IJ.getImage().setTitle( "result" );
-        }
-    }
-
     public void createTransformedImagesAndSaveAsTiff()
     {
         settings.transformationFilePath =
@@ -134,12 +112,14 @@ public class ElastixWrapper
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
-        for ( int c = 1; c <= settings.numChannels; ++c )
+        for ( int c = 0; c < movingImageFilenames.size(); ++c )
         {
             List< String > transformixCallArgs =
                     getTransformixCallArgs(
-                            movingImageFilenames.get( c - 1 ), executableShellScript );
+                            movingImageFilenames.get( c ), executableShellScript );
+
             Utils.executeCommand( transformixCallArgs, settings.logService );
+
             ImagePlus result = loadResultImage(
                     settings.workingDirectory,
                     DEFAULT_TRANSFORMIX_OUTPUT_FILENAME,
@@ -149,28 +129,23 @@ public class ElastixWrapper
                     + File.separator
                     + createTransformedImageTitle( c ) + ".tif";
 
+            transformedImagePaths.add( path );
+
             settings.logService.info( "\nSaving transformed image: " + path );
 
             new FileSaver( result ).saveAsTiff( path );
         }
-
-        transformedImageAreAvailable = true;
     }
 
     public ArrayList< ImagePlus > getTransformedImages()
     {
-        if ( ! transformedImageAreAvailable )
+        if ( transformedImagePaths.size() == 0 )
             createTransformedImagesAndSaveAsTiff();
 
         ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
 
-        for ( int c = 1; c <= settings.numChannels; ++c )
-        {
-            final ImagePlus imagePlus = IJ.openImage( settings.workingDirectory
-                    + File.separator + createTransformedImageTitle( c ) + ".tif" );
-
-            transformedImages.add( imagePlus );
-        }
+        for ( String path : transformedImagePaths )
+            transformedImages.add( IJ.openImage( path ) );
 
         return transformedImages;
     }
@@ -208,9 +183,6 @@ public class ElastixWrapper
             movingMaskFilenames = stageImageAsMhd(
                     settings.movingMaskPath,
                     ELASTIX_MOVING_MASK_IMAGE_NAME );
-
-        if ( ! checkChannelNumber( fixedImageFilenames.size(), movingImageFilenames.size() ) )
-            return false;
 
         settings.numChannels = fixedImageFilenames.size();
 
@@ -314,7 +286,7 @@ public class ElastixWrapper
     {
         ArrayList< String > filenames = new ArrayList<>( );
 
-        for ( int channel = 1; channel <= imp.getNChannels(); ++channel )
+        for ( int channel = 0; channel < imp.getNChannels(); ++channel )
         {
             Duplicator duplicator = new Duplicator();
 
@@ -332,7 +304,8 @@ public class ElastixWrapper
                 convertToMask( channelImage );
             }
 
-            filenames.add( stageImagePlusAsMhd( channelImage, filename + "-C" + channel ) );
+            filenames.add( stageImagePlusAsMhd(
+                    channelImage, filename + "-C" + channel ) );
         }
 
         return filenames;

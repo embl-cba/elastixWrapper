@@ -1,13 +1,12 @@
-import bdv.util.Bdv;
-import bdv.util.BdvFunctions;
-import bdv.util.BdvHandle;
-import bdv.util.BdvOptions;
+import bdv.util.*;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import ij.IJ;
 import ij.ImagePlus;
 import net.imagej.ImageJ;
+import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
+import net.imglib2.type.numeric.ARGBType;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class TimElastixAPI
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
-		settings.transformationType = ElastixSettings.EULER;
+		settings.transformationType = ElastixSettings.AFFINE;
 		settings.fixedImageFilePath = "/Users/tischer/Desktop/tim-elastix/template.tif";
 		settings.movingImageFilePath = "/Users/tischer/Desktop/tim-elastix/bUnwarpJ_pass.tif";
 
@@ -40,8 +39,8 @@ public class TimElastixAPI
 		// settings.fixedMaskPath = "";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
-		// settings.iterations = 1000;
-		// settings.spatialSamples = 10000;
+		settings.iterations = 1000;
+		settings.spatialSamples = "3000";
 		// settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
 		// settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
 
@@ -50,7 +49,7 @@ public class TimElastixAPI
 
 		final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
 		final Bdv bdv = BdvFunctions.show(
-				ImageJFunctions.wrap( templateImp ),
+				(RandomAccessibleInterval) ImageJFunctions.wrapReal( templateImp ),
 				templateImp.getTitle(),
 				BdvOptions.options().is2D() ).getBdvHandle();
 
@@ -58,11 +57,11 @@ public class TimElastixAPI
 
 		for ( ImagePlus transformedImage : transformedImages )
 		{
-			BdvFunctions.show(
-					ImageJFunctions.wrap( transformedImage  ),
+			final BdvStackSource show = BdvFunctions.show(
+					( RandomAccessibleInterval ) ImageJFunctions.wrapReal( transformedImage ),
 					transformedImage.getTitle(),
 					BdvOptions.options().is2D().addTo( bdv )
-					);
+			);
 		}
 
 		settings.logService.info( "Done!" );
