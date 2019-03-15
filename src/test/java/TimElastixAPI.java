@@ -1,3 +1,4 @@
+import bdv.util.Bdv;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
@@ -38,8 +39,9 @@ public class TimElastixAPI
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
-		elastixWrapper.createTransformedImagesAndSaveAsTiff();
-		//elastixWrapper.reviewResults();
+		//elastixWrapper.createTransformedImagesAndSaveAsTiff();
+		final Bdv bdv = elastixWrapper.reviewResults();
+		bdv.close();
 
 		settings.logService.info( "Done!" );
 	}
