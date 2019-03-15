@@ -67,15 +67,17 @@ public class ElastixParameters
     }
 
 
-    public List<String> getDetlevStyleParameters( )
+    public List<String> getDefaultParameters( )
     {
         parameters = new ArrayList<>();
 
         // User defined
         parameters.add( "(Transform \"" + settings.transformationType + "Transform\")" );
         parameters.add( "(MaximumNumberOfIterations " + settings.iterations + ")" );
-        parameters.add( "(ImagePyramidSchedule " + settings.downSamplingFactors.replace( ";", " " ).replace( ",", " " ) + ")" );
-        parameters.add( "(NumberOfSpatialSamples " + settings.spatialSamples.replace( ";", " " ) + ")" );
+        parameters.add( "(ImagePyramidSchedule " +
+                settings.downSamplingFactors.replace( ";", " " ).replace( ",", " " ) + ")" );
+        parameters.add( "(NumberOfSpatialSamples " +
+                settings.spatialSamples.replace( ";", " " ) + ")" );
         parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
 
 
@@ -90,7 +92,6 @@ public class ElastixParameters
         }
 
         addParameter( "CheckNumberOfSamples", "false", false, false );
-
 
         // Pyramid
         parameters.add( "(NumberOfResolutions " + settings.downSamplingFactors.split( ";" ).length + ")" );

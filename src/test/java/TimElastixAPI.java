@@ -27,7 +27,7 @@ public class TimElastixAPI
 		 */
 		settings.fixedToMovingChannel.put( 0, 1 );
 
-		settings.downSamplingFactors = "10 10 10";
+		settings.downSamplingFactors = "10 10";
 		// settings.fixedMaskPath = "";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
@@ -38,8 +38,8 @@ public class TimElastixAPI
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
-
-		elastixWrapper.reviewResults();
+		elastixWrapper.createTransformedImagesAndSaveAsTiff();
+		//elastixWrapper.reviewResults();
 
 		settings.logService.info( "Done!" );
 	}

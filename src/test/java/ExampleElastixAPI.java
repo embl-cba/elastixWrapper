@@ -20,8 +20,8 @@ public class ExampleElastixAPI
 		settings.fixedImageFilePath = getImageFilePath( "ellipsoid-horizontal-dxyz200nm.tif");
 		settings.movingImageFilePath = getImageFilePath( "ellipsoid-at45degrees-dxyz200nm.tif" );
 		settings.downSamplingFactors = "10 10 10";
-		// settings.fixedMaskPath = "";
-		// settings.movingMaskPath = "";
+		settings.fixedMaskPath = "";
+		settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
 		// settings.iterations = 1000;
 		// settings.spatialSamples = 10000;

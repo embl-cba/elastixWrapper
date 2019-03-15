@@ -112,7 +112,13 @@ public class ElastixWrapper
         if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
 
-    public void reviewResults()
+    /**
+     * Shows the fixed, moving and transformed moving images
+     * in BigDataViewer.
+     *
+     * @return {@code Bdv} BigDataViewer handle, enabling, e.g., bdv.close()
+     */
+    public Bdv reviewResults()
     {
         createTransformedImagesAndSaveAsTiff();
 
@@ -123,6 +129,8 @@ public class ElastixWrapper
         showMovingImages();
 
         showTransformedImages();
+
+        return bdv;
     }
 
     private void showTransformedImages()
@@ -315,20 +323,31 @@ public class ElastixWrapper
 
         ElastixParameters parameters = new ElastixParameters( settings );
 
+        final List< String > parameterList;
+
+        System.out.println( "Parameter list type: " + settings.elastixParameters);
+
         if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_HENNING ) )
         {
-            Utils.saveStringListToFile( parameters.getHenningStyleParameters( ), settings.parameterFilePath );
+            parameterList = parameters.getHenningStyleParameters();
         }
         else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_GIULIA ) )
         {
-            Utils.saveStringListToFile( parameters.getGiuliaMizzonStyleParameters(), settings.parameterFilePath );
+            parameterList = parameters.getGiuliaMizzonStyleParameters();
         }
         else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DEFAULT ) )
         {
-            Utils.saveStringListToFile( parameters.getDetlevStyleParameters( ), settings.parameterFilePath );
+            parameterList = parameters.getDefaultParameters( );
+        }
+        else
+        {
+            IJ.error( "Could not generate parameter list." );
+            parameterList = null;
         }
 
-
+        System.out.println( "Number of parameters: " + parameterList.size() );
+        System.out.println( "Writing parameter file: " + settings.parameterFilePath  );
+        Utils.saveStringListToFile( parameterList, settings.parameterFilePath );
     }
 
 
@@ -382,7 +401,7 @@ public class ElastixWrapper
 
     private ArrayList< String > stageMultiChannelImagePlusAsMhd( ImagePlus imp, String filename )
     {
-        ArrayList< String > filenames = new ArrayList<>( );
+        ArrayList< String > fileNames = new ArrayList<>( );
 
         for ( int channel = 0; channel < imp.getNChannels(); ++channel )
         {
@@ -402,11 +421,11 @@ public class ElastixWrapper
                 convertToMask( channelImage );
             }
 
-            filenames.add( stageImagePlusAsMhd(
+            fileNames.add( stageImagePlusAsMhd(
                     channelImage, filename + "-C" + channel ) );
         }
 
-        return filenames;
+        return fileNames;
     }
 
     private List< String > getTransformixCallArgs( String filenameMoving, String executableShellScript )

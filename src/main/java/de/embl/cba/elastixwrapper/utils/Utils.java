@@ -30,6 +30,7 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
+import ij.IJ;
 import org.scijava.log.LogService;
 
 import java.io.*;
@@ -95,12 +96,14 @@ public abstract class Utils {
             FileWriter writer = new FileWriter( path );
             for (String str : parameters)
             {
+                System.out.println( str );
                 writer.write(str+"\n");
             }
             writer.close();
         }
         catch ( Exception e )
         {
+            IJ.showMessage( "Writing file failed: " + path );
             System.out.print( e.toString() );
         }
     }

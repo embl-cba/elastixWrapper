@@ -38,10 +38,11 @@ public class ElastixSettings
 
     public String fixedImageFilePath = "";
     public String movingImageFilePath = "";
-    public String parameterFilePath = "";
-    public String initialTransformationFilePath = "";
     public String fixedMaskPath = "";
     public String movingMaskPath = "";
+
+    public String parameterFilePath = "";
+    public String initialTransformationFilePath = "";
     public String transformationFilePath = "";
     public String elastixParameters = PARAMETERS_DEFAULT;
     public String resultImageFileType = STAGING_FILE_TYPE;
