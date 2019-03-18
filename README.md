@@ -147,13 +147,13 @@ And just a reminder: Elastix works in physical units and it is thus important th
 #### Submit as cluster job
 
 ```
-srun --mem 16000 -n 8 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test/out',outputModality='Save as BigDataViewer .xml/.h5'" &
+srun --mem 16000 -n 1 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test/out',outputModality='Save as BigDataViewer .xml/.h5'"
 ```
 
 #### Submit MMPB transformation as a  cluster job
 
 ```
-srun --mem 16000 -n 8 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TEMP', inputImageFile='/g/arendt/PrImR/ProSPr6/ProSPr6_Ref.tif',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.Similarity-3Channels.0.txt',outputDirectory='/g/arendt/EM_6dpf_segmentation/EM-Prospr/',outputModality='Save as BigDataViewer .xml/.h5'" &
+srun --mem 16000 -n 1 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/cba/tischer/tmp-elastix', inputImageFile='/g/cba/tischer/tmp/ProSPr6_Ref.tif',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.Similarity-3Channels.0.txt',outputFile='/g/arendt/EM_6dpf_segmentation/EM-Prospr/ProSPr6_Ref-SPM.xml',outputModality='Save as BigDataViewer .xml/.h5'" &
 ```
 
 

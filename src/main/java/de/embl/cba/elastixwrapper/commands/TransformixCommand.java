@@ -42,9 +42,11 @@ public class TransformixCommand implements Command
     } )
     public String outputModality;
 
-    @Parameter( label = "Output path", style = "save" )
+    @Parameter( label = "Output file", style = "save" )
     public File outputFile;
 
+    @Parameter( label = "Number of threads" )
+    int numThreads = 1;
 
     public void run()
     {
@@ -115,8 +117,7 @@ public class TransformixCommand implements Command
         settings.workingDirectory = workingDirectory.toString();
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
-
-        settings.numWorkers = Prefs.getThreads(); // TODO
+        settings.numWorkers = numThreads;
 
         return settings;
     }
