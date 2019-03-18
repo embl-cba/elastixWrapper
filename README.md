@@ -119,7 +119,9 @@ The parameters, given as a comma separated key value pair list, are:
 - outputDirectory
 - outputModality
 
-### Running transformix EMBL Slurm cluster
+### Running transformix on EMBL Slurm cluster
+
+#### Executable command
 
 ```
 /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test/out',outputModality='Save as BigDataViewer .xml/.h5'"
@@ -140,6 +142,21 @@ To adapt it to your own application, the following parameters should be adapted:
     - 'Save as BigDataViewer .xml/.h5'
 
 And just a reminder: Elastix works in physical units and it is thus important that your images are properly calibrated.
+
+
+#### Submit as cluster job
+
+```
+srun --mem 16000 -n 8 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/almf/software/elastix-test/tmp', inputImageFile='/g/almf/software/elastix-test/muscles.tif',transformationFile='/g/almf/software/elastix-test/TransformParameters.RotationPreAlign.0.txt',outputDirectory='/g/almf/software/elastix-test/out',outputModality='Save as BigDataViewer .xml/.h5'" &
+```
+
+#### Submit MMPB transformation as a  cluster job
+
+```
+srun --mem 16000 -n 8 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TEMP', inputImageFile='/g/arendt/PrImR/ProSPr6/ProSPr6_Ref.tif',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.Similarity-3Channels.0.txt',outputDirectory='/g/arendt/EM_6dpf_segmentation/EM-Prospr/',outputModality='Save as BigDataViewer .xml/.h5'" &
+```
+
+
 
 ### Running elastix via API
 

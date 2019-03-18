@@ -40,11 +40,11 @@ public class TransformixCommand implements Command
             CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK,
             CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV
     } )
-
     public String outputModality;
 
-    @Parameter( label = "Output directory", style = "directory" )
-    public File outputDirectory;
+    @Parameter( label = "Output path", style = "save" )
+    public File outputFile;
+
 
     public void run()
     {
@@ -64,26 +64,12 @@ public class TransformixCommand implements Command
         else if ( outputModality.equals(
                 CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK ) )
         {
-
-            String outputPath =
-                    outputDirectory.getPath()
-                            + File.separator
-                            + inputImageFile.getName()
-                            + "-transformed.tif";
-
-            new FileSaver( result ).saveAsTiff( outputPath );
+            new FileSaver( result ).saveAsTiff( outputFile.toString() );
         }
         else if ( outputModality.equals(
                 CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV ) )
         {
-
-            String outputPath =
-                    outputDirectory.getPath()
-                            + File.separator
-                            + inputImageFile.getName()
-                            + "-transformed.xml";
-
-            BdvWriter.saveAsBdv( result, new File( outputPath ) );
+            BdvWriter.saveAsBdv( result, outputFile );
         }
 
     }
