@@ -37,10 +37,11 @@ The `export` statements have to be adapted for your gene and user.
     - SPMs: must enfd with -SPM.xml
     
 
-
-
 ### Notes
 
 - Faster transformation for testing: `TransformParameters.Similarity-3Channels.0.txt`
+
+### Issues
+
 - It is super weird: setting `-n` to a value larger than `1` did execute the job multiple times...
 - I did not manage yet to specify a cluster job specific tmp dir. I tried using $TMPDIR, but it did not work. Like this, jobs running on the same node will screw up each other.
