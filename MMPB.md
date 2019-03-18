@@ -42,10 +42,5 @@ The `export` statements have to be adapted for your gene and user.
 ### Notes
 
 - Faster transformation for testing: `TransformParameters.Similarity-3Channels.0.txt`
-- It is very weird: setting `-n` to a value larger than `1` will execute the job multiple times...
-- have to control to number of threads that transformix is taking; currently it seems to just grab all: `bash-4.2$ cat /g/cba/cluster/tischer/elastix-job-000.out
-                                                                    [INFO] Command launched: /tmp/run_transformix.sh -out /tmp -in /tmp/to_be_transformed.mhd -tp /g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt -threads 48`
-
-
-## Nearest neighbor transformation for MED
-
+- It is super weird: setting `-n` to a value larger than `1` did execute the job multiple times...
+- I did not manage yet to specify a cluster job specific tmp dir. I tried using $TMPDIR, but it did not work. Like this, jobs running on the same node will screw up each other.
