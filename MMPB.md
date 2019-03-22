@@ -7,6 +7,8 @@
 ```
 #!/bin/bash
 
+
+
 export TRAFO="/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt"
 export OUT="/g/cba/cluster/tischer/elastix-job-000.out"
 export ERR="/g/cba/cluster/tischer/elastix-job-000.err"
