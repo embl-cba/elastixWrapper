@@ -1,0 +1,45 @@
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
+import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import ij.IJ;
+import ij.ImagePlus;
+import net.imagej.ImageJ;
+
+public class ExampleTransformixAPI
+{
+	public static void main( String[] args )
+	{
+
+		final ImageJ ij = new ImageJ();
+		ij.ui().showUI();
+
+		final String inputImagePath =
+				"/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/FIB segmentation/muscle.tif";
+
+		IJ.open( inputImagePath );
+
+		ElastixSettings settings = new ElastixSettings();
+
+		settings.logService = ij.log();
+		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
+		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+		settings.movingImageFilePath = inputImagePath;
+		settings.transformationFilePath = "/Users/tischer/Desktop/transform.txt";
+
+		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
+		elastixWrapper.runTransformix();
+
+		MetaImage_Reader reader = new MetaImage_Reader();
+		final ImagePlus transformed = reader.load(
+				settings.workingDirectory,
+				ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+						+ "." + settings.resultImageFileType,
+				false );
+
+		transformed.show();
+
+		settings.logService.info( "Done!" );
+	}
+
+}

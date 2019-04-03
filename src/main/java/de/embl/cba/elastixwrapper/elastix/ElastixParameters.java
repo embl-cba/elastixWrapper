@@ -20,7 +20,7 @@ public class ElastixParameters
     {
         String key = "MetricCHANNELWeight";
 
-        for ( int c = 0; c < settings.numChannels; ++c )
+        for ( int c = 0; c < settings.fixedToMovingChannel.size(); ++c )
         {
             String channelKey = key.replace( "CHANNEL", ""+c  );
             String channelWeight = "" + settings.channelWeights[ c ];
@@ -28,7 +28,11 @@ public class ElastixParameters
         }
     }
 
-    private void addParameter( String key, String value, boolean isMultiChannelParameter, boolean isNumeric )
+    private void addParameter(
+            String key,
+            String value,
+            boolean isMultiChannelParameter,
+            boolean isNumeric )
     {
         String keyValues = "(KEY VALUES)";
 
@@ -38,11 +42,12 @@ public class ElastixParameters
         parameters.add( keyValues );
     }
 
-    private String setValues( String value, String keyValues, boolean isMultiChannelParameter, boolean isNumeric )
+    private String setValues(
+            String value, String keyValues, boolean isMultiChannelParameter, boolean isNumeric )
     {
         String values = "";
 
-        int n = isMultiChannelParameter ? settings.numChannels : 1;
+        int n = isMultiChannelParameter ? settings.fixedToMovingChannel.size() : 1;
 
         for ( int c = 0; c < n; ++c )
         {
@@ -81,9 +86,13 @@ public class ElastixParameters
         parameters.add( "(FinalGridSpacingInVoxels " + settings.bSplineGridSpacing.replace( ",", " " ) + " )" );
 
 
-        if ( settings.numChannels > 1 )
+        if ( settings.fixedToMovingChannel.size() > 1 )
         {
-            addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
+            addParameter(
+                    "Registration",
+                    "MultiMetricMultiResolutionRegistration",
+                    false,
+                    false );
             addChannelWeights();
         }
         else
@@ -125,7 +134,12 @@ public class ElastixParameters
         parameters.add("(AutomaticScalesEstimation \"true\")");
 
         // Metric
-        addParameter( "Metric", "AdvancedMattesMutualInformation", true, false );
+        addParameter(
+                "Metric",
+                "AdvancedMattesMutualInformation",
+                true,
+                false );
+
         parameters.add("(NumberOfHistogramBins 32)"); // needed for AdvancedMattesMutualInformation
 
         parameters.add("(HowToCombineTransforms \"Compose\")");
@@ -222,7 +236,7 @@ public class ElastixParameters
     {
         parameters = new ArrayList<>();
 
-        if ( settings.numChannels > 1 )
+        if ( settings.fixedToMovingChannel.size() > 1 )
         {
             addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
             addChannelWeights();

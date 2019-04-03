@@ -17,8 +17,8 @@ public class TimElastixAPI
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
 		settings.transformationType = ElastixSettings.AFFINE;
-		settings.fixedImageFilePath = "/Users/tischer/Desktop/tim-elastix/template.tif";
-		settings.movingImageFilePath = "/Users/tischer/Desktop/tim-elastix/bUnwarpJ_pass.tif";
+		settings.fixedImageFilePath = "/Users/tischer/Desktop/3dtemplate.tif";
+		settings.movingImageFilePath = "/Users/tischer/Desktop/3dtemplate.tif";
 
 		/**
 		 * You want to match the first channel (0) in the fixed image,
@@ -26,22 +26,21 @@ public class TimElastixAPI
 		 * to the second channel (1) in the moving image
 		 * - which has two channels -
 		 */
-		settings.fixedToMovingChannel.put( 0, 1 );
+		settings.fixedToMovingChannel.put( 1, 1 );
 
-		settings.downSamplingFactors = "10 10";
+		settings.downSamplingFactors = "10 10 10";
 		// settings.fixedMaskPath = "";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
-		settings.iterations = 1000;
+		settings.iterations = 1;
 		settings.spatialSamples = "3000";
 		// settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
 		// settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
-		//elastixWrapper.createTransformedImagesAndSaveAsTiff();
 		final Bdv bdv = elastixWrapper.reviewResults();
-		bdv.close();
+		//bdv.close();
 
 		settings.logService.info( "Done!" );
 	}

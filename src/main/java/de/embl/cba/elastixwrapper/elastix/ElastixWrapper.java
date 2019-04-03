@@ -49,6 +49,7 @@ public class ElastixWrapper
     private ArrayList< ARGBType > colors;
     private Bdv bdv;
     private int colorIndex;
+    private int nChannels;
 
 
     public ElastixWrapper( ElastixSettings settings )
@@ -292,6 +293,13 @@ public class ElastixWrapper
 
         settings.numChannels = fixedImageFileNames.size();
 
+        if ( settings.fixedToMovingChannel.size() == 0 )
+        {
+            // use all channels for registration
+            for ( int c = 0; c < settings.numChannels; c++ )
+                settings.fixedToMovingChannel.put( c, c );
+        }
+
         return true;
     }
 
@@ -378,7 +386,9 @@ public class ElastixWrapper
             movingImageBitDepth = imp.getBitDepth();
         }
 
-        if ( imp.getNChannels() > 1 )
+        nChannels = imp.getNChannels();
+
+        if ( nChannels > 1 )
         {
             return stageMultiChannelImagePlusAsMhd( imp, filename );
         }
@@ -470,28 +480,23 @@ public class ElastixWrapper
 
     private void addImagesAndMasksToArguments( List< String > args )
     {
-        addImages( args, FIXED, fixedImageFileNames );
+        addImagesToArguments( args, FIXED, fixedImageFileNames );
 
-        addImages( args, MOVING, movingImageFileNames );
+        addImagesToArguments( args, MOVING, movingImageFileNames );
 
         if ( fixedMaskFileNames != null )
-            addImages( args, "fMask", fixedMaskFileNames );
+            addImagesToArguments( args, "fMask", fixedMaskFileNames );
 
         if ( movingMaskFileNames != null )
-            addImages( args, "mMask", movingMaskFileNames );
+            addImagesToArguments( args, "mMask", movingMaskFileNames );
     }
 
-    private void addImages( List< String > args,
-                            String fixedOrMoving,
-                            ArrayList< String > filenames )
+    private void addImagesToArguments( List< String > args,
+                                       String fixedOrMoving,
+                                       ArrayList< String > fileNames )
     {
-
-        if ( settings.fixedToMovingChannel.size() == 0 )
-            for ( int c = 0; c < filenames.size(); c++ )
-                settings.fixedToMovingChannel.put( c, c );
-
         int elastixChannelIndex = 0;
-        for ( int fixedChannelIndex :  settings.fixedToMovingChannel.keySet() )
+        for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() )
         {
             if (  settings.fixedToMovingChannel.size() == 1 )
                 args.add( "-" + fixedOrMoving );
@@ -499,7 +504,7 @@ public class ElastixWrapper
                 args.add( "-" + fixedOrMoving + elastixChannelIndex );
 
             final String filename = getFileName(
-                    fixedOrMoving, filenames, fixedChannelIndex );
+                    fixedOrMoving, fileNames, fixedChannelIndex );
 
             args.add( getPath( filename ) );
 
