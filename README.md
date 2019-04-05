@@ -4,6 +4,10 @@ This repository contains a Fiji plugin to run elastix registration algorithms vi
 
 Fiji handles image the data, provides the GUI and runs elastix via system calls.
 
+## Cite
+
+- Tischer, C. (2019). ElastixWrapper: Fiji plugin for 3D image registration with elastix. Zenodo. http://doi.org/10.5281/zenodo.2602549
+
 ## Learn more
 
 - Elastix manual: http://elastix.isi.uu.nl/download/elastix_manual_v4.8.pdf
