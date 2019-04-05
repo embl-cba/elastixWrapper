@@ -8,9 +8,11 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
 import ij.io.FileSaver;
+import ij.measure.Calibration;
 import ij.plugin.Duplicator;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
+import net.imglib2.realtransform.Scale3D;
 import net.imglib2.type.numeric.ARGBType;
 
 import java.io.File;
@@ -173,21 +175,48 @@ public class ElastixWrapper
     }
 
     private BdvStackSource showImagePlusInBdv(
-            ImagePlus transformedImage )
+            ImagePlus imp )
     {
-        return BdvFunctions.show(
-                ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( transformedImage ),
-                transformedImage.getTitle(),
-                BdvOptions.options().is2D().addTo( bdv ) );
+
+        final Calibration calibration = imp.getCalibration();
+
+        if ( imp.getNSlices() > 1 )
+        {
+            final double[] calib = {
+                    calibration.pixelWidth,
+                    calibration.pixelHeight,
+                    calibration.pixelDepth
+            };
+            return BdvFunctions.show(
+                    ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( imp ),
+                    imp.getTitle(),
+                    BdvOptions.options().addTo( bdv ).axisOrder( AxisOrder.XYZ ).sourceTransform( calib ) );
+        }
+        else
+        {
+
+            final double[] calib = {
+                    calibration.pixelWidth,
+                    calibration.pixelHeight
+            };
+
+            return BdvFunctions.show(
+                    ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( imp ),
+                    imp.getTitle(),
+                    BdvOptions.options().addTo( bdv ).is2D().sourceTransform( calib ) );
+        }
     }
 
     private void initColors()
     {
         colors = new ArrayList<>();
-        colors.add( new ARGBType( ARGBType.rgba( 0, 255, 0, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 0, 0, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 0, 0, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 000, 255, 000, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 000, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 000, 000, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 000, 000, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 000, 255, 255, 255 ) ) );
+        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 000, 255 ) ) );
+
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
         colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
@@ -366,6 +395,9 @@ public class ElastixWrapper
 
     private String stageImagePlusAsMhd( ImagePlus imp, String filename )
     {
+        if ( filename.equals( ELASTIX_FIXED_MASK_IMAGE_NAME ) || filename.equalsIgnoreCase( ELASTIX_MOVING_MASK_IMAGE_NAME ) )
+            convertToMask( imp );
+
         MetaImage_Writer writer = new MetaImage_Writer();
         String filenameWithExtension = filename + MHD_SUFFIX;
         writer.save( imp, settings.workingDirectory, filenameWithExtension );
@@ -413,29 +445,29 @@ public class ElastixWrapper
     {
         ArrayList< String > fileNames = new ArrayList<>( );
 
-        for ( int channel = 0; channel < imp.getNChannels(); ++channel )
+        for ( int channelIndex = 0; channelIndex < imp.getNChannels(); ++channelIndex )
         {
-            Duplicator duplicator = new Duplicator();
-
-            ImagePlus channelImage = duplicator.run(
-                    imp,
-                    channel + 1,
-                    channel + 1,
-                    1,
-                    imp.getNSlices(),
-                    1,
-                    1 );
-
-            if ( filename.equals( ELASTIX_FIXED_MASK_IMAGE_NAME ) )
-            {
-                convertToMask( channelImage );
-            }
+            ImagePlus channelImage = getChannel( imp, channelIndex );
 
             fileNames.add( stageImagePlusAsMhd(
-                    channelImage, filename + "-C" + channel ) );
+                    channelImage, filename + "-C" + channelIndex ) );
         }
 
         return fileNames;
+    }
+
+    private ImagePlus getChannel( ImagePlus imp, int channel )
+    {
+        Duplicator duplicator = new Duplicator();
+
+        return duplicator.run(
+                imp,
+                channel + 1,
+                channel + 1,
+                1,
+                imp.getNSlices(),
+                1,
+                1 );
     }
 
     private List< String > getTransformixCallArgs( String filenameMoving, String executableShellScript )

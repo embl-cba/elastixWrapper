@@ -3,7 +3,7 @@ import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 
-public class TimElastixAPI
+public class ParapodRegistration
 {
 	public static void main( String[] args )
 	{
@@ -16,29 +16,28 @@ public class TimElastixAPI
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+
+		settings.fixedImageFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/spem-seg-ganglion.tif";
+
+		settings.movingImageFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/fib-sem-seg-ganglion.tif";
+
+		settings.fixedMaskPath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/spem-mask-ganglion.tif";
+
+
+		settings.initialTransformationFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/amira-transform.txt";
+
 		settings.transformationType = ElastixSettings.AFFINE;
-		settings.fixedImageFilePath = "/Users/tischer/Desktop/3dtemplate.tif";
-		settings.movingImageFilePath = "/Users/tischer/Desktop/3dstg16.tif";
-
-		/**
-		 * You want to match the first channel (0) in the fixed image,
-		 * - which has only one channel -
-		 * to the second channel (1) in the moving image
-		 * - which has two channels -
-		 */
-		settings.fixedToMovingChannel.put( 1, 1 );
-
-		settings.downSamplingFactors = "10 10 10";
-		// settings.fixedMaskPath = "";
+		settings.downSamplingFactors = "10 10 10; 2, 2, 2";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";
 		settings.iterations = 1000;
-		settings.spatialSamples = "10000";
-		// settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
+		settings.spatialSamples = "10000; 10000";
+		settings.channelWeights = new double[]{1.0, 1.0, 3.0, 1.0, 1.0};
 		// settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
 		elastixWrapper.runElastix();
+
 		final Bdv bdv = elastixWrapper.reviewResults();
 		//bdv.close();
 
@@ -47,7 +46,7 @@ public class TimElastixAPI
 
 	private static String getImageFilePath( String relativePath )
 	{
-		return TimElastixAPI.class.getResource( relativePath ).getFile().toString();
+		return ParapodRegistration.class.getResource( relativePath ).getFile().toString();
 	}
 
 }
