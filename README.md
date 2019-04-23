@@ -1,12 +1,18 @@
 # Fiji plugins for running elastix and transformix
 
-This repository contains a Fiji plugin to run elastix registration algorithms via a GUI.
+This repository contains the code for the Fiji plugin (Elastix)[https://imagej.net/Elastix] for 2D and 3D image registration. The plugin is a wrapper around the image registration suite (elastix)[http://elastix.isi.uu.nl/]. Wrapping elastix into Fiji provides the convenience of easy image handling, visualisation and a graphical user interface.
 
-Fiji handles image the data, provides the GUI and runs elastix via system calls.
+## Citation
 
-## Cite
+This plugin:
 
 - Tischer, C. (2019). ElastixWrapper: Fiji plugin for 3D image registration with elastix. Zenodo. http://doi.org/10.5281/zenodo.2602549
+
+elastix:
+
+- S. Klein, M. Staring, K. Murphy, M.A. Viergever, J.P.W. Pluim, "elastix: a toolbox for intensity based medical image registration," IEEE Transactions on Medical Imaging, vol. 29, no. 1, pp. 196 - 205, January 2010.
+
+- D.P. Shamonin, E.E. Bron, B.P.F. Lelieveldt, M. Smits, S. Klein and M. Staring, "Fast Parallel Image Registration on CPU and GPU for Diagnostic Classification of Alzheimer’s Disease", Frontiers in Neuroinformatics, vol. 7, no. 50, pp. 1-15, January 2014.
 
 ## Learn more
 
