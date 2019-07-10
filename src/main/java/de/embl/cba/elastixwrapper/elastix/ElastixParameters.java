@@ -42,8 +42,7 @@ public class ElastixParameters
         parameters.add( keyValues );
     }
 
-    private String setValues(
-            String value, String keyValues, boolean isMultiChannelParameter, boolean isNumeric )
+    private String setValues( String value, String keyValues, boolean isMultiChannelParameter, boolean isNumeric )
     {
         String values = "";
 

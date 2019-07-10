@@ -142,7 +142,7 @@ To adapt it to your own application, the following parameters should be adapted:
 - transformationFile
     - your transformation file, as generated using elastix 
 - outputModality
-    - 'Save as Tiff stack'
+    - 'Save as Tiff'
     - 'Save as BigDataViewer .xml/.h5'
 
 And just a reminder: Elastix works in physical units and it is thus important that your images are properly calibrated.

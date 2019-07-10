@@ -6,8 +6,8 @@ public class CommandUtils
             = "Show fixed and moving as individual images";
     public static final String OUTPUT_MODALITY_SHOW_IMAGE
             = "Show image";
-    public static final String OUTPUT_MODALITY_SAVE_AS_TIFF_STACK
-            = "Save as Tiff stack";
+    public static final String OUTPUT_MODALITY_SAVE_AS_TIFF
+            = "Save as Tiff";
     public static final String OUTPUT_MODALITY_SAVE_AS_BDV
             = "Save as BigDataViewer .xml/.h5";
     public static final String OUTPUT_MODALITY_SHOW_AS_COMPOSITE_IMAGE

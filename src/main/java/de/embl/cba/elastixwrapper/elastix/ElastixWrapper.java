@@ -12,7 +12,6 @@ import ij.measure.Calibration;
 import ij.plugin.Duplicator;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.realtransform.Scale3D;
 import net.imglib2.type.numeric.ARGBType;
 
 import java.io.File;
@@ -84,15 +83,13 @@ public class ElastixWrapper
     {
         createOrEmptyWorkingDir();
 
-        ArrayList< String > fileNames = stageImageAsMhd(
+        ArrayList< String > channelFileNames = stageImageAsMhd(
                 settings.movingImageFilePath, DEFAULT_TRANSFORMIX_INPUT_IMAGE_NAME );
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
-        List< String > transformixCallArgs = getTransformixCallArgs(
-                fileNames.get( 0 ), executableShellScript );
-
-        Utils.executeCommand( transformixCallArgs, settings.logService );
+        for ( int c = 0; c < channelFileNames.size(); c++ )
+            transformImageAndSaveAsTiff( executableShellScript, channelFileNames, c );
 
     }
 
@@ -243,30 +240,34 @@ public class ElastixWrapper
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
         for ( int c = 0; c < movingImageFileNames.size(); ++c )
-        {
-            List< String > transformixCallArgs =
-                    getTransformixCallArgs(
-                            movingImageFileNames.get( c ), executableShellScript );
+            transformImageAndSaveAsTiff( executableShellScript, movingImageFileNames, c );
+    }
 
-            Utils.executeCommand( transformixCallArgs, settings.logService );
+    private void transformImageAndSaveAsTiff( String executableShellScript,
+                                              ArrayList< String > movingImageFileNames,
+                                              int c )
+    {
+        List< String > transformixCallArgs =
+                getTransformixCallArgs(
+                        movingImageFileNames.get( c ), executableShellScript );
 
-            ImagePlus result = loadMetaImage(
-                    settings.workingDirectory,
-                    DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
-                            + "."
-                            + settings.resultImageFileType );
+        Utils.executeCommand( transformixCallArgs, settings.logService );
 
-            final String fileName = createTransformedImageTitle( c ) + ".tif";
+        ImagePlus result = loadMetaImage(
+                settings.workingDirectory,
+                DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+                        + "."
+                        + settings.resultImageFileType );
 
-            transformedImageFileNames.add( fileName );
+        final String fileName = createTransformedImageTitle( c ) + ".tif";
 
-            final String path = getPath( fileName );
+        transformedImageFileNames.add( fileName );
 
+        final String path = getPath( fileName );
 
-            settings.logService.info( "\nSaving transformed image: " + path );
+        settings.logService.info( "\nSaving transformed image: " + path );
 
-            new FileSaver( result ).saveAsTiff( path );
-        }
+        new FileSaver( result ).saveAsTiff( path );
     }
 
     public ArrayList< ImagePlus > getTransformedImages()
@@ -288,7 +289,7 @@ public class ElastixWrapper
     }
 
 
-    private String createTransformedImageTitle( int channel )
+    public static String createTransformedImageTitle( int channel )
     {
         return "C" + channel + "-transformed";
     }

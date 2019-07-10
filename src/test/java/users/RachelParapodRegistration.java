@@ -1,9 +1,11 @@
+package users;
+
 import bdv.util.Bdv;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 
-public class ParapodRegistration
+public class RachelParapodRegistration
 {
 	public static void main( String[] args )
 	{
@@ -22,7 +24,6 @@ public class ParapodRegistration
 		settings.movingImageFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/fib-sem-seg-ganglion.tif";
 
 		settings.fixedMaskPath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/spem-mask-ganglion.tif";
-
 
 		settings.initialTransformationFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/amira-transform.txt";
 
@@ -46,7 +47,7 @@ public class ParapodRegistration
 
 	private static String getImageFilePath( String relativePath )
 	{
-		return ParapodRegistration.class.getResource( relativePath ).getFile().toString();
+		return RachelParapodRegistration.class.getResource( relativePath ).getFile().toString();
 	}
 
 }

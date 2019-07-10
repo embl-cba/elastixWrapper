@@ -7,7 +7,6 @@ import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.utils.CommandUtils;
 import ij.ImagePlus;
-import ij.Prefs;
 import ij.io.FileSaver;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
@@ -15,6 +14,7 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Transformix" )
 public class TransformixCommand implements Command
@@ -37,12 +37,12 @@ public class TransformixCommand implements Command
 
     @Parameter( label = "Output modality", choices = {
             CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE,
-            CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK,
+            CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF,
             CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV
     } )
     public String outputModality;
 
-    @Parameter( label = "Output file", style = "save" )
+    @Parameter( label = "Output file (without extension!)", style = "save" )
     public File outputFile;
 
     @Parameter( label = "Number of threads" )
@@ -50,30 +50,34 @@ public class TransformixCommand implements Command
 
     public void run()
     {
-        ElastixSettings settings = runTransformix();
-        handleOutput( settings );
+        ElastixWrapper wrapper = runTransformix();
+        handleOutput( wrapper );
     }
 
-    private void handleOutput( ElastixSettings settings )
+    private void handleOutput( ElastixWrapper wrapper )
     {
+        ArrayList< ImagePlus > results = wrapper.getTransformedImages();
 
-        ImagePlus result = openResultImage( settings );
+        for ( int c = 0; c < results.size(); ++c )
+        {
+            ImagePlus result = results.get( c );
 
-        if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE ) )
-        {
-            result.show();
+            if ( outputModality.equals( CommandUtils.OUTPUT_MODALITY_SHOW_IMAGE ) )
+            {
+                result.show();
+                result.setTitle( "transformed-ch" + c );
+            }
+            else if ( outputModality.equals(
+                    CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+            {
+                new FileSaver( result ).saveAsTiff( outputFile.toString() + "-ch" + c + ".tif" );
+            }
+            else if ( outputModality.equals(
+                    CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV ) )
+            {
+                BdvWriter.saveAsBdv( result, new File( outputFile.toString() + "-ch" + c + ".xml" ) );
+            }
         }
-        else if ( outputModality.equals(
-                CommandUtils.OUTPUT_MODALITY_SAVE_AS_TIFF_STACK ) )
-        {
-            new FileSaver( result ).saveAsTiff( outputFile.toString() );
-        }
-        else if ( outputModality.equals(
-                CommandUtils.OUTPUT_MODALITY_SAVE_AS_BDV ) )
-        {
-            BdvWriter.saveAsBdv( result, outputFile );
-        }
-
     }
 
 
@@ -95,16 +99,17 @@ public class TransformixCommand implements Command
         {
             result = null;
         }
+
         return result;
     }
 
 
-    private ElastixSettings runTransformix()
+    private ElastixWrapper runTransformix()
     {
         ElastixSettings settings = getSettingsFromUI();
         ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
         elastixWrapper.runTransformix();
-        return settings;
+        return elastixWrapper;
     }
 
     private ElastixSettings getSettingsFromUI()
