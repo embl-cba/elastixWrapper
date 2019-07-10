@@ -2,8 +2,6 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import ij.IJ;
-import ij.ImagePlus;
 import ij.Prefs;
 import org.scijava.ItemVisibility;
 import org.scijava.command.Command;
@@ -12,13 +10,13 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import java.io.File;
-import java.util.ArrayList;
 
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Elastix" )
 public class ElastixCommand implements Command
 {
-    public static final String SHOW_OUTPUT = "Show output";
-    public static final String SAVE_TRANSFORMED_AS_TIFF = "Save transformed image as Tiff";
+    public static final String SHOW_OUTPUT_IN_IMAGEJ1 = "Show output in ImageJ1";
+    public static final String SHOW_OUTPUT_IN_BDV = "Show output in Bdv";
+    public static final String SAVE_TRANSFORMED_AS_TIFF = "Save transformed images in working directory as Tiff";
 
     @Parameter( label = "Elastix directory", style = "directory" )
     public File elastixDirectory;
@@ -57,7 +55,7 @@ public class ElastixCommand implements Command
 
     @Parameter( label = "Output modality",
             choices = {
-                    SHOW_OUTPUT,
+                    SHOW_OUTPUT_IN_IMAGEJ1,
                     SAVE_TRANSFORMED_AS_TIFF
             } )
     public String outputModality;
@@ -109,7 +107,6 @@ public class ElastixCommand implements Command
     public void run()
     {
         runElastix();
-        handleOutput();
     }
 
     private void runElastix( )
@@ -119,31 +116,22 @@ public class ElastixCommand implements Command
         elastixWrapper = new ElastixWrapper( settings );
 
         elastixWrapper.runElastix();
-    }
 
-    private void handleOutput( )
-    {
-        if ( outputModality.equals( SHOW_OUTPUT ) )
+        elastixWrapper.showTransformationFile();
+
+        if ( outputModality.equals( SHOW_OUTPUT_IN_BDV ))
         {
-            showOutput();
+            elastixWrapper.reviewResults();
+        }
+        else if ( outputModality.equals( SHOW_OUTPUT_IN_IMAGEJ1 ))
+        {
+            elastixWrapper.reviewResultsInImageJ();
         }
         else if ( outputModality.equals( SAVE_TRANSFORMED_AS_TIFF ) )
         {
             elastixWrapper.createTransformedImagesAndSaveAsTiff();
         }
-    }
 
-    private void showOutput()
-    {
-        elastixWrapper.showInputImagePlus();
-
-        final ArrayList< ImagePlus > transformedImages = elastixWrapper.getTransformedImages();
-
-        for ( ImagePlus transformedImage : transformedImages )
-            transformedImage.show();
-
-        elastixWrapper.showTransformationFile();
-        IJ.run( "Synchronize Windows", "" );
     }
 
     private ElastixSettings getSettings()
@@ -187,6 +175,8 @@ public class ElastixCommand implements Command
         settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
 
         settings.finalResampler = finalResampler;
+
+        settings.outputModality = outputModality;
 
         return settings;
     }

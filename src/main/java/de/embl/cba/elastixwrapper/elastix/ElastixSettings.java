@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper.elastix;
 
 import org.scijava.log.LogService;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,8 @@ public class ElastixSettings
     public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
 
     public String finalResampler = FINAL_RESAMPLER_LINEAR;
+    public String outputModality;
+    public File outputFile;
 
     public ElastixSettings()
     {

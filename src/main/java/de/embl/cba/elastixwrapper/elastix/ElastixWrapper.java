@@ -1,6 +1,7 @@
 package de.embl.cba.elastixwrapper.elastix;
 
 import bdv.util.*;
+import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -38,13 +39,20 @@ public class ElastixWrapper
     public static final String FIXED = "f";
     public static final String MOVING = "m";
 
-    ElastixSettings settings;
+	public static final String OUTPUT_MODALITY_SHOW_IMAGES
+			= "Show images";
+	public static final String OUTPUT_MODALITY_SAVE_AS_TIFF
+			= "Save as Tiff";
+	public static final String OUTPUT_MODALITY_SAVE_AS_BDV
+			= "Save as BigDataViewer .xml/.h5";
+
+	ElastixSettings settings;
 
     private ArrayList< String > fixedImageFileNames;
     private ArrayList< String > movingImageFileNames;
     private ArrayList< String > fixedMaskFileNames;
     private ArrayList< String > movingMaskFileNames;
-    private ArrayList< String > transformedImageFileNames;
+    private ArrayList< String > transformedImageFilePaths;
 
     private int movingImageBitDepth;
     private ArrayList< ARGBType > colors;
@@ -56,7 +64,7 @@ public class ElastixWrapper
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
-        this.transformedImageFileNames = new ArrayList<>(  );
+        this.transformedImageFilePaths = new ArrayList<>(  );
     }
 
     public void runElastix()
@@ -89,7 +97,7 @@ public class ElastixWrapper
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
         for ( int c = 0; c < channelFileNames.size(); c++ )
-            transformImageAndSaveAsTiff( executableShellScript, channelFileNames, c );
+            transformImageAndHandleOutput( executableShellScript, channelFileNames, c );
 
     }
 
@@ -124,7 +132,7 @@ public class ElastixWrapper
 
         initColors();
 
-        showFixedImages();
+        showFixedImagesInBdv();
 
         showMovingImages();
 
@@ -137,8 +145,7 @@ public class ElastixWrapper
     {
         for ( int index : settings.fixedToMovingChannel.values() )
         {
-            ImagePlus imagePlus = IJ.openImage(
-                    getPath( transformedImageFileNames.get( index ) ) );
+            ImagePlus imagePlus = IJ.openImage( transformedImageFilePaths.get( index ) );
             final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
@@ -158,7 +165,7 @@ public class ElastixWrapper
         }
     }
 
-    private void showFixedImages(  )
+    private void showFixedImagesInBdv(  )
     {
         for ( int index : settings.fixedToMovingChannel.keySet() )
         {
@@ -234,18 +241,38 @@ public class ElastixWrapper
 
     public void createTransformedImagesAndSaveAsTiff()
     {
+        settings.outputModality = OUTPUT_MODALITY_SAVE_AS_TIFF;
+        settings.outputFile = new File( settings.workingDirectory + "transformed" );
+
         settings.transformationFilePath =
                 getPath( "TransformParameters.0.txt" );
 
         String executableShellScript = createExecutableShellScript( TRANSFORMIX );
 
         for ( int c = 0; c < movingImageFileNames.size(); ++c )
-            transformImageAndSaveAsTiff( executableShellScript, movingImageFileNames, c );
+            transformImageAndHandleOutput( executableShellScript, movingImageFileNames, c );
     }
 
-    private void transformImageAndSaveAsTiff( String executableShellScript,
-                                              ArrayList< String > movingImageFileNames,
-                                              int c )
+	public void reviewResultsInImageJ()
+	{
+		settings.outputModality = OUTPUT_MODALITY_SHOW_IMAGES;
+		settings.outputFile = new File( settings.workingDirectory + "transformed" );
+
+		settings.transformationFilePath =
+				getPath( "TransformParameters.0.txt" );
+
+		String executableShellScript = createExecutableShellScript( TRANSFORMIX );
+
+		showInputImagePlus();
+
+		for ( int c = 0; c < movingImageFileNames.size(); ++c )
+			transformImageAndHandleOutput( executableShellScript, movingImageFileNames, c );
+
+	}
+
+    private void transformImageAndHandleOutput( String executableShellScript,
+                                                ArrayList< String > movingImageFileNames,
+                                                int c )
     {
         List< String > transformixCallArgs =
                 getTransformixCallArgs(
@@ -259,26 +286,42 @@ public class ElastixWrapper
                         + "."
                         + settings.resultImageFileType );
 
-        final String fileName = createTransformedImageTitle( c ) + ".tif";
+        if ( settings.outputModality.equals( OUTPUT_MODALITY_SHOW_IMAGES ) )
+        {
+            result.show();
+            result.setTitle( "transformed-ch" + c );
+        }
+        else if ( settings.outputModality.equals( OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+        {
+            final String path = settings.outputFile.toString() + "-ch" + c + ".tif";
 
-        transformedImageFileNames.add( fileName );
+			transformedImageFilePaths.add( path );
 
-        final String path = getPath( fileName );
+            settings.logService.info( "\nSaving transformed image: " + path );
 
-        settings.logService.info( "\nSaving transformed image: " + path );
+            new FileSaver( result ).saveAsTiff( path );
+        }
+        else if ( settings.outputModality.equals(
+                OUTPUT_MODALITY_SAVE_AS_BDV ) )
+        {
+            final String path = settings.outputFile.toString() + "-ch" + c + ".xml";
 
-        new FileSaver( result ).saveAsTiff( path );
+            settings.logService.info( "\nSaving transformed image: " + path );
+
+            BdvImagePlusExport.saveAsBdv( result, new File( path ) );
+        }
+
     }
 
     public ArrayList< ImagePlus > getTransformedImages()
     {
-        if ( transformedImageFileNames.size() == 0 )
+        if ( transformedImageFilePaths.size() == 0 )
             createTransformedImagesAndSaveAsTiff();
 
         ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
 
-        for ( String fileName : transformedImageFileNames )
-            transformedImages.add( IJ.openImage( getPath( fileName ) ) );
+        for ( String path : transformedImageFilePaths )
+            transformedImages.add( IJ.openImage( path ) );
 
         return transformedImages;
     }
