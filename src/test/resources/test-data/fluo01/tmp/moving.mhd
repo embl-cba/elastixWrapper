@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = True
+DimSize = 61 54 100
+ElementSize = 1.9999999999999998E-4 1.9999999999999998E-4 1.9999999999999998E-4
+ElementType = MET_UCHAR
+ElementDataFile = moving.raw
