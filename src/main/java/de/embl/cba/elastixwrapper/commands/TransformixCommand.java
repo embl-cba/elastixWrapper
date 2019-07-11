@@ -35,7 +35,7 @@ public class TransformixCommand implements Command
     } )
     public String outputModality;
 
-    @Parameter( label = "Output file (without extension!)", style = "save" )
+    @Parameter( label = "Output file", style = "save" )
     public File outputFile;
 
     @Parameter( label = "Number of threads" )

@@ -18,10 +18,10 @@ public class TestElastix
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
-		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+		settings.workingDirectory = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/tmp";
 		settings.transformationType = ElastixSettings.EULER;
-		settings.fixedImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/ellipsoid-horizontal-dxyz200nm.tif";
-		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/ellipsoid-at45degrees-dxyz200nm.tif";
+		settings.fixedImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-horizontal-dxyz200nm.tif";
+		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
 		settings.downSamplingFactors = "10 10 10";
 		settings.fixedMaskPath = "";
 		settings.movingMaskPath = "";

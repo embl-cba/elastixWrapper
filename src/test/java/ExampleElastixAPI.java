@@ -16,8 +16,8 @@ public class ExampleElastixAPI
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
 		settings.transformationType = ElastixSettings.EULER;
-		settings.fixedImageFilePath = getImageFilePath( "test-data/ellipsoid-horizontal-dxyz200nm.tif" );
-		settings.movingImageFilePath = getImageFilePath( "test-data/ellipsoid-at45degrees-dxyz200nm.tif" );
+		settings.fixedImageFilePath = getImageFilePath( "test-data/fluo01/ellipsoid-horizontal-dxyz200nm.tif" );
+		settings.movingImageFilePath = getImageFilePath( "test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif" );
 		settings.downSamplingFactors = "10 10 10";
 		settings.fixedMaskPath = "";
 		settings.movingMaskPath = "";

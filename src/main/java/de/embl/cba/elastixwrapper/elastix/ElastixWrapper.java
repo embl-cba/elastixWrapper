@@ -291,24 +291,32 @@ public class ElastixWrapper
             result.show();
             result.setTitle( "transformed-ch" + c );
         }
-        else if ( settings.outputModality.equals( OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+        else
         {
-            final String path = settings.outputFile.toString() + "-ch" + c + ".tif";
+            String outputFile = settings.outputFile.toString();
+            outputFile = outputFile.replace( ".tif", "" );
+            outputFile = outputFile.replace( ".xml", "" );
 
-			transformedImageFilePaths.add( path );
+            if ( settings.outputModality.equals( OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+            {
 
-            settings.logService.info( "\nSaving transformed image: " + path );
+                final String path = outputFile + "-ch" + c + ".tif";
 
-            new FileSaver( result ).saveAsTiff( path );
-        }
-        else if ( settings.outputModality.equals(
-                OUTPUT_MODALITY_SAVE_AS_BDV ) )
-        {
-            final String path = settings.outputFile.toString() + "-ch" + c + ".xml";
+                transformedImageFilePaths.add( path );
 
-            settings.logService.info( "\nSaving transformed image: " + path );
+                settings.logService.info( "\nSaving transformed image: " + path );
 
-            BdvImagePlusExport.saveAsBdv( result, new File( path ) );
+                new FileSaver( result ).saveAsTiff( path );
+            }
+            else if ( settings.outputModality.equals(
+                    OUTPUT_MODALITY_SAVE_AS_BDV ) )
+            {
+                final String path = outputFile + "-ch" + c + ".xml";
+
+                settings.logService.info( "\nSaving transformed image: " + path );
+
+                BdvImagePlusExport.saveAsBdv( result, new File( path ) );
+            }
         }
 
     }

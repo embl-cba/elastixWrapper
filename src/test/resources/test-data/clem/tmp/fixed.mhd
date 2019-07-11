@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 2
+BinaryData = True
+BinaryDataByteOrderMSB = True
+DimSize = 941 1003
+ElementSize = 1.003200007383552E-4 1.003200007383552E-4
+ElementType = MET_UCHAR
+ElementDataFile = fixed.raw
