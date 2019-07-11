@@ -22,7 +22,7 @@ public class TestElastix
 		settings.transformationType = ElastixSettings.EULER;
 		settings.fixedImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-horizontal-dxyz200nm.tif";
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
-		settings.downSamplingFactors = "10 10 10";
+		settings.downSamplingFactors = "10 10";
 		settings.fixedMaskPath = "";
 		settings.movingMaskPath = "";
 

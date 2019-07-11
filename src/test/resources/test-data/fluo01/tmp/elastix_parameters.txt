@@ -1,6 +1,6 @@
 (Transform "EulerTransform")
 (MaximumNumberOfIterations 1000)
-(ImagePyramidSchedule 10 10 10)
+(ImagePyramidSchedule 10 10)
 (NumberOfSpatialSamples 10000)
 (FinalGridSpacingInVoxels 50 50 50 )
 (Registration "MultiResolutionRegistration")

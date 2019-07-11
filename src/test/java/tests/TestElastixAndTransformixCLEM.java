@@ -65,8 +65,8 @@ public class TestElastixAndTransformixCLEM
 
 	public static void main( String[] args )
 	{
-//		new TestElastixAndTransformixCLEM().registerFluoToEM();
-		new TestElastixAndTransformixCLEM().transformTwoChannelFluo();
+		new TestElastixAndTransformixCLEM().registerFluoToEM();
+//		new TestElastixAndTransformixCLEM().transformTwoChannelFluo();
 	}
 
 
