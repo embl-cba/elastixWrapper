@@ -7,16 +7,14 @@
 ```
 #!/bin/bash
 
-
-
+export WORKING_DIR="/tmp/elastix"
 export TRAFO="/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt"
 export OUT="/g/cba/cluster/tischer/elastix-job-000.out"
 export ERR="/g/cba/cluster/tischer/elastix-job-000.err"
 export INPUT_IMAGE="/g/cba/tischer/tmp/ProSPr6_Ref.tif"
 export OUTPUT_IMAGE="/g/arendt/EM_6dpf_segmentation/EM-Prospr/ProSPr6_Ref-SPM.xml"
 
-srun --mem 16000 -n 1 -N 1 -c 8 -t 30:00 -o $OUT -e $ERR /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix" "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TMPDIR', inputImageFile='$INPUT_IMAGE',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt
-',outputFile='$OUTPUT_IMAGE',outputModality='Save as BigDataViewer .xml/.h5',numThreads='1'"
+srun --mem 16000 -n 1 -N 1 -c 8 -t 30:00 -o $OUT -e $ERR mkdir -p $WORKING_DIR; /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix" "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$WORKING_DIR', inputImageFile='$INPUT_IMAGE',transformationFile='$TRAFO',outputFile='$OUTPUT_IMAGE',outputModality='Save as BigDataViewer .xml/.h5',numThreads='1'"
 ```
 
 - Save this file, e.g. with the name `transformix.job`.
