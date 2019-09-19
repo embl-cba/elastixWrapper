@@ -30,7 +30,9 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
-import ij.IJ;
+import ij.*;
+import ij.process.ByteProcessor;
+import ij.process.ImageProcessor;
 import org.scijava.log.LogService;
 
 import java.io.*;
@@ -181,4 +183,42 @@ public abstract class Utils {
             e.printStackTrace();
         }
     }
+
+	public static void convertToMask( ImagePlus imp, float threshold )
+	{
+		int width = imp.getWidth();
+		int height = imp.getHeight();
+		int size = width*height;
+		int nSlices = imp.getStackSize();
+		ImageStack stack1 = imp.getStack();
+		ImageStack stack2 = new ImageStack(width, height);
+		float value;
+		ImageProcessor ip1, ip2;
+		IJ.showStatus("Converting to mask");
+		for (int i=1; i<=nSlices; i++) {
+			IJ.showProgress(i, nSlices);
+			String label = stack1.getSliceLabel(i);
+			ip1 = stack1.getProcessor(i);
+			ip2 = new ByteProcessor(width, height);
+			for (int j=0; j<size; j++) {
+				value = ip1.getf(j);
+				if ( value>=threshold )
+					ip2.set(j, 1);
+				else
+					ip2.set(j, 0);
+			}
+			stack2.addSlice(label, ip2);
+		}
+		imp.setStack(null, stack2);
+		ImageStack stack = imp.getStack();
+		stack.setColorModel( LookUpTable.createGrayscaleColorModel(!Prefs.blackBackground));
+		imp.setStack(null, stack);
+		if (imp.isComposite()) {
+			CompositeImage ci = (CompositeImage)imp;
+			ci.setMode(IJ.GRAYSCALE);
+			ci.resetDisplayRanges();
+			ci.updateAndDraw();
+		}
+		IJ.showStatus("");
+	}
 }

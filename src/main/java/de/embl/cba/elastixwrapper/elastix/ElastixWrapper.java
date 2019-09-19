@@ -5,8 +5,7 @@ import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
 import de.embl.cba.elastixwrapper.utils.Utils;
-import ij.IJ;
-import ij.ImagePlus;
+import ij.*;
 import ij.Prefs;
 import ij.io.FileSaver;
 import ij.measure.Calibration;
@@ -14,6 +13,7 @@ import ij.plugin.Duplicator;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.type.numeric.ARGBType;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,14 +39,7 @@ public class ElastixWrapper
     public static final String FIXED = "f";
     public static final String MOVING = "m";
 
-	public static final String OUTPUT_MODALITY_SHOW_IMAGES
-			= "Show images";
-	public static final String OUTPUT_MODALITY_SAVE_AS_TIFF
-			= "Save as Tiff";
-	public static final String OUTPUT_MODALITY_SAVE_AS_BDV
-			= "Save as BigDataViewer .xml/.h5";
-
-	ElastixSettings settings;
+    ElastixSettings settings;
 
     private ArrayList< String > fixedImageFileNames;
     private ArrayList< String > movingImageFileNames;
@@ -106,6 +99,21 @@ public class ElastixWrapper
         IJ.open( settings.workingDirectory + "TransformParameters.0.txt");
     }
 
+    public void saveTransformationFile()
+    {
+        final File transformation =
+                new File( settings.workingDirectory + "TransformParameters.0.txt" );
+
+        File copied = new File( settings.transformationOutputFilePath );
+
+        try
+        {
+            FileUtils.copyFile( transformation, copied);
+        } catch ( IOException e )
+        {
+            e.printStackTrace();
+        }
+    }
 
     public void showInputImagePlus( )
     {
@@ -117,8 +125,10 @@ public class ElastixWrapper
 
         fixed.setTitle( "fixed" );
 
-        if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
+        // TODO: The macro recording does not work when using IJ.run(..) inside the plugin
+        // if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
+
 
     /**
      * Shows the fixed, moving and transformed moving images
@@ -241,7 +251,7 @@ public class ElastixWrapper
 
     public void createTransformedImagesAndSaveAsTiff()
     {
-        settings.outputModality = OUTPUT_MODALITY_SAVE_AS_TIFF;
+        settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
         settings.outputFile = new File( settings.workingDirectory + "transformed" );
 
         settings.transformationFilePath =
@@ -255,7 +265,7 @@ public class ElastixWrapper
 
 	public void reviewResultsInImageJ()
 	{
-		settings.outputModality = OUTPUT_MODALITY_SHOW_IMAGES;
+		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES;
 		settings.outputFile = new File( settings.workingDirectory + "transformed" );
 
 		settings.transformationFilePath =
@@ -286,7 +296,7 @@ public class ElastixWrapper
                         + "."
                         + settings.resultImageFileType );
 
-        if ( settings.outputModality.equals( OUTPUT_MODALITY_SHOW_IMAGES ) )
+        if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
         {
             result.show();
             result.setTitle( "transformed-ch" + c );
@@ -297,7 +307,7 @@ public class ElastixWrapper
             outputFile = outputFile.replace( ".tif", "" );
             outputFile = outputFile.replace( ".xml", "" );
 
-            if ( settings.outputModality.equals( OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+            if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF ) )
             {
 
                 final String path = outputFile + "-ch" + c + ".tif";
@@ -309,7 +319,7 @@ public class ElastixWrapper
                 new FileSaver( result ).saveAsTiff( path );
             }
             else if ( settings.outputModality.equals(
-                    OUTPUT_MODALITY_SAVE_AS_BDV ) )
+                    ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV ) )
             {
                 final String path = outputFile + "-ch" + c + ".xml";
 
@@ -447,8 +457,9 @@ public class ElastixWrapper
 
     private String stageImagePlusAsMhd( ImagePlus imp, String filename )
     {
-        if ( filename.equals( ELASTIX_FIXED_MASK_IMAGE_NAME ) || filename.equalsIgnoreCase( ELASTIX_MOVING_MASK_IMAGE_NAME ) )
-            convertToMask( imp );
+        if ( filename.contains( ELASTIX_FIXED_MASK_IMAGE_NAME )
+                || filename.contains( ELASTIX_MOVING_MASK_IMAGE_NAME ) )
+            Utils.convertToMask( imp, 0.1F );
 
         MetaImage_Writer writer = new MetaImage_Writer();
         String filenameWithExtension = filename + MHD_SUFFIX;
@@ -484,14 +495,6 @@ public class ElastixWrapper
         }
     }
 
-    public static void convertToMask( ImagePlus imp )
-    {
-        IJ.setRawThreshold( imp, 0.5, Double.MAX_VALUE, null );
-        Prefs.blackBackground = true;
-        IJ.run( imp, "Convert to Mask", "method=Default background=Dark black" );
-        IJ.run( imp, "Divide...", "value=255 stack" );
-        IJ.wait( 100 );
-    }
 
     private ArrayList< String > stageMultiChannelImagePlusAsMhd( ImagePlus imp, String filename )
     {
@@ -501,8 +504,9 @@ public class ElastixWrapper
         {
             ImagePlus channelImage = getChannel( imp, channelIndex );
 
-            fileNames.add( stageImagePlusAsMhd(
-                    channelImage, filename + "-C" + channelIndex ) );
+            fileNames.add(
+                    stageImagePlusAsMhd(
+                        channelImage, filename + "-C" + channelIndex ) );
         }
 
         return fileNames;

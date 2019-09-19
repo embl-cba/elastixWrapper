@@ -1,3 +1,5 @@
+package command;
+
 import de.embl.cba.elastixwrapper.commands.TransformixCommand;
 import net.imagej.ImageJ;
 

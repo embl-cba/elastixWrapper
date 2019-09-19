@@ -23,7 +23,7 @@ public class TestTransformix
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
 		settings.transformationFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/tmp/TransformParameters.0.txt";
 
-		settings.outputModality = ElastixWrapper.OUTPUT_MODALITY_SAVE_AS_TIFF;
+		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
 		settings.outputFile = new File( "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/transformed-ellipsoid" );
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );

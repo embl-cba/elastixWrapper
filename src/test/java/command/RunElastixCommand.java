@@ -1,3 +1,5 @@
+package command;
+
 import de.embl.cba.elastixwrapper.commands.ElastixCommand;
 import net.imagej.ImageJ;
 

@@ -14,6 +14,7 @@ import java.io.File;
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Elastix" )
 public class ElastixCommand implements Command
 {
+    public static final String NONE = "None";
     public static final String SHOW_OUTPUT_IN_IMAGEJ1 = "Show output in ImageJ1";
     public static final String SHOW_OUTPUT_IN_BDV = "Show output in Bdv";
     public static final String SAVE_TRANSFORMED_AS_TIFF = "Save transformed images in working directory as Tiff";
@@ -53,8 +54,12 @@ public class ElastixCommand implements Command
     @Parameter( label = "Gaussian smoothing sigma [voxels]" )
     public String gaussianSmoothingSigmas = "10,10,10";
 
-    @Parameter( label = "Output modality",
+    @Parameter( label = "Transformation output file", style = "save", required = false  )
+    public File transformationOutputFile = null;
+
+    @Parameter( label = "Image output modality",
             choices = {
+                    NONE,
                     SHOW_OUTPUT_IN_IMAGEJ1,
                     SAVE_TRANSFORMED_AS_TIFF
             } )
@@ -91,7 +96,6 @@ public class ElastixCommand implements Command
             })
     public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
 
-
     @Parameter( label = "Final resampler",
             choices = {
                     ElastixSettings.FINAL_RESAMPLER_LINEAR,
@@ -117,7 +121,7 @@ public class ElastixCommand implements Command
 
         elastixWrapper.runElastix();
 
-        elastixWrapper.showTransformationFile();
+        elastixWrapper.saveTransformationFile();
 
         if ( outputModality.equals( SHOW_OUTPUT_IN_BDV ))
         {
@@ -131,7 +135,6 @@ public class ElastixCommand implements Command
         {
             elastixWrapper.createTransformedImagesAndSaveAsTiff();
         }
-
     }
 
     private ElastixSettings getSettings()
@@ -178,9 +181,9 @@ public class ElastixCommand implements Command
 
         settings.outputModality = outputModality;
 
+        settings.transformationOutputFilePath = transformationOutputFile.getAbsolutePath();
+
         return settings;
     }
-
-
 }
 

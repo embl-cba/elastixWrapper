@@ -29,9 +29,9 @@ public class TransformixCommand implements Command
     public File transformationFile;
 
     @Parameter( label = "Output modality", choices = {
-            ElastixWrapper.OUTPUT_MODALITY_SHOW_IMAGES,
-            ElastixWrapper.OUTPUT_MODALITY_SAVE_AS_TIFF,
-            ElastixWrapper.OUTPUT_MODALITY_SAVE_AS_BDV
+            ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES,
+            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
+            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV
     } )
     public String outputModality;
 

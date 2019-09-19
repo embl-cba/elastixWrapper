@@ -28,6 +28,12 @@ public class ElastixSettings
     public static final String PARAMETERS_HENNING = "Henning";
     public static final String PARAMETERS_DEFAULT = "Default";
     public static final String PARAMETERS_GIULIA = "CLEM";
+    public static final String OUTPUT_MODALITY_SHOW_IMAGES
+            = "Show images";
+    public static final String OUTPUT_MODALITY_SAVE_AS_TIFF
+            = "Save as Tiff";
+    public static final String OUTPUT_MODALITY_SAVE_AS_BDV
+            = "Save as BigDataViewer .xml/.h5";
 
 
     // variables
@@ -64,6 +70,8 @@ public class ElastixSettings
     public String finalResampler = FINAL_RESAMPLER_LINEAR;
     public String outputModality;
     public File outputFile;
+	public File outputDirectory;
+    public String transformationOutputFilePath;
 
     public ElastixSettings()
     {

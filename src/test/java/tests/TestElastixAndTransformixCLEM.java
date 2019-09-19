@@ -52,7 +52,7 @@ public class TestElastixAndTransformixCLEM
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/fluo_red_green.tif";
 		settings.transformationFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/tmp/TransformParameters.0.txt";
 
-		settings.outputModality = ElastixWrapper.OUTPUT_MODALITY_SAVE_AS_TIFF;
+		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
 		settings.outputFile = new File( "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/aligned" );
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );

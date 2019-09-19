@@ -1,152 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-		http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>de.embl.cba</groupId>
-        <artifactId>pom-embl-cba</artifactId>
-        <version>0.3.5</version>
-        <relativePath>../pom-embl-cba</relativePath>
-    </parent>
-
-    <groupId>de.embl.cba</groupId>
-    <artifactId>fiji-plugin-elastixWrapper</artifactId>
-    <version>0.3.13</version>
-
-    <name>Fiji plugin for image registration using elastix</name>
-    <description>A Fiji plugin for image registration using elastix.</description>
-    <url>https://github.com/tischi/</url>
-    <inceptionYear>2017</inceptionYear>
-    <organization>
-        <name>EMBL</name>
-        <url>https://embl.de/</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <id>tischi</id>
-            <name>Christian Tischer</name>
-            <email>Christian.Tischer@EMBL.DE</email>
-            <url></url>
-            <organization>EMBL Heidelberg</organization>
-            <organizationUrl>http://www.embl.de</organizationUrl>
-            <roles>
-                <role>microscopy</role>
-                <role>image analysis</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
-
-    <licenses>
-        <license>
-            <name>Simplified BSD License</name>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <mailingLists>
-        <mailingList>
-            <name>ImageJ Forum</name>
-            <archive>http://forum.imagej.net/</archive>
-        </mailingList>
-    </mailingLists>
-
-
-    <properties>
-        <package-name>de.embl.cba.elastixwrapper</package-name>
-        <license.licenseName>bsd_2</license.licenseName>
-        <license.copyrightOwners>EMBL</license.copyrightOwners>
-        <imagej.app.directory>/Applications/Fiji.app/</imagej.app.directory>
-        <license.projectName>Fiji distribution of ImageJ for the life sciences.</license.projectName>
-        <enforcer.skip>true</enforcer.skip>
-    </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>${main-class}</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-
-    <repositories>
-
-        <repository>
-            <id>imagej.public</id>
-            <url>http://maven.imagej.net/content/groups/public</url>
-        </repository>
-
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-
-    </repositories>
-
-
-    <dependencies>
-
-        <!-- ImageJ dependencies -->
-
-        <dependency>
-            <groupId>net.imagej</groupId>
-            <artifactId>imagej-legacy</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.imagej</groupId>
-            <artifactId>imagej</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.imagej</groupId>
-            <artifactId>imagej-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.imagej</groupId>
-            <artifactId>ij</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.scijava</groupId>
-            <artifactId>scijava-plugins-commands</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cisd</groupId>
-            <artifactId>jhdf5</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>ome</groupId>
-            <artifactId>formats-gpl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.embl.cba</groupId>
-            <artifactId>bdv-utils</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
-
-    </dependencies>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.embl.cba</groupId>
+		<artifactId>pom-embl-cba</artifactId>
+		<version>0.3.6</version>
+		<relativePath>../pom-embl-cba</relativePath>
+	</parent>
+	<groupId>de.embl.cba</groupId>
+	<artifactId>fiji-plugin-elastixWrapper</artifactId>
+	<version>0.3.13</version>
+	<name>Fiji plugin for image registration using elastix</name>
+	<description>A Fiji plugin for image registration using elastix.</description>
+	<url>https://github.com/tischi/</url>
+	<inceptionYear>2017</inceptionYear>
+	<organization>
+		<name>EMBL</name>
+		<url>https://embl.de/</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>tischi</id>
+			<name>Christian Tischer</name>
+			<email>Christian.Tischer@EMBL.DE</email>
+			<url/>
+			<organization>EMBL Heidelberg</organization>
+			<organizationUrl>http://www.embl.de</organizationUrl>
+			<roles>
+				<role>microscopy</role>
+				<role>image analysis</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>Simplified BSD License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<mailingLists>
+		<mailingList>
+			<name>ImageJ Forum</name>
+			<archive>http://forum.imagej.net/</archive>
+		</mailingList>
+	</mailingLists>
+	<properties>
+		<package-name>de.embl.cba.elastixwrapper</package-name>
+		<license.licenseName>bsd_2</license.licenseName>
+		<license.copyrightOwners>EMBL</license.copyrightOwners>
+		<imagej.app.directory>/Applications/Fiji.app/</imagej.app.directory>
+		<license.projectName>Fiji distribution of ImageJ for the life sciences.</license.projectName>
+		<enforcer.skip>true</enforcer.skip>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${main-class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<!-- ImageJ dependencies -->
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej-legacy</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.scijava</groupId>
+			<artifactId>scijava-plugins-commands</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cisd</groupId>
+			<artifactId>jhdf5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ome</groupId>
+			<artifactId>formats-gpl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.embl.cba</groupId>
+			<artifactId>bdv-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
 </project>
