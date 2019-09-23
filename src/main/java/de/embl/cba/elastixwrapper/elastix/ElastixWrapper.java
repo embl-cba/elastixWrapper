@@ -53,7 +53,6 @@ public class ElastixWrapper
     private int colorIndex;
     private int nChannels;
 
-
     public ElastixWrapper( ElastixSettings settings )
     {
         this.settings = settings;
@@ -91,7 +90,6 @@ public class ElastixWrapper
 
         for ( int c = 0; c < channelFileNames.size(); c++ )
             transformImageAndHandleOutput( executableShellScript, channelFileNames, c );
-
     }
 
     public void showTransformationFile()
@@ -290,11 +288,20 @@ public class ElastixWrapper
 
         Utils.executeCommand( transformixCallArgs, settings.logService );
 
+        final String transformedImageFileName = DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+                + "."
+                + settings.resultImageFileType;
+
         ImagePlus result = loadMetaImage(
                 settings.workingDirectory,
-                DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
-                        + "."
-                        + settings.resultImageFileType );
+                transformedImageFileName );
+
+        if ( result == null )
+        {
+            throw new UnsupportedOperationException( "The transformed image could not be loaded: "
+                    + settings.workingDirectory + File.separator + transformedImageFileName + "\n" +
+                    "Please check the log: " + settings.workingDirectory + File.separator + "elastix.log" );
+        }
 
         if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
         {
@@ -309,7 +316,6 @@ public class ElastixWrapper
 
             if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF ) )
             {
-
                 final String path = outputFile + "-ch" + c + ".tif";
 
                 transformedImageFilePaths.add( path );
@@ -318,10 +324,13 @@ public class ElastixWrapper
 
                 new FileSaver( result ).saveAsTiff( path );
             }
-            else if ( settings.outputModality.equals(
-                    ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV ) )
+            else if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV ) )
             {
-                final String path = outputFile + "-ch" + c + ".xml";
+                String path;
+                if ( nChannels > 1 )
+                    path = outputFile + "-ch" + c + ".xml";
+                else
+                    path = outputFile + ".xml";
 
                 settings.logService.info( "\nSaving transformed image: " + path );
 
@@ -464,6 +473,7 @@ public class ElastixWrapper
         MetaImage_Writer writer = new MetaImage_Writer();
         String filenameWithExtension = filename + MHD_SUFFIX;
         writer.save( imp, settings.workingDirectory, filenameWithExtension );
+        settings.imageWidthMillimeter = writer.getImageWidthMillimeter();
         return filenameWithExtension;
     }
 
@@ -473,13 +483,15 @@ public class ElastixWrapper
 
         if ( imp == null )
         {
-            settings.logService.error( "Could not open image file: " + imagePath );
+            System.err.println( "[ERROR] The transformed image could not be loaded: "
+                    + settings.workingDirectory + File.separator + imagePath + "\n" +
+                    "Please check the log: " + settings.workingDirectory + File.separator + "elastix.log" );
+            System.exit( 1 );
         }
 
         if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
-        {
             movingImageBitDepth = imp.getBitDepth();
-        }
+
 
         nChannels = imp.getNChannels();
 

@@ -72,6 +72,7 @@ public class ElastixSettings
     public File outputFile;
 	public File outputDirectory;
     public String transformationOutputFilePath;
+    public double imageWidthMillimeter;
 
     public ElastixSettings()
     {

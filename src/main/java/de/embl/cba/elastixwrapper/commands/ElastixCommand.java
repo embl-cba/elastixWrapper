@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.Prefs;
 import org.scijava.ItemVisibility;
 import org.scijava.command.Command;
@@ -24,9 +25,6 @@ public class ElastixCommand implements Command
 
     @Parameter( label = "Working directory", style = "directory" )
     public File workingDirectory;
-
-    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false  )
-    private String space00 = "\n";
 
     @Parameter( label = "Fixed image" )
     public File fixedImageFile;
@@ -65,9 +63,6 @@ public class ElastixCommand implements Command
             } )
     public String outputModality;
 
-    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false )
-    private String space02 = "\n";
-
     @Parameter( label = "Use fixed image mask" )
     public boolean useFixedMask;
 
@@ -86,9 +81,6 @@ public class ElastixCommand implements Command
     @Parameter( label = "Initial transformation file", required = false )
     public File initialTransformationFile;
 
-    @Parameter( visibility = ItemVisibility.MESSAGE, persist = false, required = false  )
-    private String space03 = "\n";
-
     @Parameter( label = "Elastix parameters", choices =
             {
                     ElastixSettings.PARAMETERS_DEFAULT,
@@ -102,6 +94,9 @@ public class ElastixCommand implements Command
                     ElastixSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
             } )
     public String finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
+
+    @Parameter( label = "Weights for multi channel images" )
+    public String multiChannelWeights = "1.0,3.0,1.0,1.0,1.0,1.0";
 
     @Parameter
     public LogService logService;
@@ -173,14 +168,9 @@ public class ElastixCommand implements Command
         settings.numWorkers = Prefs.getThreads();
         settings.downSamplingFactors = gaussianSmoothingSigmas;
         settings.bSplineGridSpacing = bSplineGridSpacing;
-
-        // TODO: make this a UI
-        settings.channelWeights = new double[]{1.0, 3.0, 3.0, 1.0, 1.0};
-
+        settings.channelWeights = Utils.delimitedStringToDoubleArray( multiChannelWeights, "," );
         settings.finalResampler = finalResampler;
-
         settings.outputModality = outputModality;
-
         settings.transformationOutputFilePath = transformationOutputFile.getAbsolutePath();
 
         return settings;

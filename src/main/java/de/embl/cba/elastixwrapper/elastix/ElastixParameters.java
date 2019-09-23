@@ -49,17 +49,11 @@ public class ElastixParameters
         int n = isMultiChannelParameter ? settings.fixedToMovingChannel.size() : 1;
 
         for ( int c = 0; c < n; ++c )
-        {
             if ( isNumeric )
-            {
                 values += value + " ";
-            }
             else
-            {
                 values += "\"" + value + "\"" + " ";
-            }
 
-        }
 
         return keyValues.replace( "VALUES", values );
 
@@ -131,6 +125,16 @@ public class ElastixParameters
         parameters.add("(ResampleInterpolator \"" + settings.finalResampler + "\")");
         parameters.add("(AutomaticParameterEstimation \"true\")");
         parameters.add("(AutomaticScalesEstimation \"true\")");
+
+        if ( settings.transformationType.equals( ElastixSettings.SPLINE ) )
+        {
+            parameters.add("(UseRandomSampleRegion \"true\")");
+            final double sampleRegionSize = settings.imageWidthMillimeter / 5;
+            String sampleRegionSizeString = "";
+            for ( int c = 0; c < settings.numChannels; c++ )
+                sampleRegionSizeString += sampleRegionSize + " ";
+            parameters.add("(SampleRegionSize " + sampleRegionSizeString +" )");
+        }
 
         // Metric
         addParameter(

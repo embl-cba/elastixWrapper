@@ -164,7 +164,10 @@ class ExtendedFileSaver extends FileSaver {
 
 public final class MetaImage_Writer implements PlugIn {
 
-    public void run(String arg) {
+    private double voxelWidthMillimeter;
+    private double imageWidthMillimeter;
+
+    public void run( String arg) {
         ImagePlus imp = WindowManager.getCurrentImage();
         if (imp == null) {
             IJ.noImage();
@@ -244,8 +247,6 @@ public final class MetaImage_Writer implements PlugIn {
     private boolean writeHeader( ImagePlus imp, String path, String dataFile)
             throws IOException
     {
-        
-        
         FileInfo fi = imp.getFileInfo();
         String numChannels = "1", type = "MET_NONE";
 
@@ -276,13 +277,9 @@ public final class MetaImage_Writer implements PlugIn {
         stream.println("ObjectType = Image");
 
         if (ndims == 3)
-        {
             stream.println( "NDims = 3" );
-        }
         else
-        {
             stream.println( "NDims = 2" );
-        }
 
         stream.println("BinaryData = True");
 
@@ -294,12 +291,16 @@ public final class MetaImage_Writer implements PlugIn {
 
         double conversionFactorToMillimeter = getConversionFactorToMillimeter( fi.unit );
 
+        voxelWidthMillimeter = conversionFactorToMillimeter * fi.pixelWidth;
+
+        imageWidthMillimeter = imp.getWidth() * voxelWidthMillimeter;
+
         if (ndims == 3)
         {
             stream.println("DimSize = " + fi.width + " " + fi.height + " " + fi.nImages);
 
             stream.println("ElementSize = "
-                    + conversionFactorToMillimeter * fi.pixelWidth
+                    + voxelWidthMillimeter
                     + " " + conversionFactorToMillimeter * fi.pixelHeight
                     + " " + conversionFactorToMillimeter * fi.pixelDepth);
         }
@@ -307,12 +308,12 @@ public final class MetaImage_Writer implements PlugIn {
             {
             stream.println("DimSize = " + fi.width + " " + fi.height);
             stream.println("ElementSize = "
-                    + conversionFactorToMillimeter * fi.pixelWidth
+                    + voxelWidthMillimeter
                     + " " +  conversionFactorToMillimeter * fi.pixelHeight);
         }
+
         if (numChannels != "1") stream.println("ElementNumberOfChannels = " + numChannels);
         stream.println("ElementType = " + type);
-
 
         if (dataFile.endsWith(".mha"))
             stream.println("ElementDataFile = LOCAL");
@@ -323,6 +324,11 @@ public final class MetaImage_Writer implements PlugIn {
         file.close();
 
         return true;
+    }
+
+    public double getImageWidthMillimeter()
+    {
+        return imageWidthMillimeter;
     }
 
     private double getConversionFactorToMillimeter( String unit )
