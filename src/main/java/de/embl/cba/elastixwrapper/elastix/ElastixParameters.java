@@ -126,15 +126,15 @@ public class ElastixParameters
         parameters.add("(AutomaticParameterEstimation \"true\")");
         parameters.add("(AutomaticScalesEstimation \"true\")");
 
-        if ( settings.transformationType.equals( ElastixSettings.SPLINE ) )
-        {
-            parameters.add("(UseRandomSampleRegion \"true\")");
-            final double sampleRegionSize = settings.imageWidthMillimeter / 5;
-            String sampleRegionSizeString = "";
-            for ( int c = 0; c < settings.numChannels; c++ )
-                sampleRegionSizeString += sampleRegionSize + " ";
-            parameters.add("(SampleRegionSize " + sampleRegionSizeString +" )");
-        }
+//        if ( settings.transformationType.equals( ElastixSettings.SPLINE ) )
+//        {
+//            parameters.add("(UseRandomSampleRegion \"true\")");
+//            final double sampleRegionSize = settings.imageWidthMillimeter / 5;
+//            String sampleRegionSizeString = "";
+//            for ( int d = 0; d < 3; d++ )
+//                sampleRegionSizeString += sampleRegionSize + " ";
+//            parameters.add("(SampleRegionSize " + sampleRegionSizeString +" )");
+//        }
 
         // Metric
         addParameter(
@@ -147,6 +147,8 @@ public class ElastixParameters
 
         parameters.add("(HowToCombineTransforms \"Compose\")");
         parameters.add("(ErodeMask \"false\")");
+
+        parameters.add("(WriteResultImage \"false\")");
 
         //parameters.add("(BSplineInterpolationOrder 1)");
         //parameters.add("(FinalBSplineInterpolationOrder 3)");

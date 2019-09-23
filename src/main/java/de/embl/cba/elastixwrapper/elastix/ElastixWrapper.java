@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static de.embl.cba.elastixwrapper.elastix.ElastixUtils.DEFAULT_ELASTIX_OUTPUT_FILENAME;
 import static de.embl.cba.elastixwrapper.elastix.ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.*;
@@ -288,9 +289,10 @@ public class ElastixWrapper
 
         Utils.executeCommand( transformixCallArgs, settings.logService );
 
-        final String transformedImageFileName = DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+        String transformedImageFileName = DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
                 + "."
                 + settings.resultImageFileType;
+
 
         ImagePlus result = loadMetaImage(
                 settings.workingDirectory,
