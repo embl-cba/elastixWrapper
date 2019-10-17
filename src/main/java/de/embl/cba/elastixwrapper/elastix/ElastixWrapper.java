@@ -717,25 +717,16 @@ public class ElastixWrapper
         createOrEmptyDir( settings.workingDirectory );
     }
 
-
     private static void createOrEmptyDir( String directoryString )
     {
         File directory = new File( directoryString );
 
         if (! directory.exists() )
-        {
             directory.mkdir();
-        }
         else
-        {
             for( File file : directory.listFiles() )
-            {
                 if ( !file.isDirectory() )
-                {
                     file.delete();
-                }
-            }
-        }
     }
 
 

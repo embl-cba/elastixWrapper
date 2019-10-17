@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.commands;
 
+import de.embl.cba.bdv.utils.Logger;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -52,8 +53,8 @@ public class ElastixCommand implements Command
     @Parameter( label = "Gaussian smoothing sigma [voxels]" )
     public String gaussianSmoothingSigmas = "10,10,10";
 
-    @Parameter( label = "Transformation output file", style = "save", required = false  )
-    public File transformationOutputFile = null;
+    @Parameter( label = "Transformation output file", style = "save" )
+    public File transformationOutputFile;
 
     @Parameter( label = "Image output modality",
             choices = {
@@ -140,6 +141,12 @@ public class ElastixCommand implements Command
 
         settings.elastixDirectory = elastixDirectory.toString();
 
+        if ( ! new File( settings.elastixDirectory ).exists() )
+        {
+            Logger.error( "The elastix directory does not exist: " + settings.elastixDirectory );
+            throw new UnsupportedOperationException( "Directory does not exist.");
+        }
+
         settings.workingDirectory = workingDirectory.toString();
 
         if ( useInitialTransformation )
@@ -171,6 +178,7 @@ public class ElastixCommand implements Command
         settings.channelWeights = Utils.delimitedStringToDoubleArray( multiChannelWeights, "," );
         settings.finalResampler = finalResampler;
         settings.outputModality = outputModality;
+
         settings.transformationOutputFilePath = transformationOutputFile.getAbsolutePath();
 
         return settings;
