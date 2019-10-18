@@ -7,6 +7,7 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.Prefs;
 import org.scijava.ItemVisibility;
 import org.scijava.command.Command;
+import org.scijava.log.DefaultLogger;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;

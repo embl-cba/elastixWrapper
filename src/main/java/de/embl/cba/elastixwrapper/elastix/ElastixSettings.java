@@ -7,13 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by tischi on 30/04/17.
+ * TODO: make a simpler settings for transformix
  */
 public class ElastixSettings
 {
-
     // constants
-
+    //
     public static final String TRANSLATION = "Translation";
     public static final String EULER = "Euler";
     public static final String AFFINE = "Affine";
@@ -35,9 +34,8 @@ public class ElastixSettings
     public static final String OUTPUT_MODALITY_SAVE_AS_BDV
             = "Save as BigDataViewer .xml/.h5";
 
-
     // variables
-
+    //
     public LogService logService;
 
     public String elastixDirectory = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
