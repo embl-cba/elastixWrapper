@@ -1,15 +1,11 @@
 package de.embl.cba.elastixwrapper.commands;
 
-
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
 import itc.converters.AffineTransform3DToElastixAffine3D;
 import itc.transforms.elastix.ElastixAffineTransform3D;
 import itc.transforms.elastix.ElastixTransform;
-import net.imagej.ImageJ;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.realtransform.Scale;
 import org.scijava.command.Command;
