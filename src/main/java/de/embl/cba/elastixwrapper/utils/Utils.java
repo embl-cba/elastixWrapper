@@ -227,40 +227,4 @@ public abstract class Utils {
 		}
 		IJ.showStatus("");
 	}
-
-	public static Double[] getMillimeterVoxelSpacingUsingBF( File file )
-	{
-		// create OME-XML metadata store
-		ServiceFactory factory = null;
-		try
-		{
-			factory = new ServiceFactory();
-			OMEXMLService service = factory.getInstance( OMEXMLService.class );
-			IMetadata meta = service.createOMEXMLMetadata();
-
-			// create format reader
-			IFormatReader reader = new ImageReader();
-			reader.setMetadataStore( meta );
-
-			// initialize file
-			reader.setId( file.getAbsolutePath() );
-			reader.setSeries(0);
-
-			String unit = meta.getPixelsPhysicalSizeX( 0 ).unit().getSymbol();
-			final Double[] voxelSpacings = new Double[ 3 ];
-			voxelSpacings[ 0 ] = meta.getPixelsPhysicalSizeX( 0 ).value( UNITS.MILLIMETRE ).doubleValue();
-			voxelSpacings[ 1 ] = meta.getPixelsPhysicalSizeX( 0 ).value( UNITS.MILLIMETRE ).doubleValue();
-			voxelSpacings[ 2 ] = meta.getPixelsPhysicalSizeX( 0 ).value( UNITS.MILLIMETRE ).doubleValue();
-
-			return voxelSpacings;
-
-		}
-		catch ( Exception e )
-		{
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
 }

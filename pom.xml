@@ -76,6 +76,10 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
+		<repository>
+			<id>bintray-image-transform-converters-image-transform-converters</id>
+			<url>https://dl.bintray.com/image-transform-converters/image-transform-converters</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<!-- ImageJ dependencies -->
@@ -119,6 +123,11 @@
 		<dependency>
 			<groupId>de.embl.cba</groupId>
 			<artifactId>bdv-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.itc</groupId>
+			<artifactId>image-transform-converters</artifactId>
+			<version>0.1.1</version>
 		</dependency>
 	</dependencies>
 </project>
