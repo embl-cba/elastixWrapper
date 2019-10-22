@@ -71,8 +71,9 @@ public class ElastixSettings
 	public File outputDirectory;
     public String transformationOutputFilePath;
     public double imageWidthMillimeter;
+    public boolean headless = false;
 
-    public ElastixSettings()
+	public ElastixSettings()
     {
     }
 

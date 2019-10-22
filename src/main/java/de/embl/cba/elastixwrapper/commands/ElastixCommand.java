@@ -1,16 +1,16 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.bdv.utils.Logger;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.Prefs;
-import org.scijava.ItemVisibility;
+import ij.gui.GenericDialog;
+import org.scijava.Context;
 import org.scijava.command.Command;
-import org.scijava.log.DefaultLogger;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.scijava.ui.UIService;
 
 import java.io.File;
 
@@ -22,10 +22,10 @@ public class ElastixCommand implements Command
     public static final String SHOW_OUTPUT_IN_BDV = "Show output in Bdv";
     public static final String SAVE_TRANSFORMED_AS_TIFF = "Save transformed images in working directory as Tiff";
 
-    @Parameter( label = "Elastix directory", style = "directory" )
+    @Parameter( label = "Elastix installation directory", style = "directory" )
     public File elastixDirectory;
 
-    @Parameter( label = "Working directory", style = "directory" )
+    @Parameter( label = "Temporary working directory", style = "directory" )
     public File workingDirectory;
 
     @Parameter( label = "Fixed image" )
@@ -103,6 +103,12 @@ public class ElastixCommand implements Command
     @Parameter
     public LogService logService;
 
+    @Parameter
+    public UIService uiService;
+
+    @Parameter
+    public Context context;
+
     private ElastixWrapper elastixWrapper;
 
     public void run()
@@ -113,6 +119,8 @@ public class ElastixCommand implements Command
     private void runElastix( )
     {
         ElastixSettings settings = getSettings();
+
+        if ( settings == null ) return;
 
         elastixWrapper = new ElastixWrapper( settings );
 
@@ -138,15 +146,12 @@ public class ElastixCommand implements Command
     {
         ElastixSettings settings = new ElastixSettings();
 
+        settings.headless = uiService.isHeadless();
         settings.logService = logService;
-
         settings.elastixDirectory = elastixDirectory.toString();
 
         if ( ! new File( settings.elastixDirectory ).exists() )
-        {
-            Logger.error( "The elastix directory does not exist: " + settings.elastixDirectory );
-            throw new UnsupportedOperationException( "Directory does not exist.");
-        }
+            Utils.logErrorAndExit( settings, "The elastix directory does not exist: " + settings.elastixDirectory );
 
         settings.workingDirectory = workingDirectory.toString();
 
@@ -180,9 +185,29 @@ public class ElastixCommand implements Command
         settings.finalResampler = finalResampler;
         settings.outputModality = outputModality;
 
+        if ( transformationOutputFile.exists() )
+        {
+            GenericDialog gd = new GenericDialog("File exists");
+            gd.addMessage("The transformation output file exists: " + transformationOutputFile.getAbsolutePath());
+            gd.enableYesNoCancel("Overwrite", "Exit");
+            gd.showDialog();
+
+            if (gd.wasCanceled())
+            {
+                return null;
+            }
+            else if (gd.wasOKed())
+            {
+                //
+            }
+            else
+                return null;
+        }
+
         settings.transformationOutputFilePath = transformationOutputFile.getAbsolutePath();
 
         return settings;
     }
+
 }
 

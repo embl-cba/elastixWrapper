@@ -1,6 +1,7 @@
 package de.embl.cba.elastixwrapper.elastix;
 
 import bdv.util.*;
+import de.embl.cba.bdv.utils.Logger;
 import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Writer;
@@ -66,7 +67,12 @@ public class ElastixWrapper
 
         createOrEmptyWorkingDir();
 
-        if ( ! stageImages() ) return;
+        if ( ! stageImages() )
+        {
+            Utils.logErrorAndExit( settings, "There was an issue staging the images.\n " +
+                    "Maybe the temporary working directory could not be generated." );
+            return;
+        }
 
         callElastix();
     }
@@ -190,7 +196,6 @@ public class ElastixWrapper
     private BdvStackSource showImagePlusInBdv(
             ImagePlus imp )
     {
-
         final Calibration calibration = imp.getCalibration();
 
         if ( imp.getNSlices() > 1 )
@@ -293,16 +298,16 @@ public class ElastixWrapper
                 + "."
                 + settings.resultImageFileType;
 
-
         ImagePlus result = loadMetaImage(
                 settings.workingDirectory,
                 transformedImageFileName );
 
         if ( result == null )
         {
-            throw new UnsupportedOperationException( "The transformed image could not be loaded: "
+            Utils.logErrorAndExit( settings,"The transformed image could not be loaded: "
                     + settings.workingDirectory + File.separator + transformedImageFileName + "\n" +
                     "Please check the log: " + settings.workingDirectory + File.separator + "elastix.log" );
+
         }
 
         if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
@@ -419,7 +424,7 @@ public class ElastixWrapper
 
         if ( nChannelsFixedImage != nChannelsMovingImage )
         {
-            settings.logService.error( "Number of channels " +
+            Utils.logErrorAndExit( settings, "Number of channels " +
                     "in fixed and moving image do not match." );
             return false;
         }
@@ -485,10 +490,10 @@ public class ElastixWrapper
 
         if ( imp == null )
         {
-            System.err.println( "[ERROR] The transformed image could not be loaded: "
-                    + settings.workingDirectory + File.separator + imagePath + "\n" +
-                    "Please check the log: " + settings.workingDirectory + File.separator + "elastix.log" );
-            System.exit( 1 );
+            System.err.println( "[ERROR] The image could not be loaded: "
+                    + imagePath );
+            if ( settings.headless )
+                System.exit( 1 );
         }
 
         if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
@@ -631,11 +636,15 @@ public class ElastixWrapper
 
     private String createExecutableShellScript( String elastixOrTransformix )
     {
-
         if ( isMac() || isLinux() )
         {
             String executablePath = settings.workingDirectory
                     + File.separator + "run_" + elastixOrTransformix + ".sh";
+
+            String binaryPath = settings.elastixDirectory + File.separator + "bin" + File.separator + elastixOrTransformix;
+
+            if( ! new File( binaryPath ).exists() )
+                Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
 
             String shellScriptText = getScriptText( elastixOrTransformix );
 
@@ -652,16 +661,14 @@ public class ElastixWrapper
 
             String binaryPath = settings.elastixDirectory + File.separator + elastixOrTransformix + ".exe";
 
-            if( ! new File( binaryPath ).exists() )
-            {
-                IJ.showMessage( "Elastix file does not exist: " +  binaryPath );
-            }
+            if ( ! new File( binaryPath ).exists() )
+                Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
 
             return binaryPath;
         }
         else
         {
-            settings.logService.error( "Could not detect operating system!" );
+            Utils.logErrorAndExit( settings, "Could not detect operating system!" );
             return null;
         }
 

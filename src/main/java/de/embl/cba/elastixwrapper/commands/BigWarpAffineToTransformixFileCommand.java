@@ -17,8 +17,6 @@ import org.scijava.plugin.Plugin;
 
 import java.io.File;
 
-import static de.embl.cba.elastixwrapper.utils.Utils.getMillimeterVoxelSpacingAndPixelDimensions;
-
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Utils>Big Warp Affine to Transformix File" )
 public class BigWarpAffineToTransformixFileCommand implements Command
 {
@@ -30,7 +28,7 @@ public class BigWarpAffineToTransformixFileCommand implements Command
 	public File targetImageFile;
 
 	@Parameter( label = "Big warp affine transform" )
-	public String affineTransformString;
+	public String affineTransformString = "1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0";
 
 	@Parameter( label = "Big warp affine transform units", choices = { MILLIMETER, MICROMETER, NANOMETER }  )
 	public String affineTransformUnit;
@@ -39,7 +37,8 @@ public class BigWarpAffineToTransformixFileCommand implements Command
 	public File transformationOutputFile;
 
 	@Parameter( label = "Interpolation", choices = { ElastixTransform.FINAL_LINEAR_INTERPOLATOR, ElastixTransform.FINAL_NEAREST_NEIGHBOR_INTERPOLATOR } )
-	public String interpolation;
+	public String interpolation = ElastixTransform.FINAL_LINEAR_INTERPOLATOR;
+
 	private Double[] voxelSpacingsMillimeter;
 	private Integer[] dimensionsPixels;
 	private Integer bitDepth;

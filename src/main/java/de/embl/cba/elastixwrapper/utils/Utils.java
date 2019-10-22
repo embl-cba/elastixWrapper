@@ -30,6 +30,7 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
+import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
@@ -226,5 +227,12 @@ public abstract class Utils {
 			ci.updateAndDraw();
 		}
 		IJ.showStatus("");
+	}
+
+	public static void logErrorAndExit( ElastixSettings settings, String msg )
+	{
+		settings.logService.error( msg );
+		if ( settings.headless )
+			System.exit( 1 );
 	}
 }

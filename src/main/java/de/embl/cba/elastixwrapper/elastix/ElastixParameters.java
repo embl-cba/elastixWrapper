@@ -1,6 +1,8 @@
 package de.embl.cba.elastixwrapper.elastix;
 
 
+import de.embl.cba.elastixwrapper.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,7 +233,7 @@ public class ElastixParameters
         }
         else
         {
-            settings.logService.error("Bit depth " + settings.movingImageBitDepth + " not supported.");
+            Utils.logErrorAndExit( settings,"Bit depth " + settings.movingImageBitDepth + " not supported.");
             return true;
         }
         return false;

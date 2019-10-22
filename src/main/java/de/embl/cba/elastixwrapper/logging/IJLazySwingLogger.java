@@ -1,9 +1,7 @@
 package de.embl.cba.elastixwrapper.logging;
 
 import ij.IJ;
-
 import javax.swing.*;
-
 
 public class IJLazySwingLogger implements Logger {
 

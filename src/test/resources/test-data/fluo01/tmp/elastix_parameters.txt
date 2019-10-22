@@ -30,3 +30,4 @@
 (NumberOfHistogramBins 32)
 (HowToCombineTransforms "Compose")
 (ErodeMask "false")
+(WriteResultImage "false")
