@@ -9,7 +9,6 @@ import java.io.File;
 
 public class TestTransformix
 {
-
 	@Test
 	public void registerSingleChannelImageAndSaveAsTiff()
 	{
@@ -19,7 +18,7 @@ public class TestTransformix
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
-		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
 		settings.transformationFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/tmp/TransformParameters.0.txt";
 
@@ -31,7 +30,6 @@ public class TestTransformix
 		elastixWrapper.runTransformix();
 
 		settings.logService.info( "Done!" );
-
 	}
 
 	public static void main( String[] args )

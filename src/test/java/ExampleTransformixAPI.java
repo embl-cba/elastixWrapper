@@ -1,5 +1,4 @@
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixUtils;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
 import ij.IJ;
@@ -23,7 +22,7 @@ public class ExampleTransformixAPI
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
-		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
 		settings.movingImageFilePath = inputImagePath;
 		settings.transformationFilePath = "/Users/tischer/Desktop/transform.txt";
 
@@ -32,8 +31,8 @@ public class ExampleTransformixAPI
 
 		MetaImage_Reader reader = new MetaImage_Reader();
 		final ImagePlus transformed = reader.load(
-				settings.workingDirectory,
-				ElastixUtils.DEFAULT_TRANSFORMIX_OUTPUT_FILENAME
+				settings.tmpDir,
+				ElastixWrapper.TRANSFORMIX_OUTPUT_FILENAME
 						+ "." + settings.resultImageFileType,
 				false );
 

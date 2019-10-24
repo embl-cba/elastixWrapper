@@ -25,8 +25,8 @@ public class ElastixCommand implements Command
     @Parameter( label = "Elastix installation directory", style = "directory" )
     public File elastixDirectory;
 
-    @Parameter( label = "Temporary working directory", style = "directory" )
-    public File workingDirectory;
+    @Parameter( label = "Temporary directory for intermediate files", style = "directory" )
+    public File tmpDir = new File( System.getProperty("java.io.tmpdir") );
 
     @Parameter( label = "Fixed image" )
     public File fixedImageFile;
@@ -126,6 +126,8 @@ public class ElastixCommand implements Command
 
         elastixWrapper.runElastix();
 
+        settings.logService.info( "Handling elastix output...." );
+
         elastixWrapper.saveTransformationFile();
 
         if ( outputModality.equals( SHOW_OUTPUT_IN_BDV ))
@@ -140,6 +142,8 @@ public class ElastixCommand implements Command
         {
             elastixWrapper.createTransformedImagesAndSaveAsTiff();
         }
+
+        settings.logService.info( "...done!" );
     }
 
     private ElastixSettings getSettings()
@@ -153,7 +157,7 @@ public class ElastixCommand implements Command
         if ( ! new File( settings.elastixDirectory ).exists() )
             Utils.logErrorAndExit( settings, "The elastix directory does not exist: " + settings.elastixDirectory );
 
-        settings.workingDirectory = workingDirectory.toString();
+        settings.tmpDir = tmpDir.toString();
 
         if ( useInitialTransformation )
             settings.initialTransformationFilePath = initialTransformationFile.toString();

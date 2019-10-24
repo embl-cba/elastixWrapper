@@ -39,7 +39,7 @@ public class ElastixSettings
     public LogService logService;
 
     public String elastixDirectory = "/Users/tischi/Downloads/elastix_macosx64_v4.8/";
-    public String workingDirectory = "/Users/tischi/Desktop/tmp/";
+    public String tmpDir = "/Users/tischi/Desktop/tmp/";
 
     public String fixedImageFilePath = "";
     public String movingImageFilePath = "";

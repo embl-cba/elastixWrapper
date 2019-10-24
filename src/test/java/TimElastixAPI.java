@@ -15,7 +15,7 @@ public class TimElastixAPI
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
-		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp";
+		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
 		settings.transformationType = ElastixSettings.AFFINE;
 		settings.fixedImageFilePath = "/Users/tischer/Desktop/3dtemplate.tif";
 		settings.movingImageFilePath = "/Users/tischer/Desktop/3dstg16.tif";

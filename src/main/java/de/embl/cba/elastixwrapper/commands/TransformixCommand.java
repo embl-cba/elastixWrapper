@@ -2,6 +2,7 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.utils.Utils;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -19,8 +20,8 @@ public class TransformixCommand implements Command
             style = "directory" )
     public File elastixDirectory;
 
-    @Parameter( label = "Working directory", style = "directory" )
-    public File workingDirectory;
+    @Parameter( label = "Temporary directory for intermediate files", style = "directory" )
+    public File tmpDir = new File( System.getProperty("java.io.tmpdir") );
 
     @Parameter( label = "Image" )
     public File inputImageFile;
@@ -35,7 +36,7 @@ public class TransformixCommand implements Command
     } )
     public String outputModality;
 
-    @Parameter( label = "Output file", style = "save" )
+    @Parameter( label = "Output file", style = "save", required = false )
     public File outputFile;
 
     @Parameter( label = "Number of threads" )
@@ -61,12 +62,16 @@ public class TransformixCommand implements Command
         settings.logService = logService;
 
         settings.elastixDirectory = elastixDirectory.toString();
-        settings.workingDirectory = workingDirectory.toString();
+        settings.tmpDir = tmpDir.toString();
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
         settings.numWorkers = numThreads;
         settings.outputModality = outputModality;
         settings.outputFile = outputFile;
+
+        if ( ! outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
+            if ( outputFile == null )
+                Utils.logErrorAndExit( settings,"Please specify an output file.");
 
         return settings;
     }

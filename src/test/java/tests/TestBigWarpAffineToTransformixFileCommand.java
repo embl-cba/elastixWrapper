@@ -29,7 +29,7 @@ public class TestBigWarpAffineToTransformixFileCommand
 
 		settings.logService = imageJ.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8";
-		settings.workingDirectory = "/Users/tischer/Desktop/elastix-tmp/";
+		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp/";
 		settings.movingImageFilePath = getClass().getClassLoader().getResource("test-data/xray.ome.tif").getFile();
 		settings.transformationFilePath = command.transformationOutputFile.getAbsolutePath();
 		settings.numWorkers = 4;
