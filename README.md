@@ -61,6 +61,10 @@ elastix:
 
 - Using Windows OS, there sometimes is an error pop-up window during the running, which you can ignore.
 
+## Groovy scripting
+
+Run elastix: https://github.com/embl-cba/elastixWrapper/blob/master/scripts/run_elastix.groovy
+
 ## Running elastix from command line
 
 Elastix can be called via ImageJ on the command line, as in this example:
@@ -166,8 +170,6 @@ srun --mem 16000 -n 1 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.ou
 ```
 srun --mem 16000 -n 1 -N 1 -t 10:00 -o /g/cba/cluster/tischer/elastix-job-000.out -e /g/cba/cluster/tischer/elastix-job-000.err /g/almf/software/Fiji.app/ImageJ-linux64 --ij2 --headless --run "Transformix"  "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='/g/cba/tischer/tmp-elastix', inputImageFile='/g/cba/tischer/tmp/ProSPr6_Ref.tif',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.Similarity-3Channels.0.txt',outputFile='/g/arendt/EM_6dpf_segmentation/EM-Prospr/ProSPr6_Ref-SPM',outputModality='Save as BigDataViewer .xml/.h5'" &
 ```
-
-
 
 ### Running elastix via API
 
