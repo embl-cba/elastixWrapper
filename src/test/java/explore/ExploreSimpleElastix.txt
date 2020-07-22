@@ -1,0 +1,37 @@
+package explore;
+
+import org.apache.ivy.core.sort.SilentNonMatchingVersionReporter;
+import org.itk.simple.ElastixImageFilter;
+import org.itk.simple.Image;
+import org.itk.simple.SimpleITK;
+
+public class ExploreSimpleElastix {
+
+	public static final String ROOT_DIR = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources";
+
+	public static void main( String[] args )
+	{
+//		gaussianBlur();
+		runElastix();
+	}
+
+	private static void runElastix()
+	{
+		final ElastixImageFilter elastix = new ElastixImageFilter();
+		Image fixed = SimpleITK.readImage(ROOT_DIR + "/test-data/sbem.mhd" );
+		Image moving = SimpleITK.readImage(ROOT_DIR + "/test-data/sbem.mhd" );
+		elastix.setFixedImage( fixed );
+		elastix.setMovingImage( fixed );
+		elastix.setParameterMap( SimpleITK.getDefaultParameterMap("rigid") );
+		elastix.execute();
+		final Image resultImage = elastix.getResultImage();
+	}
+
+	private static void gaussianBlur()
+	{
+		Image image = SimpleITK.readImage(ROOT_DIR + "/test-data/sbem.mhd" );
+		Image output = SimpleITK.discreteGaussian(image);
+		SimpleITK.writeImage(output, ROOT_DIR + "/tmp/sbem-blur.mhd");
+	}
+
+}

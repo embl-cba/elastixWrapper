@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>de.embl.cba</groupId>
-		<artifactId>pom-embl-cba</artifactId>
-		<version>0.3.9</version>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>27.0.1</version>
 	</parent>
-
 	<groupId>de.embl.cba</groupId>
-	<artifactId>fiji-plugin-elastixWrapper</artifactId>
-	<version>0.4.3</version>
-
+	<artifactId>elastixWrapper</artifactId>
+	<version>0.5.0</version>
 	<name>Fiji plugin for image registration using elastix</name>
 	<description>A Fiji plugin for image registration using elastix.</description>
 	<url>https://github.com/tischi/</url>
@@ -123,11 +121,20 @@
 		<!-- CBA -->
 		<dependency>
 			<groupId>de.embl.cba</groupId>
-			<artifactId>bdv-utils</artifactId>
+			<artifactId>imagej-utils</artifactId>
+			<version>0.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.itc</groupId>
 			<artifactId>image-transform-converters</artifactId>
+			<version>0.1.1</version>
 		</dependency>
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>bintray-tischi-snapshots</id>
+			<name>tischi-snapshots</name>
+			<url>https://api.bintray.com/maven/tischi/snapshots/fiji-plugin-elastixWrapper/;publish=1</url>
+		</repository>
+	</distributionManagement>
 </project>

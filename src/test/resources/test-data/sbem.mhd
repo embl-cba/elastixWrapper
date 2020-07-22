@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = True
+DimSize = 275 259 286
+ElementSize = 1.0 1.0 1.0
+ElementType = MET_UCHAR
+ElementDataFile = sbem.raw
