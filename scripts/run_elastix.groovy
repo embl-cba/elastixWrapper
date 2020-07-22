@@ -1,7 +1,8 @@
 /**
+ * Open this script in Fiji and click [ Run ]
+ * 
  * Open [ Window > Console ] to see the log
  * 
- *
  */
 
 import bdv.util.Bdv;
@@ -12,20 +13,21 @@ import net.imagej.ImageJ;
 
 ElastixSettings settings = new ElastixSettings();
 
+final ImageJ ij = new ImageJ();
 settings.logService = ij.log();
 settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
-setting.fixedImageFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/spem-seg-ganglion.tif";
-settings.movingImageFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/fib-sem-seg-ganglion.tif";
-settings.fixedMaskPath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/spem-mask-ganglion.tif";
-settings.initialTransformationFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/amira-transform.txt";
+settings.fixedImageFilePath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/fixed-image-sbem-seg-ganglion.tif";
+settings.movingImageFilePath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/moving-image-sbem-seg-ganglion.tif";
+settings.fixedMaskPath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/fixed-image-mask.tif";
+settings.initialTransformationFilePath = "g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/amira-transform.txt";
 settings.transformationType = ElastixSettings.AFFINE;
 settings.downSamplingFactors = "10 10 10; 2, 2, 2";
 // settings.movingMaskPath = "";
 // settings.bSplineGridSpacing = "50 50 50";
-settings.iterations = 1000;
+settings.iterations = 1; // Set to 1000
 settings.spatialSamples = "10000; 10000";
-settings.channelWeights = [1.0, 1.0, 3.0, 1.0, 1.0];
+settings.channelWeights = [1.0, 1.0, 3.0, 1.0, 1.0]; // not used in this example
 // settings.finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
 
 final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
