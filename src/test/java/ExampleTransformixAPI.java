@@ -1,6 +1,6 @@
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
-import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import de.embl.cba.metaimage_io.MetaImage_Reader;
 import ij.IJ;
 import ij.ImagePlus;
 import net.imagej.ImageJ;
