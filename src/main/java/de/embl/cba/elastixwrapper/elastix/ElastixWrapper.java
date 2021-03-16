@@ -87,18 +87,7 @@ public class ElastixWrapper
             settings.tmpDir += File.separator;
     }
 
-    public void runTransformix()
-    {
-        createOrEmptyWorkingDir();
 
-        ArrayList< String > channelFileNames = stageImageAsMhd(
-                settings.movingImageFilePath, TRANSFORMIX_INPUT_FILENAME );
-
-        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
-
-        for ( int c = 0; c < channelFileNames.size(); c++ )
-            transformImageAndHandleOutput( executableShellScript, channelFileNames, c );
-    }
 
     public void showTransformationFile()
     {
@@ -411,19 +400,6 @@ public class ElastixWrapper
         return true;
     }
 
-    private void callElastix()
-    {
-        settings.logService.info( "Running elastix... (please wait)" );
-
-        setParameters();
-
-        List< String > args = createElastixCallArgs();
-
-        Utils.executeCommand( args, settings.logService );
-
-        settings.logService.info( "...done!" );
-    }
-
     private boolean checkChannelNumber( int nChannelsFixedImage, int nChannelsMovingImage )
     {
 
@@ -555,22 +531,7 @@ public class ElastixWrapper
                 1 );
     }
 
-    private List< String > getTransformixCallArgs( String filenameMoving, String executableShellScript )
-    {
 
-        List<String> args = new ArrayList<>();
-        args.add( executableShellScript );
-        args.add( "-out" );
-        args.add( settings.tmpDir );
-        args.add( "-in" );
-        args.add( getPath( filenameMoving ) );
-        args.add( "-tp" );
-        args.add( settings.transformationFilePath );
-        args.add( "-threads" );
-        args.add( "" + settings.numWorkers );
-
-        return args;
-    }
 
     private List< String > createElastixCallArgs( )
     {
@@ -642,87 +603,6 @@ public class ElastixWrapper
 			filenameIndex = settings.fixedToMovingChannel.get( fixedChannelIndex );
 
         return filenames.get( filenameIndex );
-    }
-
-    private String createExecutableShellScript( String elastixOrTransformix )
-    {
-        if ( isMac() || isLinux() )
-        {
-            String executablePath = settings.tmpDir
-                    + File.separator + "run_" + elastixOrTransformix + ".sh";
-
-            String binaryPath = settings.elastixDirectory + File.separator + "bin" + File.separator + elastixOrTransformix;
-
-            if( ! new File( binaryPath ).exists() )
-                Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
-
-            String shellScriptText = getScriptText( elastixOrTransformix );
-
-            saveStringToFile( shellScriptText, executablePath );
-
-            makeExecutable( executablePath );
-
-            return executablePath;
-
-        }
-        else if ( isWindows() )
-        {
-            setElastixSystemPathForWindowsOS();
-
-            String binaryPath = settings.elastixDirectory + File.separator + elastixOrTransformix + ".exe";
-
-            if ( ! new File( binaryPath ).exists() )
-                Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
-
-            return binaryPath;
-        }
-        else
-        {
-            Utils.logErrorAndExit( settings, "Could not detect operating system!" );
-            return null;
-        }
-
-    }
-
-    private String getScriptText( String elastixOrTransformix )
-    {
-        String shellScriptText = "";
-        shellScriptText += "#!/bin/bash\n";
-        shellScriptText += "ELASTIX_PATH=" + settings.elastixDirectory + "\n";
-
-        if ( isMac() )
-        {
-            shellScriptText += "export DYLD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
-        }
-        else if ( isLinux() )
-        {
-            shellScriptText += "export LD_LIBRARY_PATH=$ELASTIX_PATH/lib/\n";
-        }
-
-        shellScriptText += "$ELASTIX_PATH/bin/" + elastixOrTransformix +" $@\n";
-        return shellScriptText;
-    }
-
-    private void setElastixSystemPathForWindowsOS()
-    {
-        ProcessBuilder pb = new ProcessBuilder();
-        Map<String, String> env = pb.environment();
-        env.put( "PATH", settings.elastixDirectory + ":$PATH");
-    }
-
-    private void makeExecutable( String executablePath )
-    {
-        try
-        {
-            Utils.waitOneSecond();
-            Runtime.getRuntime().exec("chmod +x " + executablePath );
-            Utils.waitOneSecond();
-        }
-        catch ( IOException e )
-        {
-            IJ.log( "Could not make file executable: " + executablePath );
-            e.printStackTrace();
-        }
     }
 
     private void createOrEmptyWorkingDir()
