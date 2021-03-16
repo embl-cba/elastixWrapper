@@ -1,6 +1,6 @@
 package tests;
 
-import de.embl.cba.elastixwrapper.commands.BigWarpAffineToTransformixFileCommand;
+import itc.commands.BigWarpAffineToTransformixFileCommand;
 import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;

@@ -1,7 +1,6 @@
 package command;
 
-import de.embl.cba.elastixwrapper.commands.BigWarpAffineToTransformixFileCommand;
-import de.embl.cba.elastixwrapper.commands.TransformixCommand;
+import itc.commands.BigWarpAffineToTransformixFileCommand;
 import net.imagej.ImageJ;
 
 public class RunBigWarpAffineToTransformixFileCommand
