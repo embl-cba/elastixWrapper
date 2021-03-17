@@ -6,10 +6,11 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.embl.cba.elastixwrapper.elastix.ElastixWrapper.*;
+import static de.embl.cba.elastixwrapper.utils.CommandLineUtils.createExecutableShellScript;
 
 public class ElastixCaller {
 
+    public static final String ELASTIX = "elastix";
     public static final String FIXED = "f";
     public static final String MOVING = "m";
 
@@ -18,7 +19,7 @@ public class ElastixCaller {
 
     public ElastixCaller( ElastixSettings settings ) {
         this.settings = settings;
-        executableShellScript = createExecutableShellScript( ELASTIX );
+        executableShellScript = createExecutableShellScript( ELASTIX, settings );
     }
 
     public void callElastix()

@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.utils;
 
+import de.embl.cba.elastixwrapper.settings.Settings;
 import ij.IJ;
 
 import java.io.File;
@@ -10,19 +11,19 @@ import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.*;
 
 public class CommandLineUtils {
-    public static String createExecutableShellScript( String elastixOrTransformix )
+    public static String createExecutableShellScript( String elastixOrTransformix, Settings settings )
     {
         if ( isMac() || isLinux() )
         {
-            String executablePath = tmpDir
+            String executablePath = settings.tmpDir
                     + File.separator + "run_" + elastixOrTransformix + ".sh";
 
-            String binaryPath = elastixDirectory + File.separator + "bin" + File.separator + elastixOrTransformix;
+            String binaryPath = settings.elastixDirectory + File.separator + "bin" + File.separator + elastixOrTransformix;
 
             if( ! new File( binaryPath ).exists() )
                 Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
 
-            String shellScriptText = getScriptText( elastixOrTransformix );
+            String shellScriptText = getScriptText( elastixOrTransformix, settings );
 
             saveStringToFile( shellScriptText, executablePath );
 
@@ -33,9 +34,9 @@ public class CommandLineUtils {
         }
         else if ( isWindows() )
         {
-            setElastixSystemPathForWindowsOS();
+            setElastixSystemPathForWindowsOS( settings );
 
-            String binaryPath = elastixDirectory + File.separator + elastixOrTransformix + ".exe";
+            String binaryPath = settings.elastixDirectory + File.separator + elastixOrTransformix + ".exe";
 
             if ( ! new File( binaryPath ).exists() )
                 Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
@@ -50,11 +51,11 @@ public class CommandLineUtils {
 
     }
 
-    private String getScriptText( String elastixOrTransformix )
+    private static String getScriptText( String elastixOrTransformix, Settings settings )
     {
         String shellScriptText = "";
         shellScriptText += "#!/bin/bash\n";
-        shellScriptText += "ELASTIX_PATH=" + elastixDirectory + "\n";
+        shellScriptText += "ELASTIX_PATH=" + settings.elastixDirectory + "\n";
 
         if ( isMac() )
         {
@@ -69,14 +70,14 @@ public class CommandLineUtils {
         return shellScriptText;
     }
 
-    private void setElastixSystemPathForWindowsOS()
+    private static void setElastixSystemPathForWindowsOS( Settings settings )
     {
         ProcessBuilder pb = new ProcessBuilder();
         Map<String, String> env = pb.environment();
-        env.put( "PATH", elastixDirectory + ":$PATH");
+        env.put( "PATH", settings.elastixDirectory + ":$PATH");
     }
 
-    private void makeExecutable( String executablePath )
+    private static void makeExecutable( String executablePath )
     {
         try
         {

@@ -30,7 +30,7 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.settings.Settings;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
@@ -223,7 +223,7 @@ public abstract class Utils {
 		IJ.showStatus("");
 	}
 
-	public static void logErrorAndExit(ElastixWrapperSettings settings, String msg )
+	public static void logErrorAndExit( Settings settings, String msg )
 	{
 		settings.logService.error( msg );
 		if ( settings.headless )

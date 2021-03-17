@@ -20,8 +20,8 @@ import java.util.List;
 
 public class ElastixWrapper
 {
-    public static final String ELASTIX = "elastix";
-    public static final String TRANSFORMIX = "transformix";
+
+
     public static final String ELASTIX_FIXED_IMAGE_NAME = "fixed";
     public static final String ELASTIX_MOVING_IMAGE_NAME = "moving";
     public static final String ELASTIX_FIXED_MASK_IMAGE_NAME = "fixedMask";

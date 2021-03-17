@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class TransformixWrapper {
 
 
-
-    public static final String TRANSFORMIX = "transformix";
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
