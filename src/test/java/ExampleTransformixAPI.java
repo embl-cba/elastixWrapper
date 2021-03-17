@@ -1,4 +1,4 @@
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.metaimage_io.MetaImage_Reader;
 import ij.IJ;
@@ -18,7 +18,7 @@ public class ExampleTransformixAPI
 
 		IJ.open( inputImagePath );
 
-		ElastixSettings settings = new ElastixSettings();
+		ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;

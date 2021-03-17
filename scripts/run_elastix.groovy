@@ -6,12 +6,12 @@
  */
 
 import bdv.util.Bdv;
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 
 
-ElastixSettings settings = new ElastixSettings();
+ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 final ImageJ ij = new ImageJ();
 settings.logService = ij.log();
@@ -21,7 +21,7 @@ settings.fixedImageFilePath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datas
 settings.movingImageFilePath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/moving-image-sbem-seg-ganglion.tif";
 settings.fixedMaskPath = "/g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/fixed-image-mask.tif";
 settings.initialTransformationFilePath = "g/arendt/EM_6dpf_segmentation/platy-fibsem-datasets/registration/examples/amira-transform.txt";
-settings.transformationType = ElastixSettings.AFFINE;
+settings.transformationType = ElastixWrapperSettings.AFFINE;
 settings.downSamplingFactors = "10 10 10; 2, 2, 2";
 // settings.movingMaskPath = "";
 // settings.bSplineGridSpacing = "50 50 50";

@@ -1,7 +1,8 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
@@ -30,9 +31,9 @@ public class TransformixCommand implements Command
     public File transformationFile;
 
     @Parameter( label = "Output modality", choices = {
-            ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES,
-            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
-            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV
+            ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES,
+            ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
+            ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV
     } )
     public String outputModality;
 
@@ -49,16 +50,15 @@ public class TransformixCommand implements Command
 
     private ElastixWrapper runTransformix()
     {
-        ElastixSettings settings = getSettingsFromUI();
+        TransformixWrapperSettings settings = getSettingsFromUI();
         ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
         elastixWrapper.runTransformix();
         return elastixWrapper;
     }
 
-    private ElastixSettings getSettingsFromUI()
+    private TransformixWrapperSettings getSettingsFromUI()
     {
-        ElastixSettings settings = new ElastixSettings();
-
+        TransformixWrapperSettings settings = new TransformixWrapperSettings();
         settings.logService = logService;
 
         settings.elastixDirectory = elastixDirectory.toString();
@@ -69,7 +69,7 @@ public class TransformixCommand implements Command
         settings.outputModality = outputModality;
         settings.outputFile = outputFile;
 
-        if ( ! outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
+        if ( ! outputModality.equals( ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
             if ( outputFile == null )
                 Utils.logErrorAndExit( settings,"Please specify an output file.");
 

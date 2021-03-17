@@ -1,7 +1,7 @@
 package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.Prefs;
 import ij.gui.GenericDialog;
@@ -35,11 +35,11 @@ public class ElastixCommand implements Command
     public File movingImageFile;
 
     @Parameter( label = "Transformation type", choices = {
-            ElastixSettings.TRANSLATION,
-            ElastixSettings.EULER,
-            ElastixSettings.SIMILARITY,
-            ElastixSettings.AFFINE,
-            ElastixSettings.SPLINE } )
+            ElastixWrapperSettings.TRANSLATION,
+            ElastixWrapperSettings.EULER,
+            ElastixWrapperSettings.SIMILARITY,
+            ElastixWrapperSettings.AFFINE,
+            ElastixWrapperSettings.SPLINE } )
     public String transformationType;
 
     @Parameter( label = "Grid spacing for BSpline transformation [voxels]", required = false )
@@ -85,17 +85,17 @@ public class ElastixCommand implements Command
 
     @Parameter( label = "Elastix parameters", choices =
             {
-                    ElastixSettings.PARAMETERS_DEFAULT,
-                    ElastixSettings.PARAMETERS_GIULIA
+                    ElastixWrapperSettings.PARAMETERS_DEFAULT,
+                    ElastixWrapperSettings.PARAMETERS_GIULIA
             })
-    public String elastixParameters = ElastixSettings.PARAMETERS_DEFAULT;
+    public String elastixParameters = ElastixWrapperSettings.PARAMETERS_DEFAULT;
 
     @Parameter( label = "Final resampler",
             choices = {
-                    ElastixSettings.FINAL_RESAMPLER_LINEAR,
-                    ElastixSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
+                    ElastixWrapperSettings.FINAL_RESAMPLER_LINEAR,
+                    ElastixWrapperSettings.FINAL_RESAMPLER_NEAREST_NEIGHBOR
             } )
-    public String finalResampler = ElastixSettings.FINAL_RESAMPLER_LINEAR;
+    public String finalResampler = ElastixWrapperSettings.FINAL_RESAMPLER_LINEAR;
 
     @Parameter( label = "Weights for multi channel images" )
     public String multiChannelWeights = "1.0,3.0,1.0,1.0,1.0,1.0";
@@ -118,7 +118,7 @@ public class ElastixCommand implements Command
 
     private void runElastix( )
     {
-        ElastixSettings settings = getSettings();
+        ElastixWrapperSettings settings = getSettings();
 
         if ( settings == null ) return;
 
@@ -146,9 +146,9 @@ public class ElastixCommand implements Command
         settings.logService.info( "...done!" );
     }
 
-    private ElastixSettings getSettings()
+    private ElastixWrapperSettings getSettings()
     {
-        ElastixSettings settings = new ElastixSettings();
+        ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
         settings.headless = uiService.isHeadless();
         settings.logService = logService;

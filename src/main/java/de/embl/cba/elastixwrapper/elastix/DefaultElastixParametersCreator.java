@@ -1,10 +1,9 @@
 package de.embl.cba.elastixwrapper.elastix;
 
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static de.embl.cba.elastixwrapper.elastix.ElastixParameters.FINAL_RESAMPLER_LINEAR;
@@ -32,7 +31,7 @@ public class DefaultElastixParametersCreator {
     public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
     public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
 
-    public DefaultElastixParametersCreator( ElastixSettings settings )
+    public DefaultElastixParametersCreator( ElastixWrapperSettings settings )
     {
     }
 

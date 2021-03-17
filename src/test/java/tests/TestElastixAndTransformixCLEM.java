@@ -1,6 +1,6 @@
 package tests;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 import org.junit.Test;
@@ -16,12 +16,12 @@ public class TestElastixAndTransformixCLEM
 		final ImageJ ij = new ImageJ();
 		ij.ui().showUI();
 
-		ElastixSettings settings = new ElastixSettings();
+		ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.tmpDir = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/tmp";
-		settings.transformationType = ElastixSettings.SPLINE;
+		settings.transformationType = ElastixWrapperSettings.SPLINE;
 		settings.fixedImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/em.tif";
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/fluo_green.tif";
 		settings.downSamplingFactors = "2 2";
@@ -42,7 +42,7 @@ public class TestElastixAndTransformixCLEM
 	@Test
 	public void transformTwoChannelFluo()
 	{
-		ElastixSettings settings = new ElastixSettings();
+		ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 		final ImageJ ij = new ImageJ();
 
@@ -52,7 +52,7 @@ public class TestElastixAndTransformixCLEM
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/fluo_red_green.tif";
 		settings.transformationFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/tmp/TransformParameters.0.txt";
 
-		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
+		settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
 		settings.outputFile = new File( "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/clem/aligned" );
 
 		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );

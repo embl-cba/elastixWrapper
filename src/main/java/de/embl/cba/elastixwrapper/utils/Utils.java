@@ -30,16 +30,10 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
-import loci.common.services.ServiceFactory;
-import loci.formats.IFormatReader;
-import loci.formats.ImageReader;
-import loci.formats.meta.IMetadata;
-import loci.formats.services.OMEXMLService;
-import ome.units.UNITS;
 import org.scijava.log.LogService;
 
 import java.io.*;
@@ -229,7 +223,7 @@ public abstract class Utils {
 		IJ.showStatus("");
 	}
 
-	public static void logErrorAndExit( ElastixSettings settings, String msg )
+	public static void logErrorAndExit(ElastixWrapperSettings settings, String msg )
 	{
 		settings.logService.error( msg );
 		if ( settings.headless )

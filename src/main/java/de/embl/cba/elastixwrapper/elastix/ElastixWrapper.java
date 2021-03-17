@@ -1,13 +1,11 @@
 package de.embl.cba.elastixwrapper.elastix;
 
 import bdv.util.*;
-import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
-import de.embl.cba.elastixwrapper.logging.Logger;
+import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.metaimage_io.MetaImage_Reader;
 import de.embl.cba.metaimage_io.MetaImage_Writer;
 import ij.*;
-import ij.io.FileSaver;
 import ij.measure.Calibration;
 import ij.plugin.Duplicator;
 import net.imglib2.RandomAccessibleInterval;
@@ -19,10 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
-import static org.scijava.util.PlatformUtils.*;
 
 public class ElastixWrapper
 {
@@ -34,14 +28,13 @@ public class ElastixWrapper
     public static final String ELASTIX_MOVING_MASK_IMAGE_NAME = "movingMask";
 
     public static final String MHD = ".mhd";
-    public static final String FIXED = "f";
-    public static final String MOVING = "m";
+
     public static final String ELASTIX_OUTPUT_FILENAME = "result.0";
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
     public static final String RAW = ".raw";
 
-    ElastixSettings settings;
+    ElastixWrapperSettings settings;
 
     private ArrayList< String > fixedImageFileNames;
     private ArrayList< String > movingImageFileNames;
@@ -56,7 +49,7 @@ public class ElastixWrapper
     private int nChannels;
     private ArrayList< String > elastixTmpFilenames;
 
-    public ElastixWrapper( ElastixSettings settings )
+    public ElastixWrapper( ElastixWrapperSettings settings )
     {
         this.settings = settings;
         this.transformedImageFilePaths = new ArrayList<>(  );
@@ -74,6 +67,8 @@ public class ElastixWrapper
                     "Maybe the temporary working directory could not be generated." );
             return;
         }
+
+        // TODO - make parameter file, and save it
 
         callElastix();
     }
@@ -144,17 +139,6 @@ public class ElastixWrapper
         showTransformedImages();
 
         return bdv;
-    }
-
-    private void showTransformedImages()
-    {
-        for ( int index : settings.fixedToMovingChannel.values() )
-        {
-            ImagePlus imagePlus = IJ.openImage( transformedImageFilePaths.get( index ) );
-            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
-            bdvStackSource.setColor( colors.get( colorIndex++ )  );
-            bdv = bdvStackSource.getBdvHandle();
-        }
     }
 
     private void showMovingImages()
@@ -245,7 +229,7 @@ public class ElastixWrapper
 
     public void createTransformedImagesAndSaveAsTiff()
     {
-        settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
+        settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
         settings.outputFile = new File( settings.tmpDir + "transformed" );
 
         settings.transformationFilePath =
@@ -259,7 +243,7 @@ public class ElastixWrapper
 
 	public void reviewResultsInImageJ()
 	{
-		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES;
+		settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES;
 		settings.outputFile = new File( settings.tmpDir + "transformed" );
 
 		settings.transformationFilePath =
@@ -274,81 +258,9 @@ public class ElastixWrapper
 
 	}
 
-    private void transformImageAndHandleOutput( String executableShellScript,
-                                                ArrayList< String > movingImageFileNames,
-                                                int c )
-    {
-        List< String > transformixCallArgs =
-                getTransformixCallArgs(
-                        movingImageFileNames.get( c ), executableShellScript );
 
-        Utils.executeCommand( transformixCallArgs, settings.logService );
 
-        String transformedImageFileName = TRANSFORMIX_OUTPUT_FILENAME
-                + "."
-                + settings.resultImageFileType;
 
-        ImagePlus result = loadMetaImage(
-                settings.tmpDir,
-                transformedImageFileName );
-
-        if ( result == null )
-        {
-            Utils.logErrorAndExit( settings,"The transformed image could not be loaded: "
-                    + settings.tmpDir + File.separator + transformedImageFileName + "\n" +
-                    "Please check the log: " + settings.tmpDir + File.separator + "elastix.log" );
-
-        }
-
-        if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
-        {
-            result.show();
-            result.setTitle( "transformed-ch" + c );
-        }
-        else
-        {
-            String outputFile = settings.outputFile.toString();
-            outputFile = outputFile.replace( ".tif", "" );
-            outputFile = outputFile.replace( ".xml", "" );
-
-            if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF ) )
-            {
-                final String path = outputFile + "-ch" + c + ".tif";
-
-                transformedImageFilePaths.add( path );
-
-                settings.logService.info( "\nSaving transformed image: " + path );
-
-                new FileSaver( result ).saveAsTiff( path );
-            }
-            else if ( settings.outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV ) )
-            {
-                String path;
-                if ( nChannels > 1 )
-                    path = outputFile + "-ch" + c + ".xml";
-                else
-                    path = outputFile + ".xml";
-
-                settings.logService.info( "\nSaving transformed image: " + path );
-
-                BdvImagePlusExport.saveAsBdv( result, new File( path ) );
-            }
-        }
-
-    }
-
-    public ArrayList< ImagePlus > getTransformedImages()
-    {
-        if ( transformedImageFilePaths.size() == 0 )
-            createTransformedImagesAndSaveAsTiff();
-
-        ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
-
-        for ( String path : transformedImageFilePaths )
-            transformedImages.add( IJ.openImage( path ) );
-
-        return transformedImages;
-    }
 
     private String getPath( String fileName )
     {
@@ -423,15 +335,15 @@ public class ElastixWrapper
 
         System.out.println( "Parameter list type: " + settings.elastixParameters);
 
-        if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_HENNING ) )
+        if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_HENNING ) )
         {
             parameterList = parameters.getHenningStyleParameters();
         }
-        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_GIULIA ) )
+        else if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_GIULIA ) )
         {
             parameterList = parameters.getGiuliaMizzonStyleParameters();
         }
-        else if ( settings.elastixParameters.equals( ElastixSettings.PARAMETERS_DEFAULT ) )
+        else if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_DEFAULT ) )
         {
             parameterList = parameters.getDefaultParameters( );
         }
@@ -529,31 +441,6 @@ public class ElastixWrapper
                 imp.getNSlices(),
                 1,
                 1 );
-    }
-
-
-
-    private List< String > createElastixCallArgs( )
-    {
-        List<String> args = new ArrayList<>();
-        args.add( createExecutableShellScript( ELASTIX ) );
-        args.add( "-out" );
-        args.add( settings.tmpDir );
-
-        addImagesAndMasksToArguments( args );
-
-        args.add( "-p" );
-        args.add( settings.parameterFilePath );
-        args.add( "-threads" );
-        args.add( "" + settings.numWorkers );
-
-        if ( ! settings.initialTransformationFilePath.equals( "" ) )
-        {
-            args.add( "-t0" );
-            args.add( settings.initialTransformationFilePath );
-        }
-
-        return args;
     }
 
     private void addImagesAndMasksToArguments( List< String > args )

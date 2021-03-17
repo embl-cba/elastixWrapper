@@ -1,7 +1,7 @@
-package de.embl.cba.elastixwrapper.elastix;
+package de.embl.cba.elastixwrapper.transformix;
 
+import de.embl.cba.elastixwrapper.settings.TransformixSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
-import org.scijava.log.LogService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,28 +10,23 @@ import static de.embl.cba.elastixwrapper.elastix.ElastixWrapper.TRANSFORMIX;
 
 public class TransformixCaller {
 
-    LogService logService;
-    String elastixDirectory;
-    String tmpDir;
-    String transformationFilePath;
-    String movingImageFilePath;
-    int numWorkers;
-
+    TransformixSettings settings;
     String executableShellScript;
 
-    public TransformixCaller() {
+    public TransformixCaller( TransformixSettings settings ) {
+        this.settings = settings;
         executableShellScript = createExecutableShellScript( TRANSFORMIX );
     }
 
     public void callTransformix()
     {
-        logService.info( "Running transformix... (please wait)" );
+        settings.logService.info( "Running transformix... (please wait)" );
 
         List< String > args = createTransformixCallArgs();
 
-        Utils.executeCommand( args, logService );
+        Utils.executeCommand( args, settings.logService );
 
-        logService.info( "...done!" );
+        settings.logService.info( "...done!" );
     }
 
     private List< String > createTransformixCallArgs()
@@ -40,13 +35,13 @@ public class TransformixCaller {
         List<String> args = new ArrayList<>();
         args.add( executableShellScript );
         args.add( "-out" );
-        args.add( tmpDir );
+        args.add( settings.tmpDir );
         args.add( "-in" );
-        args.add( movingImageFilePath );
+        args.add( settings.movingImageFilePath );
         args.add( "-tp" );
-        args.add( transformationFilePath );
+        args.add( settings.transformationFilePath );
         args.add( "-threads" );
-        args.add( "" + numWorkers );
+        args.add( "" + settings.numWorkers );
 
         return args;
     }
