@@ -6,6 +6,7 @@ import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.BdvManager;
 import de.embl.cba.elastixwrapper.wrapper.StagingManager;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParametersCreator;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
@@ -31,10 +32,6 @@ public class ElastixWrapper
     private ElastixWrapperSettings settings;
     private ElastixParametersSettings parametersSettings;
     private StagingManager stagingManager;
-
-    private ArrayList< ARGBType > colors;
-    private Bdv bdv;
-    private int colorIndex;
 
     public ElastixWrapper(ElastixWrapperSettings settings, ElastixParametersSettings parametersSettings )
     {
@@ -116,14 +113,10 @@ public class ElastixWrapper
         TransformixWrapper transformixWrapper = new TransformixWrapper( transformixWrapperSettings );
         transformixWrapper.transformImagesAndHandleOutput();
 
-        initColors();
-
-        showFixedImagesInBdv();
-
-        showMovingImages();
-
-        showTransformedImages();
-
+        BdvManager bdvManager = new BdvManager();
+        showFixedImagesInBdv( bdvManager );
+        showMovingImages( bdvManager );
+        Bdv bdv = transformixWrapper.showTransformedImages( bdvManager );
         return bdv;
     }
 
@@ -137,92 +130,32 @@ public class ElastixWrapper
         return transformixWrapperSettings;
     }
 
-    private void showMovingImages()
+    private Bdv showMovingImages( BdvManager bdvManager )
     {
-        for ( int index : settings.fixedToMovingChannel.values() )
+        Bdv bdv = null;
+        for ( String movingImageFilePath : settings.stagedMovingImageFilePaths )
         {
-            String baseName = new File( settings.movingImageFilePaths.get(index) ).getName();
-            ImagePlus imagePlus = loadMetaImage(
-                    settings.tmpDir,
-                    baseName );
-            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
-            bdvStackSource.setColor( colors.get( colorIndex++ )  );
-            bdv = bdvStackSource.getBdvHandle();
+            String baseName = new File( movingImageFilePath ).getName();
+            bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
         }
+        return bdv;
     }
 
-    private void showFixedImagesInBdv(  )
+    private Bdv showFixedImagesInBdv( BdvManager bdvManager )
     {
-        for ( int index : settings.fixedToMovingChannel.keySet() )
+        Bdv bdv = null;
+        for ( String fixedImagePath : settings.stagedFixedImageFilePaths )
         {
-            String baseName = new File( settings.fixedImageFilePaths.get(index) ).getName();
-            ImagePlus imagePlus = loadMetaImage(
-                    settings.tmpDir,
-                    baseName );
-            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
-            bdvStackSource.setColor( colors.get( colorIndex++ )  );
-            bdv = bdvStackSource.getBdvHandle();
+            String baseName = new File( fixedImagePath ).getName();
+            bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
         }
+        return bdv;
     }
 
-    private BdvStackSource showImagePlusInBdv(
-            ImagePlus imp )
+    private BdvStackSource showFixedInBdv( BdvManager bdvManager )
     {
-        final Calibration calibration = imp.getCalibration();
-
-        if ( imp.getNSlices() > 1 )
-        {
-            final double[] calib = {
-                    calibration.pixelWidth,
-                    calibration.pixelHeight,
-                    calibration.pixelDepth
-            };
-            return BdvFunctions.show(
-                    ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( imp ),
-                    imp.getTitle(),
-                    BdvOptions.options().addTo( bdv ).axisOrder( AxisOrder.XYZ ).sourceTransform( calib ) );
-        }
-        else
-        {
-
-            final double[] calib = {
-                    calibration.pixelWidth,
-                    calibration.pixelHeight
-            };
-
-            return BdvFunctions.show(
-                    ( RandomAccessibleInterval ) ImageJFunctions.wrapReal( imp ),
-                    imp.getTitle(),
-                    BdvOptions.options().addTo( bdv ).is2D().sourceTransform( calib ) );
-        }
-    }
-
-    private void initColors()
-    {
-        colors = new ArrayList<>();
-        colors.add( new ARGBType( ARGBType.rgba( 000, 255, 000, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 000, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 000, 000, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 000, 000, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 000, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 000, 255 ) ) );
-
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colors.add( new ARGBType( ARGBType.rgba( 255, 255, 255, 255 ) ) );
-        colorIndex = 0;
-    }
-
-    private BdvStackSource showFixedInBdv()
-    {
-        final ImagePlus templateImp = IJ.openImage( settings.initialFixedImageFilePath );
-
-        return showImagePlusInBdv( templateImp );
+        final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
+        return bdvManager.showImagePlusInBdv( templateImp );
     }
 
     public void createTransformedImagesAndSaveAsTiff()

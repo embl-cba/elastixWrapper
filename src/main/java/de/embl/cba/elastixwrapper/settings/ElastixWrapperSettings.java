@@ -40,7 +40,7 @@ public class ElastixWrapperSettings extends Settings
     // public ParameterStyle elastixParametersStyle = ParameterStyle.Default;
     // path to copy calculated transformation to
     public String transformationOutputFilePath;
-    public TransformixWrapperSettings.OutputModality outputModality;
+    // public TransformixWrapperSettings.OutputModality outputModality;
 
     // TODO - split off into elastix parmeter settings???
     // public ElastixParameters.TransformationType transformationType;

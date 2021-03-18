@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.wrapper.transformix;
 
+import bdv.util.Bdv;
 import bdv.util.BdvStackSource;
 import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
 import de.embl.cba.elastixwrapper.commandline.TransformixCaller;
@@ -8,6 +9,7 @@ import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.BdvManager;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.FileSaver;
@@ -114,15 +116,15 @@ public class TransformixWrapper {
     //     return transformedImages;
     // }
 
-    private void showTransformedImages()
+    public Bdv showTransformedImages( BdvManager bdvManager )
     {
-        for ( int index : settings.fixedToMovingChannel.values() )
+        Bdv bdv = null;
+        for ( String transformedImageFilePath : transformedImageFilePaths )
         {
-            ImagePlus imagePlus = IJ.openImage( transformedImageFilePaths.get( index ) );
-            final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
-            bdvStackSource.setColor( colors.get( colorIndex++ )  );
-            bdv = bdvStackSource.getBdvHandle();
+            String baseName = new File( transformedImageFilePath ).getName();
+            bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
         }
+        return bdv;
     }
 
 }
