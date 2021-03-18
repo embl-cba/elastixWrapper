@@ -1,14 +1,8 @@
-package de.embl.cba.elastixwrapper.elastix;
+package de.embl.cba.elastixwrapper.wrapper.elastix;
 
-import de.embl.cba.elastixwrapper.settings.ElastixParametersSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static de.embl.cba.elastixwrapper.elastix.ElastixParameters.FINAL_RESAMPLER_LINEAR;
 
 public class DefaultElastixParametersCreator {
 

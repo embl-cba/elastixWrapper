@@ -1,6 +1,8 @@
-package de.embl.cba.elastixwrapper.elastix;
+package de.embl.cba.elastixwrapper.wrapper.elastix;
 
 import bdv.util.*;
+import de.embl.cba.elastixwrapper.commandline.ElastixCaller;
+import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.metaimage_io.MetaImage_Reader;
@@ -17,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import de.embl.cba.elastixwrapper.elastix.DefaultElastixParametersCreator.ParameterStyle;
 
 public class ElastixWrapper
 {
@@ -27,11 +28,11 @@ public class ElastixWrapper
     public static final String ELASTIX_MOVING_MASK_IMAGE_NAME = "movingMask";
 
     public static final String MHD = ".mhd";
+    public static final String RAW = ".raw";
 
     public static final String ELASTIX_OUTPUT_FILENAME = "result.0";
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
-    public static final String RAW = ".raw";
 
     private ElastixWrapperSettings settings;
     private ArrayList< String > transformedImageFilePaths;
@@ -65,7 +66,8 @@ public class ElastixWrapper
         }
 
         setParameters();
-        new ElastixCaller( settings ).callElastix();
+        ElastixSettings elastixSettings = new ElastixSettings( settings );
+        new ElastixCaller( elastixSettings ).callElastix();
     }
 
     private void processSettings()
@@ -358,7 +360,6 @@ public class ElastixWrapper
     private void setParameters()
     {
         settings.parameterFilePath = getDefaultParameterFilePath();
-
         System.out.println( "Parameter list type: " + settings.elastixParametersStyle);
         ElastixParameters parameters =
                 new DefaultElastixParametersCreator( settings ).getElastixParameters( settings.elastixParametersStyle );

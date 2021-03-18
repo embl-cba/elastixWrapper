@@ -1,7 +1,7 @@
 package users.sultan;
 
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 import ij.IJ;
 import ij.ImagePlus;
 import itc.converters.AffineTransform3DToElastixAffine3D;

@@ -1,6 +1,6 @@
-package de.embl.cba.elastixwrapper.elastix;
+package de.embl.cba.elastixwrapper.commandline;
 
-import de.embl.cba.elastixwrapper.settings.ElastixSettings;
+import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 
 import java.util.ArrayList;

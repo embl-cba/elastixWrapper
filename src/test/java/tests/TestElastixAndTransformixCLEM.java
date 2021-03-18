@@ -1,7 +1,7 @@
 package tests;
 
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 import org.junit.Test;
 

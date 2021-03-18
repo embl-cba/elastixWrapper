@@ -30,7 +30,7 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
-import de.embl.cba.elastixwrapper.settings.Settings;
+import de.embl.cba.elastixwrapper.commandline.settings.Settings;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;

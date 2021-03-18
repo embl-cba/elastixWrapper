@@ -1,4 +1,4 @@
-package de.embl.cba.elastixwrapper.elastix;
+package de.embl.cba.elastixwrapper.wrapper.elastix;
 
 
 import de.embl.cba.elastixwrapper.utils.Utils;

@@ -1,8 +1,9 @@
-package de.embl.cba.elastixwrapper.transformix;
+package de.embl.cba.elastixwrapper.wrapper.transformix;
 
 import bdv.util.BdvStackSource;
 import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
@@ -13,12 +14,13 @@ import java.util.ArrayList;
 
 public class TransformixWrapper {
 
-
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
-    public TransformixWrapper() {
+    TransformixWrapperSettings settings;
 
+    public TransformixWrapper( TransformixWrapperSettings settings ) {
+        this.settings = settings;
     }
 
     public void runTransformix()

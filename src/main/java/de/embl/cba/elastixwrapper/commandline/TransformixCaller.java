@@ -1,6 +1,6 @@
-package de.embl.cba.elastixwrapper.transformix;
+package de.embl.cba.elastixwrapper.commandline;
 
-import de.embl.cba.elastixwrapper.settings.TransformixSettings;
+import de.embl.cba.elastixwrapper.commandline.settings.TransformixSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 
 import java.util.ArrayList;

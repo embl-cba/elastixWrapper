@@ -1,8 +1,10 @@
 package de.embl.cba.elastixwrapper.settings;
 
+import de.embl.cba.elastixwrapper.commandline.settings.TransformixSettings;
+
 import java.io.File;
 
-public class TransformixWrapperSettings extends TransformixSettings {
+public class TransformixWrapperSettings {
 
     public enum OutputModality
     {
@@ -13,6 +15,12 @@ public class TransformixWrapperSettings extends TransformixSettings {
 
     public OutputModality outputModality;
     public File outputFile;
+    
+    // surely this == tmpdir?
     public File outputDirectory;
+    // ?? how determined
     public String transformationOutputFilePath;
+
+    public boolean stageImages;
+    public boolean cleanTmpDir;
 }

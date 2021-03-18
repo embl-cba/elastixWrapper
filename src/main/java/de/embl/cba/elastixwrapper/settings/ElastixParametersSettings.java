@@ -1,11 +1,12 @@
 package de.embl.cba.elastixwrapper.settings;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixParameters;
+import de.embl.cba.elastixwrapper.commandline.settings.Settings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixParameters;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.embl.cba.elastixwrapper.elastix.ElastixParameters.FINAL_RESAMPLER_LINEAR;
+import static de.embl.cba.elastixwrapper.wrapper.elastix.ElastixParameters.FINAL_RESAMPLER_LINEAR;
 
 public class ElastixParametersSettings extends Settings {
     public ElastixParameters.TransformationType transformationType;
