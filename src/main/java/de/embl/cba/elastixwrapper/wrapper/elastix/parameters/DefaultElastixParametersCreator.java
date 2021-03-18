@@ -1,6 +1,5 @@
 package de.embl.cba.elastixwrapper.wrapper.elastix.parameters;
 
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 
@@ -13,9 +12,9 @@ public class DefaultElastixParametersCreator {
         CLEM
     }
 
-    ElastixWrapperSettings settings;
+    ElastixParametersSettings settings;
 
-    public DefaultElastixParametersCreator( ElastixWrapperSettings settings )
+    public DefaultElastixParametersCreator( ElastixParametersSettings settings )
     {
         this.settings = settings;
     }
@@ -49,7 +48,9 @@ public class DefaultElastixParametersCreator {
     private ElastixParameters getDefaultParameters( )
     {
         ElastixParameters parameters = new ElastixParameters( settings.transformationType );
-        setCommonParameters( parameters );
+        if ( !setCommonParameters( parameters ) ) {
+            return null;
+        }
 
         parameters.addParameter( "NumberOfSpatialSamples", settings.spatialSamples.replace( ";", " " ), false, true);
 
@@ -99,9 +100,9 @@ public class DefaultElastixParametersCreator {
         return( parameters );
     }
 
-    // private ElastixParameters getHenningStyleParameters()
-    // {
-    //     ElastixParameters parameters = new ElastixParameters( transformationType );
+    private ElastixParameters getHenningStyleParameters()
+    {
+        ElastixParameters parameters = new ElastixParameters( settings.transformationType );
     //
     //     // Spatial Samples
     //     parameters.addParameter("NumberOfSpatialSamples",
@@ -135,15 +136,17 @@ public class DefaultElastixParametersCreator {
     //     parameters.addParameter("WriteResultImage", "true", false, false);
     //     parameters.addParameter("ResultImageFormat", resultImageFileType, false, false);
     //
-    //     return( parameters );
-    // }
+        return( parameters );
+    }
 
 
 
     private ElastixParameters getGiuliaMizzonStyleParameters()
     {
         ElastixParameters parameters = new ElastixParameters( settings.transformationType );
-        setCommonParameters( parameters );
+        if ( !setCommonParameters( parameters ) ) {
+            return null;
+        }
 
         if ( settings.fixedToMovingChannel.size() > 1 )
         {
@@ -177,7 +180,7 @@ public class DefaultElastixParametersCreator {
         return( parameters );
     }
 
-    private void setCommonParameters( ElastixParameters parameters ) {
+    private boolean setCommonParameters( ElastixParameters parameters ) {
         parameters.addParameter( "MaximumNumberOfIterations", Integer.toString(settings.iterations), false, true );
         parameters.addParameter( "CheckNumberOfSamples", "false", false, false );
         parameters.addParameter("NumberOfResolutions" , Integer.toString(settings.downSamplingFactors.split(";").length), false, true);
@@ -200,7 +203,9 @@ public class DefaultElastixParametersCreator {
         parameters.addParameter("HowToCombineTransforms", "Compose", false, false);
         parameters.addParameter("ErodeMask", "false", false, false);
 
-        if ( setResultImageBitDepth( parameters ) ) return null;
+        if ( setResultImageBitDepth( parameters ) ) return false;
+
+        return true;
     }
 
     private void addChannelWeights( ElastixParameters elastixParameters )

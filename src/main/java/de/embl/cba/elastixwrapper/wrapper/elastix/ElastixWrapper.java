@@ -27,13 +27,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.embl.cba.elastixwrapper.wrapper.StagingManager.*;
+
 public class ElastixWrapper
 {
     private ElastixWrapperSettings settings;
     private ElastixParametersSettings parametersSettings;
     private StagingManager stagingManager;
 
-    public ElastixWrapper(ElastixWrapperSettings settings, ElastixParametersSettings parametersSettings )
+    public ElastixWrapper( ElastixWrapperSettings settings, ElastixParametersSettings parametersSettings )
     {
         this.settings = settings;
         this.stagingManager = new StagingManager( settings );
@@ -52,6 +54,7 @@ public class ElastixWrapper
 
         setMovingImageParameters();
         createElastixParameterFile();
+        // TODO - check channels added in right order
         ElastixSettings elastixSettings = new ElastixSettings( settings );
         new ElastixCaller( elastixSettings ).callElastix();
     }
@@ -65,41 +68,54 @@ public class ElastixWrapper
             settings.tmpDir += File.separator;
     }
 
-    public void showTransformationFile()
+    private boolean stageImages()
     {
-        IJ.open( settings.tmpDir + "TransformParameters.0.txt");
+        settings.stagedFixedImageFilePaths = stagingManager.stageImageAsMhd(
+                settings.fixedImageFilePath,
+                ELASTIX_FIXED_IMAGE_NAME );
+
+        settings.stagedMovingImageFilePaths = stagingManager.stageImageAsMhd(
+                settings.movingImageFilePath,
+                ELASTIX_MOVING_IMAGE_NAME );
+
+        if ( ! settings.fixedMaskPath.equals( "" ) )
+            settings.stagedFixedMaskFilePaths = stagingManager.stageImageAsMhd(
+                    settings.fixedMaskPath,
+                    ELASTIX_FIXED_MASK_IMAGE_NAME );
+
+        if ( ! settings.movingMaskPath.equals( "" ) )
+            settings.stagedMovingMaskFilePaths = stagingManager.stageImageAsMhd(
+                    settings.movingMaskPath,
+                    ELASTIX_MOVING_MASK_IMAGE_NAME );
+
+        setFixedToMovingChannel();
+
+        return true;
     }
 
-    public void saveTransformationFile()
-    {
-        final File transformation =
-                new File( settings.tmpDir + "TransformParameters.0.txt" );
-
-        File copied = new File( settings.transformationOutputFilePath );
-
-        try
+    private void setFixedToMovingChannel() {
+        if ( parametersSettings.fixedToMovingChannel.size() == 0 )
         {
-            FileUtils.copyFile( transformation, copied);
-        } catch ( IOException e )
-        {
-            e.printStackTrace();
+            // use all channels for registration
+            for ( int c = 0; c < settings.stagedFixedImageFilePaths.size(); c++ )
+                parametersSettings.fixedToMovingChannel.put( c, c );
         }
     }
 
-    public void showInputImagePlus( )
-    {
-        ImagePlus fixed;
-
-        fixed = IJ.openImage( settings.fixedImageFilePath );
-
-        fixed.show();
-
-        fixed.setTitle( "fixed" );
-
-        // TODO: The macro recording does not work when using IJ.run(..) inside the plugin
-        // if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
+    private void setMovingImageParameters() {
+        ImagePlus imp = stagingManager.openImage( settings.movingImageFilePath );
+        parametersSettings.movingImageBitDepth = imp.getBitDepth();
     }
 
+    private void createElastixParameterFile()
+    {
+        settings.parameterFilePath = stagingManager.getDefaultParameterFilePath();
+        System.out.println( "Parameter list type: " + parametersSettings.elastixParametersStyle );
+        ElastixParameters parameters =
+                new DefaultElastixParametersCreator( parametersSettings ).getElastixParameters( parametersSettings.elastixParametersStyle );
+
+        parameters.writeParameterFile( settings.parameterFilePath );
+    }
 
     /**
      * Shows the fixed, moving and transformed moving images
@@ -109,8 +125,7 @@ public class ElastixWrapper
      */
     public Bdv reviewResults()
     {
-        TransformixWrapperSettings transformixWrapperSettings = createTransformixWrapperSettings(TransformixWrapperSettings.OutputModality.Save_as_tiff);
-        TransformixWrapper transformixWrapper = new TransformixWrapper( transformixWrapperSettings );
+        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Save_as_tiff );
         transformixWrapper.transformImagesAndHandleOutput();
 
         BdvManager bdvManager = new BdvManager();
@@ -120,14 +135,27 @@ public class ElastixWrapper
         return bdv;
     }
 
-    private TransformixWrapperSettings createTransformixWrapperSettings(TransformixWrapperSettings.OutputModality outputModality) {
+    public void reviewResultsInImageJ()
+    {
+        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Show_images );
+        showInputImagePlus();
+        transformixWrapper.transformImagesAndHandleOutput();
+    }
+
+    public void createTransformedImagesAndSaveAsTiff()
+    {
+        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Save_as_tiff );
+        transformixWrapper.transformImagesAndHandleOutput();
+    }
+
+    private TransformixWrapper createTransformixWrapper( TransformixWrapperSettings.OutputModality outputModality) {
         TransformixWrapperSettings transformixWrapperSettings = new TransformixWrapperSettings( settings );
         transformixWrapperSettings.stagedMovingImageFilePaths = settings.stagedMovingImageFilePaths;
         transformixWrapperSettings.outputModality = outputModality;
         transformixWrapperSettings.transformationFilePath = stagingManager.getDefaultTransformationFilePath();
-        // TODO - what is this used for?
-        transformixWrapperSettings.outputFile = new File( settings.tmpDir + "transformed" );
-        return transformixWrapperSettings;
+        transformixWrapperSettings.outputFile = new File( stagingManager.getPath( "transformed" ) );
+
+        return new TransformixWrapper( transformixWrapperSettings );
     }
 
     private Bdv showMovingImages( BdvManager bdvManager )
@@ -158,119 +186,43 @@ public class ElastixWrapper
         return bdvManager.showImagePlusInBdv( templateImp );
     }
 
-    public void createTransformedImagesAndSaveAsTiff()
+    public void showTransformationFile()
     {
-        settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
-        settings.outputFile = new File( settings.tmpDir + "transformed" );
-
-        settings.transformationFilePath =
-                getPath( "TransformParameters.0.txt" );
-
-        String executableShellScript = createExecutableShellScript( TRANSFORMIX );
-
-        for ( int c = 0; c < movingImageFileNames.size(); ++c )
-            transformImageAndHandleOutput( executableShellScript, movingImageFileNames, c );
+        IJ.open( stagingManager.getDefaultTransformationFilePath() );
     }
 
-	public void reviewResultsInImageJ()
-	{
-		settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES;
-		settings.outputFile = new File( settings.tmpDir + "transformed" );
-
-		settings.transformationFilePath =
-				getPath( "TransformParameters.0.txt" );
-
-		String executableShellScript = createExecutableShellScript( TRANSFORMIX );
-
-		showInputImagePlus();
-
-		for ( int c = 0; c < movingImageFileNames.size(); ++c )
-			transformImageAndHandleOutput( executableShellScript, movingImageFileNames, c );
-
-	}
-
-
-
-
-
-
-
-
-    public static String createTransformedImageTitle( int channel )
+    public void saveTransformationFile()
     {
-        return "C" + channel + "-transformed";
-    }
+        final File transformation =
+                new File( stagingManager.getDefaultTransformationFilePath() );
 
+        File copied = new File( settings.transformationOutputFilePath );
 
-    public ImagePlus loadMetaImage( String directory, String filename )
-    {
-        MetaImage_Reader reader = new MetaImage_Reader();
-        return reader.load( directory, filename, false );
-    }
-
-    private boolean stageImages()
-    {
-        settings.fixedImageFilePaths = stageImageAsMhd(
-                settings.initialFixedImageFilePath,
-                ELASTIX_FIXED_IMAGE_NAME );
-
-        settings.movingImageFilePaths = stageImageAsMhd(
-                settings.initialMovingImageFilePath,
-                ELASTIX_MOVING_IMAGE_NAME );
-
-        if ( ! settings.initialFixedMaskPath.equals( "" ) )
-            settings.fixedMaskFilePaths = stageImageAsMhd(
-                    settings.initialFixedMaskPath,
-                    ELASTIX_FIXED_MASK_IMAGE_NAME );
-
-        if ( ! settings.initialMovingMaskPath.equals( "" ) )
-            settings.movingMaskFilePaths = stageImageAsMhd(
-                    settings.initialMovingMaskPath,
-                    ELASTIX_MOVING_MASK_IMAGE_NAME );
-
-        setFixedToMovingChannel();
-
-        return true;
-    }
-
-    private void setFixedToMovingChannel() {
-        settings.numChannels = settings.fixedImageFilePaths.size();
-
-        if ( settings.fixedToMovingChannel.size() == 0 )
+        try
         {
-            // use all channels for registration
-            for ( int c = 0; c < settings.numChannels; c++ )
-                settings.fixedToMovingChannel.put( c, c );
+            FileUtils.copyFile( transformation, copied);
+        } catch ( IOException e )
+        {
+            e.printStackTrace();
         }
     }
 
-    private void setMovingImageParameters() {
-        ImagePlus imp = stagingManager.openImage( settings.movingImageFilePath );
-        parametersSettings.movingImageBitDepth = imp.getBitDepth();
-    }
-
-    private void createElastixParameterFile()
+    public void showInputImagePlus( )
     {
-        settings.parameterFilePath = stagingManager.getDefaultParameterFilePath();
-        System.out.println( "Parameter list type: " + settings.elastixParametersStyle );
-        ElastixParameters parameters =
-                new DefaultElastixParametersCreator( settings ).getElastixParameters( settings.elastixParametersStyle );
+        ImagePlus fixed;
 
-        parameters.writeParameterFile( settings.parameterFilePath );
+        fixed = IJ.openImage( settings.fixedImageFilePath );
+
+        fixed.show();
+
+        fixed.setTitle( "fixed" );
+
+        // TODO: The macro recording does not work when using IJ.run(..) inside the plugin
+        // if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
 
-    private void addImagesAndMasksToArguments( List< String > args )
-    {
-        addImagesToArguments( args, FIXED, fixedImageFileNames );
+    // TODO - CHECK MUST BE ADDED IN CHANNEL ORDER, used to pick which channelf rom fixedtomovingchannels??
 
-        addImagesToArguments( args, MOVING, movingImageFileNames );
-
-        if ( fixedMaskFileNames != null )
-            addImagesToArguments( args, "fMask", fixedMaskFileNames );
-
-        if ( movingMaskFileNames != null )
-            addImagesToArguments( args, "mMask", movingMaskFileNames );
-    }
 
     private void addImagesToArguments( List< String > args,
                                        String fixedOrMoving,
@@ -303,7 +255,7 @@ public class ElastixWrapper
         if ( fixedOrMoving.equals( FIXED ) )
 			filenameIndex = fixedChannelIndex;
 		else // Moving
-			filenameIndex = settings.fixedToMovingChannel.get( fixedChannelIndex );
+			filenameIndex = parametersSettings.fixedToMovingChannel.get( fixedChannelIndex );
 
         return filenames.get( filenameIndex );
     }

@@ -10,6 +10,8 @@ import net.imglib2.type.numeric.ARGBType;
 import java.io.File;
 import java.util.ArrayList;
 
+import static de.embl.cba.elastixwrapper.utils.Utils.loadMetaImage;
+
 public class BdvManager {
 
     private ArrayList<ARGBType> colors;

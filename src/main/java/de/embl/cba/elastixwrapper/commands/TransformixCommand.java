@@ -4,6 +4,7 @@ import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -48,19 +49,17 @@ public class TransformixCommand implements Command
         runTransformix();
     }
 
-    private ElastixWrapper runTransformix()
+    private void runTransformix()
     {
         TransformixWrapperSettings settings = getSettingsFromUI();
-        ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
-        elastixWrapper.runTransformix();
-        return elastixWrapper;
+        TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
+        transformixWrapper.runTransformix();
     }
 
     private TransformixWrapperSettings getSettingsFromUI()
     {
         TransformixWrapperSettings settings = new TransformixWrapperSettings();
         settings.logService = logService;
-
         settings.elastixDirectory = elastixDirectory.toString();
         settings.tmpDir = tmpDir.toString();
         settings.movingImageFilePath = inputImageFile.toString();
@@ -69,7 +68,7 @@ public class TransformixCommand implements Command
         settings.outputModality = outputModality;
         settings.outputFile = outputFile;
 
-        if ( ! outputModality.equals( ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
+        if ( ! outputModality.equals( TransformixWrapperSettings.OutputModality.Show_images ) )
             if ( outputFile == null )
                 Utils.logErrorAndExit( settings,"Please specify an output file.");
 

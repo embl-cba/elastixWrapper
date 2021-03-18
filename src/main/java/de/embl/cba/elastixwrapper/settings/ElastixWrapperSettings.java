@@ -13,7 +13,7 @@ import static de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParam
 
 public class ElastixWrapperSettings extends Settings
 {
-    public static final String STAGING_FILE_TYPE = "mhd";
+
 
     // public LogService logService;
     // public String elastixDirectory;

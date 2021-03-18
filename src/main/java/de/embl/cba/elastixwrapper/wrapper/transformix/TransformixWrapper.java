@@ -10,6 +10,7 @@ import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.BdvManager;
+import de.embl.cba.elastixwrapper.wrapper.StagingManager;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.FileSaver;
@@ -17,24 +18,28 @@ import ij.io.FileSaver;
 import java.io.File;
 import java.util.ArrayList;
 
+import static de.embl.cba.elastixwrapper.utils.Utils.loadMetaImage;
+
 public class TransformixWrapper {
 
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
     TransformixWrapperSettings settings;
+    StagingManager stagingManager;
     private ArrayList< String > transformedImageFilePaths;
 
     public TransformixWrapper( TransformixWrapperSettings settings ) {
         this.settings = settings;
         this.transformedImageFilePaths = new ArrayList<>(  );
+        this.stagingManager = new StagingManager( settings );
     }
 
     public void runTransformix()
     {
-        createOrEmptyWorkingDir();
+        stagingManager.createOrEmptyWorkingDir();
 
-        settings.stagedMovingImageFilePaths = stageImageAsMhd(
+        settings.stagedMovingImageFilePaths = stagingManager.stageImageAsMhd(
                 settings.movingImageFilePath, TRANSFORMIX_INPUT_FILENAME );
 
         transformImagesAndHandleOutput();
@@ -52,7 +57,7 @@ public class TransformixWrapper {
 
         String transformedImageFileName = TRANSFORMIX_OUTPUT_FILENAME
                 + "."
-                + settings.resultImageFileType;
+                + StagingManager.STAGING_FILE_TYPE;
 
         ImagePlus result = loadMetaImage(
                 settings.tmpDir,

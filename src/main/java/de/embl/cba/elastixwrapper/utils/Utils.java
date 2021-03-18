@@ -31,6 +31,7 @@
 package de.embl.cba.elastixwrapper.utils;
 
 import de.embl.cba.elastixwrapper.commandline.settings.Settings;
+import de.embl.cba.metaimage_io.MetaImage_Reader;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
@@ -229,4 +230,10 @@ public abstract class Utils {
 		if ( settings.headless )
 			System.exit( 1 );
 	}
+
+    public static ImagePlus loadMetaImage( String directory, String filename )
+    {
+        MetaImage_Reader reader = new MetaImage_Reader();
+        return reader.load( directory, filename, false );
+    }
 }

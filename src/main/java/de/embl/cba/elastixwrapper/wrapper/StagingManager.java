@@ -11,6 +11,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class StagingManager {
+
+    public static final String STAGING_FILE_TYPE = "mhd";
     public static final String ELASTIX_FIXED_IMAGE_NAME = "fixed";
     public static final String ELASTIX_MOVING_IMAGE_NAME = "moving";
     public static final String ELASTIX_FIXED_MASK_IMAGE_NAME = "fixedMask";
@@ -76,7 +78,7 @@ public class StagingManager {
         elastixTmpFilenames.add( filename + RAW );
     }
 
-    private ArrayList< String > stageImageAsMhd( String imagePath, String filename )
+    public ArrayList< String > stageImageAsMhd( String imagePath, String filename )
     {
         ImagePlus imp = openImage( imagePath );
 
@@ -178,7 +180,7 @@ public class StagingManager {
         return getPath( "TransformParameters.0.txt" );
     }
 
-    private String getPath( String fileName )
+    public String getPath( String fileName )
     {
         return settings.tmpDir + File.separator + fileName;
     }
