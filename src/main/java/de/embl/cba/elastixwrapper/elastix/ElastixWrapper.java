@@ -21,8 +21,6 @@ import de.embl.cba.elastixwrapper.elastix.DefaultElastixParametersCreator.Parame
 
 public class ElastixWrapper
 {
-
-
     public static final String ELASTIX_FIXED_IMAGE_NAME = "fixed";
     public static final String ELASTIX_MOVING_IMAGE_NAME = "moving";
     public static final String ELASTIX_FIXED_MASK_IMAGE_NAME = "fixedMask";
@@ -36,11 +34,6 @@ public class ElastixWrapper
     public static final String RAW = ".raw";
 
     private ElastixWrapperSettings settings;
-
-    private ArrayList< String > fixedImageFileNames;
-    private ArrayList< String > movingImageFileNames;
-    private ArrayList< String > fixedMaskFileNames;
-    private ArrayList< String > movingMaskFileNames;
     private ArrayList< String > transformedImageFilePaths;
 
     private ArrayList< ARGBType > colors;
@@ -68,7 +61,7 @@ public class ElastixWrapper
                 return;
             }
         } else {
-            // TODO - set the things needed for parameter file e.g. moving image bit depth
+            updateSettingsForUnstagedImages();
         }
 
         setParameters();
@@ -145,9 +138,10 @@ public class ElastixWrapper
     {
         for ( int index : settings.fixedToMovingChannel.values() )
         {
+            String baseName = new File( settings.movingImageFilePaths.get(index) ).getName();
             ImagePlus imagePlus = loadMetaImage(
                     settings.tmpDir,
-                    movingImageFileNames.get( index ) );
+                    baseName );
             final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
@@ -158,9 +152,10 @@ public class ElastixWrapper
     {
         for ( int index : settings.fixedToMovingChannel.keySet() )
         {
+            String baseName = new File( settings.fixedImageFilePaths.get(index) ).getName();
             ImagePlus imagePlus = loadMetaImage(
                     settings.tmpDir,
-                    fixedImageFileNames.get( index ) );
+                    baseName );
             final BdvStackSource bdvStackSource = showImagePlusInBdv( imagePlus );
             bdvStackSource.setColor( colors.get( colorIndex++ )  );
             bdv = bdvStackSource.getBdvHandle();
@@ -282,25 +277,31 @@ public class ElastixWrapper
 
     private boolean stageImages()
     {
-        fixedImageFileNames = stageImageAsMhd(
+        settings.fixedImageFilePaths = stageImageAsMhd(
                 settings.initialFixedImageFilePath,
                 ELASTIX_FIXED_IMAGE_NAME );
 
-        movingImageFileNames = stageImageAsMhd(
+        settings.movingImageFilePaths = stageImageAsMhd(
                 settings.initialMovingImageFilePath,
                 ELASTIX_MOVING_IMAGE_NAME );
 
         if ( ! settings.initialFixedMaskPath.equals( "" ) )
-            fixedMaskFileNames = stageImageAsMhd(
+            settings.fixedMaskFilePaths = stageImageAsMhd(
                     settings.initialFixedMaskPath,
                     ELASTIX_FIXED_MASK_IMAGE_NAME );
 
         if ( ! settings.initialMovingMaskPath.equals( "" ) )
-            movingMaskFileNames = stageImageAsMhd(
+            settings.movingMaskFilePaths = stageImageAsMhd(
                     settings.initialMovingMaskPath,
                     ELASTIX_MOVING_MASK_IMAGE_NAME );
 
-        settings.numChannels = fixedImageFileNames.size();
+        setFixedToMovingChannel();
+
+        return true;
+    }
+
+    private void setFixedToMovingChannel() {
+        settings.numChannels = settings.fixedImageFilePaths.size();
 
         if ( settings.fixedToMovingChannel.size() == 0 )
         {
@@ -308,8 +309,38 @@ public class ElastixWrapper
             for ( int c = 0; c < settings.numChannels; c++ )
                 settings.fixedToMovingChannel.put( c, c );
         }
+    }
 
-        return true;
+    private void updateSettingsForUnstagedImages() {
+        // with no staging, our final file paths are == to the initial ones
+        settings.fixedImageFilePaths.add( settings.initialFixedImageFilePath );
+        settings.movingImageFilePaths.add( settings.initialMovingImageFilePath );
+        if ( settings.initialFixedMaskPath != null ) {
+            settings.fixedMaskFilePaths.add( settings.initialFixedMaskPath );
+        }
+
+        if ( settings.initialMovingMaskPath != null ) {
+            settings.movingMaskFilePaths.add( settings.initialMovingMaskPath );
+        }
+
+        // need bit depth to create parameter file
+        ImagePlus imp = openImage( settings.initialMovingImageFilePath );
+        settings.movingImageBitDepth = imp.getBitDepth();
+        setFixedToMovingChannel();
+    }
+
+    private ImagePlus openImage ( String imagePath ) {
+        ImagePlus imp = IJ.openImage( imagePath );
+
+        if ( imp == null )
+        {
+            System.err.println( "[ERROR] The image could not be loaded: "
+                    + imagePath );
+            if ( settings.headless )
+                System.exit( 1 );
+        }
+
+        return imp;
     }
 
     private boolean checkChannelNumber( int nChannelsFixedImage, int nChannelsMovingImage )
@@ -352,20 +383,12 @@ public class ElastixWrapper
         settings.logService.info( "Staging image as mhd: " + filenameWithExtension );
         writer.save( imp, settings.tmpDir, filenameWithExtension );
         settings.imageWidthMillimeter = writer.getImageWidthMillimeter();
-        return filenameWithExtension;
+        return new File( settings.tmpDir, filenameWithExtension ).getAbsolutePath();
     }
 
     private ArrayList< String > stageImageAsMhd( String imagePath, String filename )
     {
-        ImagePlus imp = IJ.openImage( imagePath );
-
-        if ( imp == null )
-        {
-            System.err.println( "[ERROR] The image could not be loaded: "
-                    + imagePath );
-            if ( settings.headless )
-                System.exit( 1 );
-        }
+        ImagePlus imp = openImage( imagePath );
 
         if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
             settings.movingImageBitDepth = imp.getBitDepth();
@@ -387,18 +410,18 @@ public class ElastixWrapper
 
     private ArrayList< String > stageMultiChannelImagePlusAsMhd( ImagePlus imp, String filename )
     {
-        ArrayList< String > fileNames = new ArrayList<>( );
+        ArrayList< String > filePaths = new ArrayList<>( );
 
         for ( int channelIndex = 0; channelIndex < imp.getNChannels(); ++channelIndex )
         {
             ImagePlus channelImage = getChannel( imp, channelIndex );
 
-            fileNames.add(
+            filePaths.add(
                     stageImagePlusAsMhd(
                         channelImage, getChannelFilename( filename, channelIndex ) ) );
         }
 
-        return fileNames;
+        return filePaths;
     }
 
     private String getChannelFilename( String filename, int channelIndex )
@@ -491,7 +514,6 @@ public class ElastixWrapper
     private void setElastixTmpFilenames()
     {
         final ArrayList< String > elastixTmpFilenameStumps = new ArrayList<>();
-        elastixTmpFilenameStumps.add( ELASTIX_FIXED_IMAGE_NAME );
         elastixTmpFilenameStumps.add( ELASTIX_FIXED_IMAGE_NAME );
         elastixTmpFilenameStumps.add( ELASTIX_MOVING_IMAGE_NAME );
         elastixTmpFilenameStumps.add( ELASTIX_MOVING_MASK_IMAGE_NAME );
