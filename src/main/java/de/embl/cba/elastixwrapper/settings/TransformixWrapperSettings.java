@@ -21,6 +21,5 @@ public class TransformixWrapperSettings {
     // ?? how determined
     public String transformationOutputFilePath;
 
-    public boolean stageImages;
     public boolean cleanTmpDir;
 }

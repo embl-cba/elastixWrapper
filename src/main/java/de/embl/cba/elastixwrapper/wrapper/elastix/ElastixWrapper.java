@@ -5,6 +5,8 @@ import de.embl.cba.elastixwrapper.commandline.ElastixCaller;
 import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParametersCreator;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import de.embl.cba.metaimage_io.MetaImage_Reader;
 import de.embl.cba.metaimage_io.MetaImage_Writer;
 import ij.*;

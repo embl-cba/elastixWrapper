@@ -1,4 +1,4 @@
-package de.embl.cba.elastixwrapper.wrapper.elastix;
+package de.embl.cba.elastixwrapper.wrapper.elastix.parameters;
 
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -20,7 +20,7 @@ public class DefaultElastixParametersCreator {
         this.settings = settings;
     }
 
-    public ElastixParameters getElastixParameters( ParameterStyle style ) {
+    public ElastixParameters getElastixParameters(ParameterStyle style ) {
 
         ElastixParameters elastixParameters;
         if ( style.equals( ParameterStyle.Henning ) )

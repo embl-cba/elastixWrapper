@@ -1,15 +1,14 @@
 package de.embl.cba.elastixwrapper.settings;
 
-import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
-import de.embl.cba.elastixwrapper.wrapper.elastix.DefaultElastixParametersCreator.ParameterStyle;
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixParameters;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParametersCreator.ParameterStyle;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import org.scijava.log.LogService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.embl.cba.elastixwrapper.wrapper.elastix.ElastixParameters.FINAL_RESAMPLER_LINEAR;
+import static de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters.FINAL_RESAMPLER_LINEAR;
 
 public class ElastixWrapperSettings
 {
@@ -57,6 +56,5 @@ public class ElastixWrapperSettings
     public int movingImageBitDepth = 8;
     public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
 
-    public boolean stageImages;
 
 }
