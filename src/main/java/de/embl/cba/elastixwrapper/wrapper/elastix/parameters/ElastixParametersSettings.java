@@ -20,6 +20,4 @@ public class ElastixParametersSettings extends Settings {
     public int movingImageBitDepth = 8;
     public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
     public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
-    public int numChannels = 1;
-    public double imageWidthMillimeter;
 }

@@ -6,6 +6,7 @@ import de.embl.cba.elastixwrapper.commandline.TransformixCaller;
 import de.embl.cba.elastixwrapper.commandline.settings.TransformixSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 import ij.ImagePlus;
@@ -20,9 +21,11 @@ public class TransformixWrapper {
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
     TransformixWrapperSettings settings;
+    private ArrayList< String > transformedImageFilePaths;
 
     public TransformixWrapper( TransformixWrapperSettings settings ) {
         this.settings = settings;
+        this.transformedImageFilePaths = new ArrayList<>(  );
     }
 
     public void runTransformix()
@@ -32,20 +35,18 @@ public class TransformixWrapper {
         settings.stagedMovingImageFilePaths = stageImageAsMhd(
                 settings.movingImageFilePath, TRANSFORMIX_INPUT_FILENAME );
 
+        transformImagesAndHandleOutput();
+    }
+
+    public void transformImagesAndHandleOutput() {
         for ( int c = 0; c < settings.stagedMovingImageFilePaths.size(); c++ )
             transformImageAndHandleOutput( c );
     }
 
-    public void transformImageAndHandleOutput( int movingFileIndex )
+    private void transformImageAndHandleOutput( int movingFileIndex )
     {
         TransformixSettings transformixSettings = new TransformixSettings( settings, movingFileIndex );
         new TransformixCaller( transformixSettings ).callTransformix();
-        // List< String > transformixCallArgs =
-        //         getTransformixCallArgs(
-        //                 movingImageFileNames.get( c ), executableShellScript );
-        //
-        // Utils.executeCommand( transformixCallArgs, settings.logService );
-        // TODO - call transformix caller
 
         String transformedImageFileName = TRANSFORMIX_OUTPUT_FILENAME
                 + "."
@@ -63,10 +64,10 @@ public class TransformixWrapper {
 
         }
 
-        if ( settings.outputModality.equals( ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
+        if ( settings.outputModality.equals( OutputModality.Show_images ) )
         {
             result.show();
-            result.setTitle( "transformed-ch" + c );
+            result.setTitle( "transformed-ch" + movingFileIndex );
         }
         else
         {
@@ -74,9 +75,9 @@ public class TransformixWrapper {
             outputFile = outputFile.replace( ".tif", "" );
             outputFile = outputFile.replace( ".xml", "" );
 
-            if ( settings.outputModality.equals( ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF ) )
+            if ( settings.outputModality.equals( OutputModality.Save_as_tiff ) )
             {
-                final String path = outputFile + "-ch" + c + ".tif";
+                final String path = outputFile + "-ch" + movingFileIndex + ".tif";
 
                 transformedImageFilePaths.add( path );
 
@@ -84,11 +85,11 @@ public class TransformixWrapper {
 
                 new FileSaver( result ).saveAsTiff( path );
             }
-            else if ( settings.outputModality.equals( ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV ) )
+            else if ( settings.outputModality.equals( OutputModality.Save_as_BigDataViewer_xml_h5 ) )
             {
                 String path;
-                if ( nChannels > 1 )
-                    path = outputFile + "-ch" + c + ".xml";
+                if ( settings.stagedMovingImageFilePaths.size() > 1 )
+                    path = outputFile + "-ch" + movingFileIndex + ".xml";
                 else
                     path = outputFile + ".xml";
 
@@ -100,18 +101,18 @@ public class TransformixWrapper {
 
     }
 
-    public ArrayList< ImagePlus > getTransformedImages()
-    {
-        if ( transformedImageFilePaths.size() == 0 )
-            createTransformedImagesAndSaveAsTiff();
-
-        ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
-
-        for ( String path : transformedImageFilePaths )
-            transformedImages.add( IJ.openImage( path ) );
-
-        return transformedImages;
-    }
+    // public ArrayList< ImagePlus > getTransformedImages()
+    // {
+    //     if ( transformedImageFilePaths.size() == 0 )
+    //         createTransformedImagesAndSaveAsTiff();
+    //
+    //     ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
+    //
+    //     for ( String path : transformedImageFilePaths )
+    //         transformedImages.add( IJ.openImage( path ) );
+    //
+    //     return transformedImages;
+    // }
 
     private void showTransformedImages()
     {

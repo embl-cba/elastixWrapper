@@ -38,7 +38,6 @@ public class ElastixWrapperSettings extends Settings
     public String parameterFilePath;
 
     // public ParameterStyle elastixParametersStyle = ParameterStyle.Default;
-    public String resultImageFileType = STAGING_FILE_TYPE;
     // path to copy calculated transformation to
     public String transformationOutputFilePath;
     public TransformixWrapperSettings.OutputModality outputModality;

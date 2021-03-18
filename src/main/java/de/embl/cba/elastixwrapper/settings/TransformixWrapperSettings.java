@@ -15,6 +15,16 @@ public class TransformixWrapperSettings extends Settings {
         Save_as_BigDataViewer_xml_h5
     }
 
+    public TransformixWrapperSettings() {}
+
+    public TransformixWrapperSettings( Settings settings ) {
+        logService = settings.logService;
+        elastixDirectory = settings.elastixDirectory;
+        tmpDir = settings.tmpDir;
+        numWorkers = settings.numWorkers;
+        headless = settings.headless;
+    }
+
     // public String elastixDirectory;
     // public String tmpDir;
 
