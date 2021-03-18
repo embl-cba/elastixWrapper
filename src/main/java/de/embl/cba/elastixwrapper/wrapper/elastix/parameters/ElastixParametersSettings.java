@@ -10,6 +10,7 @@ import static de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParam
 
 public class ElastixParametersSettings extends Settings {
     // minimal settings needed to generate defaults with DefaultElastixParametersCreator
+    public DefaultElastixParametersCreator.ParameterStyle elastixParametersStyle = DefaultElastixParametersCreator.ParameterStyle.Default;
     public ElastixParameters.TransformationType transformationType;
     public int iterations = 1000;
     public String spatialSamples = "10000";
@@ -19,4 +20,6 @@ public class ElastixParametersSettings extends Settings {
     public int movingImageBitDepth = 8;
     public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
     public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
+    public int numChannels = 1;
+    public double imageWidthMillimeter;
 }

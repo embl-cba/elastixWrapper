@@ -2,6 +2,8 @@ package de.embl.cba.elastixwrapper.wrapper.transformix;
 
 import bdv.util.BdvStackSource;
 import de.embl.cba.bdv.utils.io.BdvImagePlusExport;
+import de.embl.cba.elastixwrapper.commandline.TransformixCaller;
+import de.embl.cba.elastixwrapper.commandline.settings.TransformixSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -27,17 +29,17 @@ public class TransformixWrapper {
     {
         createOrEmptyWorkingDir();
 
-        ArrayList< String > channelFileNames = stageImageAsMhd(
+        settings.stagedMovingImageFilePaths = stageImageAsMhd(
                 settings.movingImageFilePath, TRANSFORMIX_INPUT_FILENAME );
 
-        for ( int c = 0; c < channelFileNames.size(); c++ )
-            transformImageAndHandleOutput( channelFileNames, c );
+        for ( int c = 0; c < settings.stagedMovingImageFilePaths.size(); c++ )
+            transformImageAndHandleOutput( c );
     }
 
-    private void transformImageAndHandleOutput( String executableShellScript,
-                                                ArrayList< String > movingImageFileNames,
-                                                int c )
+    public void transformImageAndHandleOutput( int movingFileIndex )
     {
+        TransformixSettings transformixSettings = new TransformixSettings( settings, movingFileIndex );
+        new TransformixCaller( transformixSettings ).callTransformix();
         // List< String > transformixCallArgs =
         //         getTransformixCallArgs(
         //                 movingImageFileNames.get( c ), executableShellScript );

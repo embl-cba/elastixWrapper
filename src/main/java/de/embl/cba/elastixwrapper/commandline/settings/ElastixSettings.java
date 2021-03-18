@@ -18,7 +18,7 @@ public class ElastixSettings extends Settings {
     public ElastixSettings( ElastixWrapperSettings settings ) {
         logService = settings.logService;
         elastixDirectory = settings.elastixDirectory;
-        outputDirectory = settings.tmpDir;
+        tmpDir = settings.tmpDir;
         numWorkers = settings.numWorkers;
         headless = settings.headless;
         parameterFilePath = settings.parameterFilePath;
