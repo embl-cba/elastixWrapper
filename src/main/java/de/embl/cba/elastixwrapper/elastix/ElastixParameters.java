@@ -40,6 +40,12 @@ public class ElastixParameters
         parameters.add( keyValues );
     }
 
+    public void writeParameterFile( String parameterFilePath ) {
+        System.out.println( "Number of parameters: " + parameters.size() );
+        System.out.println( "Writing parameter file: " + parameterFilePath  );
+        Utils.saveStringListToFile( parameters, parameterFilePath );
+    }
+
     private String setValues( String value, String keyValues, boolean isMultiChannelParameter, boolean isNumeric )
     {
         String values = "";

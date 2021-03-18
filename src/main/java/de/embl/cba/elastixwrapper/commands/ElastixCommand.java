@@ -1,5 +1,6 @@
 package de.embl.cba.elastixwrapper.commands;
 
+import de.embl.cba.elastixwrapper.elastix.DefaultElastixParametersCreator;
 import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
@@ -100,6 +101,9 @@ public class ElastixCommand implements Command
     @Parameter( label = "Weights for multi channel images" )
     public String multiChannelWeights = "1.0,3.0,1.0,1.0,1.0,1.0";
 
+    @Parameter( label = "Stage images? (only uncheck if all images are in elastix compatible formats e.g. .mhd / .nrrd)" )
+    public boolean stageImages = true;
+
     @Parameter
     public LogService logService;
 
@@ -118,7 +122,8 @@ public class ElastixCommand implements Command
 
     private void runElastix( )
     {
-        ElastixWrapperSettings settings = getSettings();
+        ElastixWrapperSettings settings = getElastixSettings();
+        DefaultElastixParametersCreator defaultElastixParametersCreator = getElastixParameterSettings();
 
         if ( settings == null ) return;
 
@@ -146,7 +151,7 @@ public class ElastixCommand implements Command
         settings.logService.info( "...done!" );
     }
 
-    private ElastixWrapperSettings getSettings()
+    private ElastixWrapperSettings getElastixSettings()
     {
         ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
@@ -164,29 +169,26 @@ public class ElastixCommand implements Command
         else
             settings.initialTransformationFilePath = "";
 
-        settings.elastixParameters = elastixParameters;
+        settings.elastixParametersStyle = elastixParameters;
 
         if ( useFixedMask )
-            settings.fixedMaskPath = fixedMaskFile.toString();
+            settings.initialFixedMaskPath = fixedMaskFile.toString();
         else
-            settings.fixedMaskPath = "";
+            settings.initialFixedMaskPath = "";
 
         if ( useMovingMask )
-            settings.movingMaskPath = movingMaskFile.toString();
+            settings.initialMovingMaskPath = movingMaskFile.toString();
         else
-            settings.movingMaskPath = "";
+            settings.initialMovingMaskPath = "";
 
-        settings.fixedImageFilePath = fixedImageFile.toString();
-        settings.movingImageFilePath = movingImageFile.toString();
+        settings.initialFixedImageFilePath = fixedImageFile.toString();
+        settings.initialMovingImageFilePath = movingImageFile.toString();
 
-        settings.transformationType = transformationType;
-        settings.iterations = numIterations;
-        settings.spatialSamples = numSpatialSamples;
+
         settings.numWorkers = Prefs.getThreads();
-        settings.downSamplingFactors = gaussianSmoothingSigmas;
-        settings.bSplineGridSpacing = bSplineGridSpacing;
+
         settings.channelWeights = Utils.delimitedStringToDoubleArray( multiChannelWeights, "," );
-        settings.finalResampler = finalResampler;
+
         settings.outputModality = outputModality;
 
         if ( transformationOutputFile.exists() )
@@ -211,6 +213,18 @@ public class ElastixCommand implements Command
         settings.transformationOutputFilePath = transformationOutputFile.getAbsolutePath();
 
         return settings;
+    }
+
+    private DefaultElastixParametersCreator getElastixParameterSettings()
+    {
+        DefaultElastixParametersCreator defaultElastixParametersCreator = new DefaultElastixParametersCreator();
+        defaultElastixParametersCreator.transformationType = transformationType;
+        defaultElastixParametersCreator.iterations = numIterations;
+        defaultElastixParametersCreator.spatialSamples = numSpatialSamples;
+        defaultElastixParametersCreator.downSamplingFactors = gaussianSmoothingSigmas;
+        defaultElastixParametersCreator.bSplineGridSpacing = bSplineGridSpacing;
+        defaultElastixParametersCreator.finalResampler = finalResampler;
+        return defaultElastixParametersCreator;
     }
 
 }

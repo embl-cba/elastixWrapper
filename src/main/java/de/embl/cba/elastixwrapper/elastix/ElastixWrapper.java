@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import de.embl.cba.elastixwrapper.elastix.DefaultElastixParametersCreator.ParameterStyle;
 
 public class ElastixWrapper
 {
@@ -34,7 +35,7 @@ public class ElastixWrapper
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
     public static final String RAW = ".raw";
 
-    ElastixWrapperSettings settings;
+    private ElastixWrapperSettings settings;
 
     private ArrayList< String > fixedImageFileNames;
     private ArrayList< String > movingImageFileNames;
@@ -42,7 +43,6 @@ public class ElastixWrapper
     private ArrayList< String > movingMaskFileNames;
     private ArrayList< String > transformedImageFilePaths;
 
-    private int movingImageBitDepth;
     private ArrayList< ARGBType > colors;
     private Bdv bdv;
     private int colorIndex;
@@ -61,16 +61,18 @@ public class ElastixWrapper
 
         createOrEmptyWorkingDir();
 
-        if ( ! stageImages() )
-        {
-            Utils.logErrorAndExit( settings, "There was an issue staging the images.\n " +
-                    "Maybe the temporary working directory could not be generated." );
-            return;
+        if ( settings.stageImages ) {
+            if (!stageImages()) {
+                Utils.logErrorAndExit(settings, "There was an issue staging the images.\n " +
+                        "Maybe the temporary working directory could not be generated.");
+                return;
+            }
+        } else {
+            // TODO - set the things needed for parameter file e.g. moving image bit depth
         }
 
-        // TODO - make parameter file, and save it
-
-        callElastix();
+        setParameters();
+        new ElastixCaller( settings ).callElastix();
     }
 
     private void processSettings()
@@ -81,8 +83,6 @@ public class ElastixWrapper
         if ( ! settings.tmpDir.endsWith( File.separator ) )
             settings.tmpDir += File.separator;
     }
-
-
 
     public void showTransformationFile()
     {
@@ -109,7 +109,7 @@ public class ElastixWrapper
     {
         ImagePlus fixed;
 
-        fixed = IJ.openImage( settings.fixedImageFilePath );
+        fixed = IJ.openImage( settings.initialFixedImageFilePath );
 
         fixed.show();
 
@@ -222,7 +222,7 @@ public class ElastixWrapper
 
     private BdvStackSource showFixedInBdv()
     {
-        final ImagePlus templateImp = IJ.openImage( settings.fixedImageFilePath );
+        final ImagePlus templateImp = IJ.openImage( settings.initialFixedImageFilePath );
 
         return showImagePlusInBdv( templateImp );
     }
@@ -283,21 +283,21 @@ public class ElastixWrapper
     private boolean stageImages()
     {
         fixedImageFileNames = stageImageAsMhd(
-                settings.fixedImageFilePath,
+                settings.initialFixedImageFilePath,
                 ELASTIX_FIXED_IMAGE_NAME );
 
         movingImageFileNames = stageImageAsMhd(
-                settings.movingImageFilePath,
+                settings.initialMovingImageFilePath,
                 ELASTIX_MOVING_IMAGE_NAME );
 
-        if ( ! settings.fixedMaskPath.equals( "" ) )
+        if ( ! settings.initialFixedMaskPath.equals( "" ) )
             fixedMaskFileNames = stageImageAsMhd(
-                    settings.fixedMaskPath,
+                    settings.initialFixedMaskPath,
                     ELASTIX_FIXED_MASK_IMAGE_NAME );
 
-        if ( ! settings.movingMaskPath.equals( "" ) )
+        if ( ! settings.initialMovingMaskPath.equals( "" ) )
             movingMaskFileNames = stageImageAsMhd(
-                    settings.movingMaskPath,
+                    settings.initialMovingMaskPath,
                     ELASTIX_MOVING_MASK_IMAGE_NAME );
 
         settings.numChannels = fixedImageFileNames.size();
@@ -326,36 +326,13 @@ public class ElastixWrapper
 
     private void setParameters()
     {
-        settings.movingImageBitDepth = movingImageBitDepth;
         settings.parameterFilePath = getDefaultParameterFilePath();
 
-        ElastixParameters parameters = new ElastixParameters( settings );
+        System.out.println( "Parameter list type: " + settings.elastixParametersStyle);
+        ElastixParameters parameters =
+                new DefaultElastixParametersCreator( settings ).getElastixParameters( settings.elastixParametersStyle );
 
-        final List< String > parameterList;
-
-        System.out.println( "Parameter list type: " + settings.elastixParameters);
-
-        if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_HENNING ) )
-        {
-            parameterList = parameters.getHenningStyleParameters();
-        }
-        else if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_GIULIA ) )
-        {
-            parameterList = parameters.getGiuliaMizzonStyleParameters();
-        }
-        else if ( settings.elastixParameters.equals( ElastixWrapperSettings.PARAMETERS_DEFAULT ) )
-        {
-            parameterList = parameters.getDefaultParameters( );
-        }
-        else
-        {
-            IJ.error( "Could not generate parameter list." );
-            parameterList = null;
-        }
-
-        System.out.println( "Number of parameters: " + parameterList.size() );
-        System.out.println( "Writing parameter file: " + settings.parameterFilePath  );
-        Utils.saveStringListToFile( parameterList, settings.parameterFilePath );
+        parameters.writeParameterFile( settings.parameterFilePath );
     }
 
 
@@ -391,7 +368,7 @@ public class ElastixWrapper
         }
 
         if ( filename.equals( ELASTIX_MOVING_IMAGE_NAME ) )
-            movingImageBitDepth = imp.getBitDepth();
+            settings.movingImageBitDepth = imp.getBitDepth();
 
         nChannels = imp.getNChannels();
 

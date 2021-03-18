@@ -1,7 +1,9 @@
 package de.embl.cba.elastixwrapper.elastix;
 
+import de.embl.cba.elastixwrapper.settings.ElastixParametersSettings;
 import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import ij.IJ;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,32 +19,47 @@ public class DefaultElastixParametersCreator {
         CLEM
     }
 
-    public ElastixParameters.TransformationType transformationType;
-    public int iterations = 1000;
-    public String spatialSamples = "10000";
-    public String downSamplingFactors = "10 10 10";
-    public int movingImageBitDepth = 8;
-    public int numChannels = 1;
-    public String bSplineGridSpacing = "50 50 50";
-
-    public String finalResampler = FINAL_RESAMPLER_LINEAR;
-
-    // specific to multichannel images
-    public Map< Integer, Integer > fixedToMovingChannel = new HashMap<>(  );
-    public double[] channelWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
+    ElastixWrapperSettings settings;
 
     public DefaultElastixParametersCreator( ElastixWrapperSettings settings )
     {
+        this.settings = settings;
     }
 
-    public ElastixParameters getDefaultParameters( )
+    public ElastixParameters getElastixParameters( ParameterStyle style ) {
+
+        ElastixParameters elastixParameters;
+        if ( style.equals( ParameterStyle.Henning ) )
+        {
+            elastixParameters = getHenningStyleParameters();
+        }
+        else if ( style.equals( ParameterStyle.CLEM ) )
+        {
+            elastixParameters = getGiuliaMizzonStyleParameters();
+        }
+        else if ( style.equals( ParameterStyle.Default ) )
+        {
+            elastixParameters = getDefaultParameters( );
+        }
+        else
+        {
+            IJ.error( "Could not generate parameter list." );
+            return null;
+        }
+
+        return elastixParameters;
+    }
+
+
+
+    private ElastixParameters getDefaultParameters( )
     {
-        ElastixParameters parameters = new ElastixParameters( transformationType );
+        ElastixParameters parameters = new ElastixParameters( settings.transformationType );
         setCommonParameters( parameters );
 
-        parameters.addParameter( "NumberOfSpatialSamples", spatialSamples.replace( ";", " " ), false, true);
+        parameters.addParameter( "NumberOfSpatialSamples", settings.spatialSamples.replace( ";", " " ), false, true);
 
-        if ( fixedToMovingChannel.size() > 1 )
+        if ( settings.fixedToMovingChannel.size() > 1 )
         {
             parameters.addParameter(
                     "Registration",
@@ -67,7 +84,7 @@ public class DefaultElastixParametersCreator {
         // Samples
         parameters.addParameter( "ImageSampler", "RandomCoordinate", true, false );
 
-        parameters.addParameter("ResampleInterpolator",finalResampler, false, false);
+        parameters.addParameter("ResampleInterpolator", settings.finalResampler, false, false);
         parameters.addParameter("WriteResultImage", "false", false, false);
 
        // if ( settings.transformationType.equals( ElastixSettings.SPLINE ) )
@@ -88,7 +105,7 @@ public class DefaultElastixParametersCreator {
         return( parameters );
     }
 
-    // public ElastixParameters getHenningStyleParameters()
+    // private ElastixParameters getHenningStyleParameters()
     // {
     //     ElastixParameters parameters = new ElastixParameters( transformationType );
     //
@@ -129,12 +146,12 @@ public class DefaultElastixParametersCreator {
 
 
 
-    public ElastixParameters getGiuliaMizzonStyleParameters()
+    private ElastixParameters getGiuliaMizzonStyleParameters()
     {
-        ElastixParameters parameters = new ElastixParameters( transformationType );
+        ElastixParameters parameters = new ElastixParameters( settings.transformationType );
         setCommonParameters( parameters );
 
-        if ( fixedToMovingChannel.size() > 1 )
+        if ( settings.fixedToMovingChannel.size() > 1 )
         {
             parameters.addParameter( "Registration", "MultiMetricMultiResolutionRegistration", false, false );
             addChannelWeights( parameters );
@@ -151,7 +168,7 @@ public class DefaultElastixParametersCreator {
         parameters.addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
 
         // Samples
-        parameters.addParameter("NumberOfSpatialSamples", spatialSamples.replace(";"," "), false, false);
+        parameters.addParameter("NumberOfSpatialSamples", settings.spatialSamples.replace(";"," "), false, false);
         parameters.addParameter( "ImageSampler", "RandomCoordinate", true, false );
 
 
@@ -167,11 +184,11 @@ public class DefaultElastixParametersCreator {
     }
 
     private void setCommonParameters( ElastixParameters parameters ) {
-        parameters.addParameter( "MaximumNumberOfIterations", Integer.toString(iterations), false, true );
+        parameters.addParameter( "MaximumNumberOfIterations", Integer.toString(settings.iterations), false, true );
         parameters.addParameter( "CheckNumberOfSamples", "false", false, false );
-        parameters.addParameter("NumberOfResolutions" , Integer.toString(downSamplingFactors.split(";").length), false, true);
-        parameters.addParameter("ImagePyramidSchedule", downSamplingFactors.replace(";"," ").replace(","," "), false, true);
-        parameters.addParameter("FinalGridSpacingInVoxels", bSplineGridSpacing.replace(",", " "), false,true);
+        parameters.addParameter("NumberOfResolutions" , Integer.toString(settings.downSamplingFactors.split(";").length), false, true);
+        parameters.addParameter("ImagePyramidSchedule", settings.downSamplingFactors.replace(";"," ").replace(","," "), false, true);
+        parameters.addParameter("FinalGridSpacingInVoxels", settings.bSplineGridSpacing.replace(",", " "), false,true);
         parameters.addParameter("NewSamplesEveryIteration", "true", false, false);
         parameters.addParameter("DefaultPixelValue",  "0", false, true);
         parameters.addParameter("Optimizer", "AdaptiveStochasticGradientDescent", false, false);
@@ -196,27 +213,27 @@ public class DefaultElastixParametersCreator {
     {
         String key = "MetricCHANNELWeight";
 
-        for ( int c = 0; c < fixedToMovingChannel.size(); ++c )
+        for ( int c = 0; c < settings.fixedToMovingChannel.size(); ++c )
         {
             String channelKey = key.replace( "CHANNEL", ""+c  );
-            String channelWeight = "" + channelWeights[ c ];
+            String channelWeight = "" + settings.channelWeights[ c ];
             elastixParameters.addParameter( channelKey, channelWeight, false, true  );
         }
     }
 
-    private boolean setResultImageBitDepth( ElastixParameters parameters)
+    private boolean setResultImageBitDepth( ElastixParameters parameters )
     {
-        if ( movingImageBitDepth == 8 )
+        if ( settings.movingImageBitDepth == 8 )
         {
             parameters.addParameter( "ResultImagePixelType", "unsigned char", false, false );
         }
-        else if ( movingImageBitDepth == 16 )
+        else if ( settings.movingImageBitDepth == 16 )
         {
             parameters.addParameter( "ResultImagePixelType", "unsigned short", false, false );
         }
         else
         {
-            Utils.logErrorAndExit( settings,"Bit depth " + movingImageBitDepth + " not supported.");
+            Utils.logErrorAndExit( settings,"Bit depth " + settings.movingImageBitDepth + " not supported.");
             return true;
         }
         return false;
