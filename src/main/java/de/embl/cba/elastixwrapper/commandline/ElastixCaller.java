@@ -6,8 +6,6 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.embl.cba.elastixwrapper.utils.CommandLineUtils.createExecutableShellScript;
-
 public class ElastixCaller {
 
     public static final String ELASTIX = "elastix";
@@ -19,7 +17,7 @@ public class ElastixCaller {
 
     public ElastixCaller( ElastixSettings settings ) {
         this.settings = settings;
-        executableShellScript = createExecutableShellScript( ELASTIX, settings );
+        executableShellScript = new ExecutableShellScriptCreator( ELASTIX, settings ).createExecutableShellScript();
     }
 
     public void callElastix()

@@ -6,8 +6,6 @@ import de.embl.cba.elastixwrapper.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.embl.cba.elastixwrapper.utils.CommandLineUtils.createExecutableShellScript;
-
 public class TransformixCaller {
 
     public static final String TRANSFORMIX = "transformix";
@@ -16,7 +14,7 @@ public class TransformixCaller {
 
     public TransformixCaller( TransformixSettings settings ) {
         this.settings = settings;
-        executableShellScript = createExecutableShellScript( TRANSFORMIX, settings );
+        executableShellScript = new ExecutableShellScriptCreator( TRANSFORMIX, settings ).createExecutableShellScript();
     }
 
     public void callTransformix()

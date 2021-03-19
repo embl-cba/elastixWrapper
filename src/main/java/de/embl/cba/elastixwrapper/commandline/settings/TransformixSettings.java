@@ -1,6 +1,5 @@
 package de.embl.cba.elastixwrapper.commandline.settings;
 
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
 
 public class TransformixSettings extends Settings {

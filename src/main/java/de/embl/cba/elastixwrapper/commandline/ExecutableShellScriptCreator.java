@@ -1,6 +1,7 @@
-package de.embl.cba.elastixwrapper.utils;
+package de.embl.cba.elastixwrapper.commandline;
 
 import de.embl.cba.elastixwrapper.commandline.settings.Settings;
+import de.embl.cba.elastixwrapper.utils.Utils;
 import ij.IJ;
 
 import java.io.File;
@@ -10,8 +11,17 @@ import java.util.Map;
 import static de.embl.cba.elastixwrapper.utils.Utils.saveStringToFile;
 import static org.scijava.util.PlatformUtils.*;
 
-public class CommandLineUtils {
-    public static String createExecutableShellScript( String elastixOrTransformix, Settings settings )
+public class ExecutableShellScriptCreator {
+
+    String elastixOrTransformix;
+    Settings settings;
+
+    public ExecutableShellScriptCreator( String elastixOrTransformix, Settings settings) {
+        this.elastixOrTransformix = elastixOrTransformix;
+        this.settings = settings;
+    }
+
+    public String createExecutableShellScript()
     {
         if ( isMac() || isLinux() )
         {
@@ -23,7 +33,7 @@ public class CommandLineUtils {
             if( ! new File( binaryPath ).exists() )
                 Utils.logErrorAndExit( settings, "Elastix file does not exist: " + binaryPath );
 
-            String shellScriptText = getScriptText( elastixOrTransformix, settings );
+            String shellScriptText = getScriptText();
 
             saveStringToFile( shellScriptText, executablePath );
 
@@ -34,7 +44,7 @@ public class CommandLineUtils {
         }
         else if ( isWindows() )
         {
-            setElastixSystemPathForWindowsOS( settings );
+            setElastixSystemPathForWindowsOS();
 
             String binaryPath = settings.elastixDirectory + File.separator + elastixOrTransformix + ".exe";
 
@@ -51,7 +61,7 @@ public class CommandLineUtils {
 
     }
 
-    private static String getScriptText( String elastixOrTransformix, Settings settings )
+    private String getScriptText()
     {
         String shellScriptText = "";
         shellScriptText += "#!/bin/bash\n";
@@ -70,14 +80,14 @@ public class CommandLineUtils {
         return shellScriptText;
     }
 
-    private static void setElastixSystemPathForWindowsOS( Settings settings )
+    private void setElastixSystemPathForWindowsOS()
     {
         ProcessBuilder pb = new ProcessBuilder();
         Map<String, String> env = pb.environment();
         env.put( "PATH", settings.elastixDirectory + ":$PATH");
     }
 
-    private static void makeExecutable( String executablePath )
+    private void makeExecutable( String executablePath )
     {
         try
         {
