@@ -104,19 +104,6 @@ public class TransformixWrapper {
 
     }
 
-    // public ArrayList< ImagePlus > getTransformedImages()
-    // {
-    //     if ( transformedImageFilePaths.size() == 0 )
-    //         createTransformedImagesAndSaveAsTiff();
-    //
-    //     ArrayList< ImagePlus > transformedImages = new ArrayList<>(  );
-    //
-    //     for ( String path : transformedImageFilePaths )
-    //         transformedImages.add( IJ.openImage( path ) );
-    //
-    //     return transformedImages;
-    // }
-
     public Bdv showTransformedImages( BdvManager bdvManager )
     {
         Bdv bdv = null;

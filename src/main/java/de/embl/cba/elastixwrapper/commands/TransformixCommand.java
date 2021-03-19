@@ -1,6 +1,5 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;

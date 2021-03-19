@@ -217,47 +217,4 @@ public class ElastixWrapper
         // TODO: The macro recording does not work when using IJ.run(..) inside the plugin
         // if ( fixed.getNChannels() > 1 ) IJ.run("Split Channels" );
     }
-
-    // TODO - CHECK MUST BE ADDED IN CHANNEL ORDER, used to pick which channelf rom fixedtomovingchannels??
-
-
-    // private void addImagesToArguments( List< String > args,
-    //                                    String fixedOrMoving,
-    //                                    ArrayList< String > fileNames )
-    // {
-    //     int elastixChannelIndex = 0;
-    //     for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() )
-    //     {
-    //         if (  settings.fixedToMovingChannel.size() == 1 )
-    //             args.add( "-" + fixedOrMoving );
-    //         else
-    //             args.add( "-" + fixedOrMoving + elastixChannelIndex );
-    //
-    //         final String filename = getFileName(
-    //                 fixedOrMoving, fileNames, fixedChannelIndex );
-    //
-    //         args.add( getPath( filename ) );
-    //
-    //         elastixChannelIndex++;
-    //     }
-    // }
-    //
-    // private String getFileName(
-    //         String fixedOrMoving,
-    //         ArrayList< String > filenames,
-    //         int fixedChannelIndex )
-    // {
-    //     int filenameIndex;
-    //
-    //     if ( fixedOrMoving.equals( FIXED ) )
-	// 		filenameIndex = fixedChannelIndex;
-	// 	else // Moving
-	// 		filenameIndex = parametersSettings.fixedToMovingChannel.get( fixedChannelIndex );
-    //
-    //     return filenames.get( filenameIndex );
-    // }
-
-
-
-
 }

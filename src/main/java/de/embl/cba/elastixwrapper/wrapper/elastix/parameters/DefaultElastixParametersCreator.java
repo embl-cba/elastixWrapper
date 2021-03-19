@@ -1,6 +1,6 @@
 package de.embl.cba.elastixwrapper.wrapper.elastix.parameters;
 
-import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.StagingManager;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import ij.IJ;
 import java.util.Map;
@@ -75,15 +75,13 @@ public class DefaultElastixParametersCreator {
         return elastixParameters;
     }
 
-
-
     private ElastixParameters getDefaultParameters( )
     {
         ElastixParameters parameters = new ElastixParameters( transformationType, fixedToMovingChannel.size() );
 
         try {
-            setCommonParameters(parameters);
-        } catch ( IllegalArgumentException e) {
+            setCommonParameters( parameters );
+        } catch ( IllegalArgumentException e ) {
             e.printStackTrace();
             return null;
         }
@@ -114,8 +112,11 @@ public class DefaultElastixParametersCreator {
 
         // Samples
         parameters.addParameter( "ImageSampler", "RandomCoordinate", true, false );
-
+        parameters.addParameter( "Interpolator", "LinearInterpolator", true, false);
         parameters.addParameter("ResampleInterpolator", finalResampler, false, false);
+
+        parameters.addParameter( "Metric", "AdvancedMattesMutualInformation", true, false );
+        parameters.addParameter("NumberOfHistogramBins", "32", false, true); // needed for AdvancedMattesMutualInformation
         parameters.addParameter("WriteResultImage", "false", false, false);
 
        // if ( settings.transformationType.equals( ElastixSettings.SPLINE ) )
@@ -139,43 +140,48 @@ public class DefaultElastixParametersCreator {
     private ElastixParameters getHenningStyleParameters()
     {
         ElastixParameters parameters = new ElastixParameters( transformationType, fixedToMovingChannel.size() );
-    //
-    //     // Spatial Samples
-    //     parameters.addParameter("NumberOfSpatialSamples",
-    //             spatialSamples.replace(";"," ").replace("full","0"),
-    //             false,
-    //             true);
-    //
-    //     // ImageSampler
-    //     String imageSampler = "";
-    //     for ( String s : spatialSamples.split(";") )
-    //     {
-    //         imageSampler += s.equals("full") ? "Full" : "Random";
-    //     }
-    //     parameters.addParameter("ImageSampler", imageSampler, false, false);
-    //
-    //     parameters.addParameter("Registration", "MultiResolutionRegistration", false, false);
-    //
-    //     parameters.addParameter("Interpolator", "LinearInterpolator", false, false);
-    //     parameters.addParameter("ResampleInterpolator", "FinalLinearInterpolator", false, false);
-    //     parameters.addParameter("FixedImagePyramid", "FixedRecursiveImagePyramid", false, false);
-    //     parameters.addParameter("MovingImagePyramid", "MovingRecursiveImagePyramid", false, false);
-    //     parameters.addParameter("AutomaticParameterEstimation",  "true", false, false);
-    //     parameters.addParameter("AutomaticScalesEstimation", "true", false, false);
-    //     parameters.addParameter("Metric", "AdvancedMeanSquares", false, false);
-    //     parameters.addParameter("AutomaticTransformInitialization", "false", false, false);
-    //     parameters.addParameter("HowToCombineTransforms", "Compose", false, false);
-    //     parameters.addParameter("ErodeMask", "false", false, false);
-    //
-    //     parameters.addParameter("BSplineInterpolationOrder", "1", false, true);
-    //     parameters.addParameter("FinalBSplineInterpolationOrder", "3", false, true);
-    //     parameters.addParameter("WriteResultImage", "true", false, false);
-    //     parameters.addParameter("ResultImageFormat", resultImageFileType, false, false);
-    //
+
+        try {
+            setCommonParameters(parameters);
+        } catch ( IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Spatial Samples
+        parameters.addParameter("NumberOfSpatialSamples",
+                spatialSamples.replace(";"," ").replace("full","0"),
+                false,
+                true);
+
+        // ImageSampler
+        String imageSampler = "";
+        for ( String s : spatialSamples.split(";") )
+        {
+            imageSampler += s.equals("full") ? "Full" : "Random";
+        }
+        parameters.addParameter("ImageSampler", imageSampler, false, false);
+
+        parameters.addParameter("Registration", "MultiResolutionRegistration", false, false);
+
+        parameters.addParameter("Interpolator", "LinearInterpolator", false, false);
+        parameters.addParameter("ResampleInterpolator", "FinalLinearInterpolator", false, false);
+        parameters.addParameter("FixedImagePyramid", "FixedRecursiveImagePyramid", false, false);
+        parameters.addParameter("MovingImagePyramid", "MovingRecursiveImagePyramid", false, false);
+        parameters.addParameter("AutomaticParameterEstimation",  "true", false, false);
+        parameters.addParameter("AutomaticScalesEstimation", "true", false, false);
+        parameters.addParameter("Metric", "AdvancedMeanSquares", false, false);
+        parameters.addParameter("AutomaticTransformInitialization", "false", false, false);
+        parameters.addParameter("HowToCombineTransforms", "Compose", false, false);
+        parameters.addParameter("ErodeMask", "false", false, false);
+
+        parameters.addParameter("BSplineInterpolationOrder", "1", false, true);
+        parameters.addParameter("FinalBSplineInterpolationOrder", "3", false, true);
+        parameters.addParameter("WriteResultImage", "true", false, false);
+        parameters.addParameter("ResultImageFormat", StagingManager.STAGING_FILE_TYPE, false, false);
+
         return( parameters );
     }
-
-
 
     private ElastixParameters getGiuliaMizzonStyleParameters()
     {
@@ -205,12 +211,14 @@ public class DefaultElastixParametersCreator {
         parameters.addParameter( "MovingImagePyramid", "MovingSmoothingImagePyramid", true, false );
 
         // Samples
-        parameters.addParameter("NumberOfSpatialSamples", spatialSamples.replace(";"," "), false, false);
+        parameters.addParameter("NumberOfSpatialSamples", spatialSamples.replace(";"," "), false, true);
         parameters.addParameter( "ImageSampler", "RandomCoordinate", true, false );
 
 
         parameters.addParameter( "Interpolator", "LinearInterpolator", true, false );
         parameters.addParameter("ResampleInterpolator", "FinalLinearInterpolator", false, false);
+        parameters.addParameter( "Metric", "AdvancedMattesMutualInformation", true, false );
+        parameters.addParameter("NumberOfHistogramBins", "32", false, true); // needed for AdvancedMattesMutualInformation
 
         //parameters.add("(BSplineInterpolationOrder 1)");
         //parameters.add("(FinalBSplineInterpolationOrder 3)");
@@ -238,8 +246,6 @@ public class DefaultElastixParametersCreator {
         parameters.addParameter("UseDirectionCosines", "false", false, false);
         parameters.addParameter("AutomaticParameterEstimation", "true", false, false);
         parameters.addParameter("AutomaticScalesEstimation", "true", false, false);
-        parameters.addParameter( "Metric", "AdvancedMattesMutualInformation", true, false );
-        parameters.addParameter("NumberOfHistogramBins", "32", false, true); // needed for AdvancedMattesMutualInformation
         parameters.addParameter("HowToCombineTransforms", "Compose", false, false);
         parameters.addParameter("ErodeMask", "false", false, false);
 
