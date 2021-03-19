@@ -25,12 +25,11 @@ public class StagingManager {
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
-    private String tmpDir;
     private Settings settings;
     private ArrayList< String > elastixTmpFilenames;
 
     public StagingManager ( Settings settings ) {
-        this.tmpDir = settings.tmpDir;
+        this.settings = settings;
     }
 
     public void createOrEmptyWorkingDir()

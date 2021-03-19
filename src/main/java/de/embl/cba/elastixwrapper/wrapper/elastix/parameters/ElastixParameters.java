@@ -32,6 +32,7 @@ public class ElastixParameters
     public ElastixParameters( TransformationType transformationType, int nChannels )
     {
         this.nChannels = nChannels;
+        this.parameters = new ArrayList<>();
         addParameter("Transform", transformationType.toString() + "Transform", false, false );
     }
 

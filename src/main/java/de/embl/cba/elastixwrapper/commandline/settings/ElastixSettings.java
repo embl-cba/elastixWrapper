@@ -34,9 +34,13 @@ public class ElastixSettings extends Settings {
         for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() ) {
             int movingChannelIndex = settings.fixedToMovingChannel.get(fixedChannelIndex);
             fixedImageFilePaths.add( settings.stagedFixedImageFilePaths.get(fixedChannelIndex) );
-            fixedMaskFilePaths.add( settings.stagedFixedMaskFilePaths.get(fixedChannelIndex) );
+            if (settings.stagedFixedMaskFilePaths != null ) {
+                fixedMaskFilePaths.add(settings.stagedFixedMaskFilePaths.get(fixedChannelIndex));
+            }
             movingImageFilePaths.add( settings.stagedMovingImageFilePaths.get(movingChannelIndex) );
-            movingMaskFilePaths.add( settings.stagedMovingMaskFilePaths.get(movingChannelIndex) );
+            if ( settings.stagedMovingMaskFilePaths != null ) {
+                movingMaskFilePaths.add(settings.stagedMovingMaskFilePaths.get(movingChannelIndex));
+            }
         }
     }
 }
