@@ -17,6 +17,12 @@ public class ElastixParameters
         BSpline
     }
 
+    public static final String TRANSLATION = "Translation";
+    public static final String EULER = "Euler";
+    public static final String SIMILARITY = "Similarity";
+    public static final String AFFINE = "Affine";
+    public static final String SPLINE = "BSpline";
+
     public static final String FINAL_RESAMPLER_LINEAR = "FinalLinearInterpolator";
     public static final String FINAL_RESAMPLER_NEAREST_NEIGHBOR = "FinalNearestNeighborInterpolator";
 

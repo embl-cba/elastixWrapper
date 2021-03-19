@@ -3,6 +3,7 @@ package users.rachel;
 import bdv.util.Bdv;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import net.imagej.ImageJ;
 
 public class RachelParapodRegistration
@@ -26,7 +27,7 @@ public class RachelParapodRegistration
 
 		settings.initialTransformationFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/amira-transform.txt";
 
-		settings.transformationType = ElastixWrapperSettings.AFFINE;
+		settings.transformationType = ElastixParameters.TransformationType.Affine;
 		settings.downSamplingFactors = "10 10 10; 2, 2, 2";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";

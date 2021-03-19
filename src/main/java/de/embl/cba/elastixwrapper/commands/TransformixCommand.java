@@ -1,6 +1,8 @@
 package de.embl.cba.elastixwrapper.commands;
 
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
 import org.scijava.command.Command;
@@ -30,8 +32,12 @@ public class TransformixCommand implements Command
     @Parameter( label = "Transformation" )
     public File transformationFile;
 
-    @Parameter( label = "Output modality")
-    public TransformixWrapperSettings.OutputModality outputModality;
+    @Parameter( label = "Output modality", choices = {
+            TransformixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES,
+            TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
+            TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV
+    } )
+    public String outputModality;
 
     @Parameter( label = "Output file", style = "save", required = false )
     public File outputFile;
@@ -60,10 +66,22 @@ public class TransformixCommand implements Command
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
         settings.numWorkers = numThreads;
-        settings.outputModality = outputModality;
+
+        switch ( outputModality ) {
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES:
+                settings.outputModality = OutputModality.Show_images;
+                break;
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF:
+                settings.outputModality = OutputModality.Save_as_tiff;
+                break;
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV:
+                settings.outputModality = OutputModality.Save_as_bdv;
+                break;
+        }
+
         settings.outputFile = outputFile;
 
-        if ( ! outputModality.equals( TransformixWrapperSettings.OutputModality.Show_images ) )
+        if ( !settings.outputModality.equals( OutputModality.Show_images ) )
             if ( outputFile == null )
                 Utils.logErrorAndExit( settings,"Please specify an output file.");
 

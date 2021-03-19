@@ -40,8 +40,13 @@ public class ElastixCommand implements Command
     @Parameter( label = "Moving image" )
     public File movingImageFile;
 
-    @Parameter( label = "Transformation type" )
-    public TransformationType transformationType;
+    @Parameter( label = "Transformation type", choices = {
+            ElastixParameters.TRANSLATION,
+            ElastixParameters.EULER,
+            ElastixParameters.SIMILARITY,
+            ElastixParameters.AFFINE,
+            ElastixParameters.SPLINE } )
+    public String transformationType;
 
     @Parameter( label = "Grid spacing for BSpline transformation [voxels]", required = false )
     public String bSplineGridSpacing = "50,50,50";
@@ -180,12 +185,30 @@ public class ElastixCommand implements Command
 
         settings.numWorkers = Prefs.getThreads();
 
-        settings.transformationType = transformationType;
+        switch (transformationType) {
+            case ElastixParameters.TRANSLATION:
+                settings.transformationType = TransformationType.Translation;
+                break;
+            case ElastixParameters.EULER:
+                settings.transformationType = TransformationType.Euler;
+                break;
+            case ElastixParameters.SIMILARITY:
+                settings.transformationType = TransformationType.Similarity;
+                break;
+            case ElastixParameters.AFFINE:
+                settings.transformationType = TransformationType.Affine;
+                break;
+            case ElastixParameters.SPLINE:
+                settings.transformationType = TransformationType.BSpline;
+                break;
+        }
+
         if ( elastixParameters.equals(PARAMETERS_DEFAULT) ) {
             settings.elastixParametersStyle = ParameterStyle.Default;
         } else if ( elastixParameters.equals(PARAMETERS_CLEM) ) {
             settings.elastixParametersStyle = ParameterStyle.CLEM;
         }
+
         settings.iterations = numIterations;
         settings.spatialSamples = numSpatialSamples;
         settings.downSamplingFactors = gaussianSmoothingSigmas;

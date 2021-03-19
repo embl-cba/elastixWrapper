@@ -88,7 +88,7 @@ public class TransformixWrapper {
 
                 new FileSaver( result ).saveAsTiff( path );
             }
-            else if ( settings.outputModality.equals( OutputModality.Save_as_BigDataViewer_xml_h5 ) )
+            else if ( settings.outputModality.equals( OutputModality.Save_as_bdv) )
             {
                 String path;
                 if ( settings.stagedMovingImageFilePaths.size() > 1 )

@@ -2,6 +2,7 @@ package tests;
 
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import net.imagej.ImageJ;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class TestElastix
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.tmpDir = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/tmp";
-		settings.transformationType = ElastixWrapperSettings.EULER;
+		settings.transformationType = ElastixParameters.TransformationType.Euler;
 		settings.fixedImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-horizontal-dxyz200nm.tif";
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
 		settings.downSamplingFactors = "10 10";
