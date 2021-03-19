@@ -42,7 +42,6 @@ public class ElastixWrapper
 
         setMovingImageParameters();
         createElastixParameterFile();
-        // TODO - check channels added in right order
         ElastixSettings elastixSettings = new ElastixSettings( settings );
         new ElastixCaller( elastixSettings ).callElastix();
     }
@@ -123,7 +122,7 @@ public class ElastixWrapper
         BdvManager bdvManager = new BdvManager();
         showFixedImagesInBdv( bdvManager );
         showMovingImages( bdvManager );
-        return transformixWrapper.showTransformedImages( bdvManager );
+        return showTransformedImages( bdvManager, transformixWrapper );
     }
 
     public void reviewResultsInImageJ()
@@ -146,12 +145,12 @@ public class ElastixWrapper
         return new TransformixWrapper( settings );
     }
 
-    private Bdv showMovingImages( BdvManager bdvManager )
+    private Bdv showMovingImagesInBdv( BdvManager bdvManager )
     {
         Bdv bdv = null;
-        for ( String movingImageFilePath : settings.stagedMovingImageFilePaths )
+        for ( int index : settings.fixedToMovingChannel.values() )
         {
-            String baseName = new File( movingImageFilePath ).getName();
+            String baseName = new File( settings.stagedMovingImageFilePaths.get(index) ).getName();
             bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
         }
         return bdv;
@@ -160,10 +159,20 @@ public class ElastixWrapper
     private Bdv showFixedImagesInBdv( BdvManager bdvManager )
     {
         Bdv bdv = null;
-        for ( String fixedImagePath : settings.stagedFixedImageFilePaths )
+        for ( int index : settings.fixedToMovingChannel.keySet() )
         {
-            String baseName = new File( fixedImagePath ).getName();
+            String baseName = new File( settings.stagedFixedImageFilePaths.get(index) ).getName();
             bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
+        }
+        return bdv;
+    }
+
+    private Bdv showTransformedImagesInBdv( BdvManager bdvManager, TransformixWrapper transformixWrapper )
+    {
+        Bdv bdv = null;
+        for ( int index : settings.fixedToMovingChannel.values() )
+        {
+            bdv = transformixWrapper.showTransformedImage( bdvManager, index );
         }
         return bdv;
     }

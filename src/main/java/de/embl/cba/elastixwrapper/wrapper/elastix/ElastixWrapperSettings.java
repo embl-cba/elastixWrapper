@@ -17,7 +17,7 @@ public class ElastixWrapperSettings extends TransformixWrapperSettings
     public String fixedMaskPath = "";
     public String movingMaskPath = "";
 
-    // after staging
+    // after staging - in order of channels
     public ArrayList<String> stagedFixedImageFilePaths;
     public ArrayList<String> stagedFixedMaskFilePaths;
     public ArrayList<String> stagedMovingMaskFilePaths;

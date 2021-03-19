@@ -27,7 +27,7 @@ public class TransformixWrapperSettings extends Settings {
 
     // before staging
     public String movingImageFilePath = "";
-    // after staging
+    // after staging - in order of channels
     public ArrayList<String> stagedMovingImageFilePaths;
 
     public OutputModality outputModality;

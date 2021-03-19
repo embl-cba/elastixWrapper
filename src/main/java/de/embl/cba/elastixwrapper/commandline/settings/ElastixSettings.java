@@ -8,6 +8,8 @@ public class ElastixSettings extends Settings {
 
     public String parameterFilePath;
     public String initialTransformationFilePath;
+    // if size >1 will do multi-image registration
+    // Order of fixed, moving and masks must be the same
     public ArrayList<String> fixedImageFilePaths;
     public ArrayList<String> movingImageFilePaths;
     public ArrayList<String> fixedMaskFilePaths;
@@ -23,9 +25,18 @@ public class ElastixSettings extends Settings {
         headless = settings.headless;
         parameterFilePath = settings.parameterFilePath;
         initialTransformationFilePath = settings.initialTransformationFilePath;
-        fixedImageFilePaths = settings.stagedFixedImageFilePaths;
-        movingImageFilePaths = settings.stagedMovingImageFilePaths;
-        fixedMaskFilePaths = settings.stagedFixedMaskFilePaths;
-        movingMaskFilePaths = settings.stagedMovingMaskFilePaths;
+
+        fixedImageFilePaths = new ArrayList<>();
+        fixedMaskFilePaths = new ArrayList<>();
+        movingImageFilePaths = new ArrayList<>();
+        movingMaskFilePaths = new ArrayList<>();
+
+        for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() ) {
+            int movingChannelIndex = settings.fixedToMovingChannel.get(fixedChannelIndex);
+            fixedImageFilePaths.add( settings.stagedFixedImageFilePaths.get(fixedChannelIndex) );
+            fixedMaskFilePaths.add( settings.stagedFixedMaskFilePaths.get(fixedChannelIndex) );
+            movingImageFilePaths.add( settings.stagedMovingImageFilePaths.get(movingChannelIndex) );
+            movingMaskFilePaths.add( settings.stagedMovingMaskFilePaths.get(movingChannelIndex) );
+        }
     }
 }

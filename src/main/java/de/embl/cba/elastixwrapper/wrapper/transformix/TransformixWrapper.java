@@ -120,12 +120,17 @@ public class TransformixWrapper {
     public Bdv showTransformedImages( BdvManager bdvManager )
     {
         Bdv bdv = null;
-        for ( String transformedImageFilePath : transformedImageFilePaths )
+        for ( int i = 0; i < transformedImageFilePaths.size(); i++ )
         {
-            String baseName = new File( transformedImageFilePath ).getName();
-            bdv = bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
+            bdv = showTransformedImage( bdvManager, i );
         }
         return bdv;
+    }
+
+    public Bdv showTransformedImage( BdvManager bdvManager, int imageIndex )
+    {
+        String baseName = new File( transformedImageFilePaths.get(imageIndex) ).getName();
+        return bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
     }
 
 }
