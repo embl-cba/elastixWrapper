@@ -1,6 +1,6 @@
 package de.embl.cba.elastixwrapper.commandline.settings;
 
-import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 
 public class TransformixSettings extends Settings {
     public String transformationFilePath;

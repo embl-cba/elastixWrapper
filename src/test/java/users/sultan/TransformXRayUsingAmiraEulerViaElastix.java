@@ -1,6 +1,6 @@
 package users.sultan;
 
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 import ij.IJ;
 import ij.ImagePlus;

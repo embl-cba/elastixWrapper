@@ -2,7 +2,7 @@ package de.embl.cba.elastixwrapper.commands;
 
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParametersCreator.ParameterStyle;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParametersSettings;

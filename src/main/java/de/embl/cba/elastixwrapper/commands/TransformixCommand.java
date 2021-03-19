@@ -1,8 +1,7 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
-import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
 import org.scijava.command.Command;

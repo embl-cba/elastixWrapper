@@ -1,4 +1,4 @@
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 
 import net.imagej.ImageJ;

@@ -3,8 +3,7 @@ package de.embl.cba.elastixwrapper.wrapper.elastix;
 import bdv.util.*;
 import de.embl.cba.elastixwrapper.commandline.ElastixCaller;
 import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
-import de.embl.cba.elastixwrapper.settings.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.settings.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.BdvManager;
 import de.embl.cba.elastixwrapper.wrapper.StagingManager;
@@ -12,14 +11,7 @@ import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParam
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParametersSettings;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
-import de.embl.cba.metaimage_io.MetaImage_Reader;
-import de.embl.cba.metaimage_io.MetaImage_Writer;
 import ij.*;
-import ij.measure.Calibration;
-import ij.plugin.Duplicator;
-import net.imglib2.RandomAccessibleInterval;
-import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.type.numeric.ARGBType;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

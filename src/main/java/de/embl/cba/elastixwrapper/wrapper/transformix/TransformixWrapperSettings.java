@@ -1,4 +1,4 @@
-package de.embl.cba.elastixwrapper.settings;
+package de.embl.cba.elastixwrapper.wrapper.transformix;
 
 import de.embl.cba.elastixwrapper.commandline.settings.Settings;
 import de.embl.cba.elastixwrapper.commandline.settings.TransformixSettings;
