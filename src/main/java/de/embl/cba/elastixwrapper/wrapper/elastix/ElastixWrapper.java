@@ -121,8 +121,8 @@ public class ElastixWrapper
 
         BdvManager bdvManager = new BdvManager();
         showFixedImagesInBdv( bdvManager );
-        showMovingImages( bdvManager );
-        return showTransformedImages( bdvManager, transformixWrapper );
+        showMovingImagesInBdv( bdvManager );
+        return showTransformedImagesInBdv( bdvManager, transformixWrapper );
     }
 
     public void reviewResultsInImageJ()
