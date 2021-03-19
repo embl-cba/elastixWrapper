@@ -3,31 +3,27 @@ package de.embl.cba.elastixwrapper.wrapper.elastix;
 import bdv.util.*;
 import de.embl.cba.elastixwrapper.commandline.ElastixCaller;
 import de.embl.cba.elastixwrapper.commandline.settings.ElastixSettings;
-import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.BdvManager;
 import de.embl.cba.elastixwrapper.wrapper.StagingManager;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.DefaultElastixParametersCreator;
 import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
-import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParametersSettings;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings.OutputModality;
 import ij.*;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static de.embl.cba.elastixwrapper.wrapper.StagingManager.*;
 
 public class ElastixWrapper
 {
     private ElastixWrapperSettings settings;
-    private ElastixParametersSettings parametersSettings;
     private StagingManager stagingManager;
 
-    public ElastixWrapper( ElastixWrapperSettings settings, ElastixParametersSettings parametersSettings )
+    public ElastixWrapper( ElastixWrapperSettings settings )
     {
         this.settings = settings;
         this.stagingManager = new StagingManager( settings );
@@ -86,25 +82,29 @@ public class ElastixWrapper
     }
 
     private void setFixedToMovingChannel() {
-        if ( parametersSettings.fixedToMovingChannel.size() == 0 )
+        if ( settings.fixedToMovingChannel.size() == 0 )
         {
             // use all channels for registration
             for ( int c = 0; c < settings.stagedFixedImageFilePaths.size(); c++ )
-                parametersSettings.fixedToMovingChannel.put( c, c );
+                settings.fixedToMovingChannel.put( c, c );
         }
     }
 
     private void setMovingImageParameters() {
         ImagePlus imp = stagingManager.openImage( settings.movingImageFilePath );
-        parametersSettings.movingImageBitDepth = imp.getBitDepth();
+        settings.movingImageBitDepth = imp.getBitDepth();
     }
 
     private void createElastixParameterFile()
     {
         settings.parameterFilePath = stagingManager.getDefaultParameterFilePath();
-        System.out.println( "Parameter list type: " + parametersSettings.elastixParametersStyle );
+        System.out.println( "Parameter list type: " + settings.elastixParametersStyle );
         ElastixParameters parameters =
-                new DefaultElastixParametersCreator( parametersSettings ).getElastixParameters( parametersSettings.elastixParametersStyle );
+                new DefaultElastixParametersCreator( settings ).getElastixParameters( settings.elastixParametersStyle );
+
+        if ( parameters == null ) {
+            Utils.logErrorAndExit( settings, "Parameter file could not be created - image bit depth might not be supported" );
+        }
 
         parameters.writeParameterFile( settings.parameterFilePath );
     }
@@ -117,37 +117,33 @@ public class ElastixWrapper
      */
     public Bdv reviewResults()
     {
-        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Save_as_tiff );
+        TransformixWrapper transformixWrapper = createTransformixWrapper( OutputModality.Save_as_tiff );
         transformixWrapper.transformImagesAndHandleOutput();
 
         BdvManager bdvManager = new BdvManager();
         showFixedImagesInBdv( bdvManager );
         showMovingImages( bdvManager );
-        Bdv bdv = transformixWrapper.showTransformedImages( bdvManager );
-        return bdv;
+        return transformixWrapper.showTransformedImages( bdvManager );
     }
 
     public void reviewResultsInImageJ()
     {
-        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Show_images );
+        TransformixWrapper transformixWrapper = createTransformixWrapper( OutputModality.Show_images );
         showInputImagePlus();
         transformixWrapper.transformImagesAndHandleOutput();
     }
 
     public void createTransformedImagesAndSaveAsTiff()
     {
-        TransformixWrapper transformixWrapper = createTransformixWrapper( TransformixWrapperSettings.OutputModality.Save_as_tiff );
+        TransformixWrapper transformixWrapper = createTransformixWrapper( OutputModality.Save_as_tiff );
         transformixWrapper.transformImagesAndHandleOutput();
     }
 
-    private TransformixWrapper createTransformixWrapper( TransformixWrapperSettings.OutputModality outputModality) {
-        TransformixWrapperSettings transformixWrapperSettings = new TransformixWrapperSettings( settings );
-        transformixWrapperSettings.stagedMovingImageFilePaths = settings.stagedMovingImageFilePaths;
-        transformixWrapperSettings.outputModality = outputModality;
-        transformixWrapperSettings.transformationFilePath = stagingManager.getDefaultTransformationFilePath();
-        transformixWrapperSettings.outputFile = new File( stagingManager.getPath( "transformed" ) );
-
-        return new TransformixWrapper( transformixWrapperSettings );
+    private TransformixWrapper createTransformixWrapper( OutputModality outputModality ) {
+        settings.outputModality = outputModality;
+        settings.transformationFilePath = stagingManager.getDefaultTransformationFilePath();
+        settings.outputFile = new File( stagingManager.getPath( "transformed" ) );
+        return new TransformixWrapper( settings );
     }
 
     private Bdv showMovingImages( BdvManager bdvManager )
@@ -216,41 +212,41 @@ public class ElastixWrapper
     // TODO - CHECK MUST BE ADDED IN CHANNEL ORDER, used to pick which channelf rom fixedtomovingchannels??
 
 
-    private void addImagesToArguments( List< String > args,
-                                       String fixedOrMoving,
-                                       ArrayList< String > fileNames )
-    {
-        int elastixChannelIndex = 0;
-        for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() )
-        {
-            if (  settings.fixedToMovingChannel.size() == 1 )
-                args.add( "-" + fixedOrMoving );
-            else
-                args.add( "-" + fixedOrMoving + elastixChannelIndex );
-
-            final String filename = getFileName(
-                    fixedOrMoving, fileNames, fixedChannelIndex );
-
-            args.add( getPath( filename ) );
-
-            elastixChannelIndex++;
-        }
-    }
-
-    private String getFileName(
-            String fixedOrMoving,
-            ArrayList< String > filenames,
-            int fixedChannelIndex )
-    {
-        int filenameIndex;
-
-        if ( fixedOrMoving.equals( FIXED ) )
-			filenameIndex = fixedChannelIndex;
-		else // Moving
-			filenameIndex = parametersSettings.fixedToMovingChannel.get( fixedChannelIndex );
-
-        return filenames.get( filenameIndex );
-    }
+    // private void addImagesToArguments( List< String > args,
+    //                                    String fixedOrMoving,
+    //                                    ArrayList< String > fileNames )
+    // {
+    //     int elastixChannelIndex = 0;
+    //     for ( int fixedChannelIndex : settings.fixedToMovingChannel.keySet() )
+    //     {
+    //         if (  settings.fixedToMovingChannel.size() == 1 )
+    //             args.add( "-" + fixedOrMoving );
+    //         else
+    //             args.add( "-" + fixedOrMoving + elastixChannelIndex );
+    //
+    //         final String filename = getFileName(
+    //                 fixedOrMoving, fileNames, fixedChannelIndex );
+    //
+    //         args.add( getPath( filename ) );
+    //
+    //         elastixChannelIndex++;
+    //     }
+    // }
+    //
+    // private String getFileName(
+    //         String fixedOrMoving,
+    //         ArrayList< String > filenames,
+    //         int fixedChannelIndex )
+    // {
+    //     int filenameIndex;
+    //
+    //     if ( fixedOrMoving.equals( FIXED ) )
+	// 		filenameIndex = fixedChannelIndex;
+	// 	else // Moving
+	// 		filenameIndex = parametersSettings.fixedToMovingChannel.get( fixedChannelIndex );
+    //
+    //     return filenames.get( filenameIndex );
+    // }
 
 
 

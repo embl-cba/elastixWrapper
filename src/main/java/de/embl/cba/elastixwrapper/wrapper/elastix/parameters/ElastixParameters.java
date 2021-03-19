@@ -13,6 +13,7 @@ public class ElastixParameters
         Translation,
         Euler,
         Similarity,
+        Affine,
         BSpline
     }
 
@@ -20,9 +21,11 @@ public class ElastixParameters
     public static final String FINAL_RESAMPLER_NEAREST_NEIGHBOR = "FinalNearestNeighborInterpolator";
 
     List<String> parameters;
+    private int nChannels;
 
-    public ElastixParameters( TransformationType transformationType )
+    public ElastixParameters( TransformationType transformationType, int nChannels )
     {
+        this.nChannels = nChannels;
         addParameter("Transform", transformationType.toString() + "Transform", false, false );
     }
 
@@ -50,7 +53,8 @@ public class ElastixParameters
     {
         String values = "";
 
-        int n = isMultiChannelParameter ? settings.fixedToMovingChannel.size() : 1;
+        // int n = isMultiChannelParameter ? settings.fixedToMovingChannel.size() : 1;
+        int n = isMultiChannelParameter ? nChannels : 1;
 
         for ( int c = 0; c < n; ++c )
             if ( isNumeric )

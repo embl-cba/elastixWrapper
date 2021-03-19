@@ -1,7 +1,7 @@
 package tests;
 
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import net.imagej.ImageJ;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ public class TestTransformix
 	@Test
 	public void registerSingleChannelImageAndSaveAsTiff()
 	{
-		ElastixWrapperSettings settings = new ElastixWrapperSettings();
+		TransformixWrapperSettings settings = new TransformixWrapperSettings();
 
 		final ImageJ ij = new ImageJ();
 
@@ -22,12 +22,12 @@ public class TestTransformix
 		settings.movingImageFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif";
 		settings.transformationFilePath = "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/tmp/TransformParameters.0.txt";
 
-		settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF;
+		settings.outputModality = TransformixWrapperSettings.OutputModality.Save_as_tiff;
 		settings.outputFile = new File( "/Users/tischer/Documents/fiji-plugin-elastixWrapper/src/test/resources/test-data/fluo01/transformed-ellipsoid" );
 
-		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
+		final TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
 
-		elastixWrapper.runTransformix();
+		transformixWrapper.runTransformix();
 
 		settings.logService.info( "Done!" );
 	}

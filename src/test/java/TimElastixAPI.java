@@ -1,6 +1,7 @@
 import bdv.util.Bdv;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import net.imagej.ImageJ;
 
 public class TimElastixAPI
@@ -16,7 +17,7 @@ public class TimElastixAPI
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
-		settings.transformationType = ElastixWrapperSettings.AFFINE;
+		settings.transformationType = ElastixParameters.TransformationType.Affine;
 		settings.fixedImageFilePath = "/Users/tischer/Desktop/3dtemplate.tif";
 		settings.movingImageFilePath = "/Users/tischer/Desktop/3dstg16.tif";
 

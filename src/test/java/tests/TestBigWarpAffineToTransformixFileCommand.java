@@ -1,8 +1,8 @@
 package tests;
 
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import itc.commands.BigWarpAffineToTransformixFileCommand;
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 import net.imagej.ImageJ;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class TestBigWarpAffineToTransformixFileCommand
 		command.affineTransformUnit = BigWarpAffineToTransformixFileCommand.MICROMETER;
 		command.run();
 
-		ElastixWrapperSettings settings = new ElastixWrapperSettings();
+		TransformixWrapperSettings settings = new TransformixWrapperSettings();
 
 		settings.logService = imageJ.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8";
@@ -33,11 +33,11 @@ public class TestBigWarpAffineToTransformixFileCommand
 		settings.movingImageFilePath = getClass().getClassLoader().getResource("test-data/xray.ome.tif").getFile();
 		settings.transformationFilePath = command.transformationOutputFile.getAbsolutePath();
 		settings.numWorkers = 4;
-		settings.outputModality = ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES;
+		settings.outputModality = TransformixWrapperSettings.OutputModality.Show_images;
 		// settings.outputFile = outputFile;
 
-		ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
-		elastixWrapper.runTransformix();
+		TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
+		transformixWrapper.runTransformix();
 	}
 
 	public static void main( String[] args )

@@ -24,10 +24,6 @@ public class ElastixCaller {
     {
         settings.logService.info( "Running elastix... (please wait)" );
 
-        // parameters should already be set when we get here
-
-        // setParameters();
-
         List< String > args = createElastixCallArgs();
 
         Utils.executeCommand( args, settings.logService );

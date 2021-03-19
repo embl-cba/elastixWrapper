@@ -1,6 +1,5 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
@@ -14,6 +13,7 @@ import java.io.File;
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Transformix" )
 public class TransformixCommand implements Command
 {
+
     @Parameter
     public LogService logService;
 
@@ -30,12 +30,8 @@ public class TransformixCommand implements Command
     @Parameter( label = "Transformation" )
     public File transformationFile;
 
-    @Parameter( label = "Output modality", choices = {
-            ElastixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES,
-            ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
-            ElastixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV
-    } )
-    public String outputModality;
+    @Parameter( label = "Output modality")
+    public TransformixWrapperSettings.OutputModality outputModality;
 
     @Parameter( label = "Output file", style = "save", required = false )
     public File outputFile;
