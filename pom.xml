@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>27.0.1</version>
+		<version>30.0.0</version>
 	</parent>
 	<groupId>de.embl.cba</groupId>
 	<artifactId>elastixWrapper</artifactId>
-	<version>0.5.0</version>
+	<version>0.5.1</version>
 	<name>Fiji plugin for image registration using elastix</name>
 	<description>A Fiji plugin for image registration using elastix.</description>
 	<url>https://github.com/tischi/</url>
@@ -51,6 +51,9 @@
 		<imagej.app.directory>/Applications/Fiji.app/</imagej.app.directory>
 		<license.projectName>Fiji distribution of ImageJ for the life sciences.</license.projectName>
 		<enforcer.skip>true</enforcer.skip>
+
+		<image-transform-converters.version>0.1.3</image-transform-converters.version>
+		<imagej-utils.version>0.6.2</imagej-utils.version>
 	</properties>
 	<build>
 		<plugins>
@@ -68,40 +71,32 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-		<repository>
-			<id>bintray-image-transform-converters-image-transform-converters</id>
-			<url>https://dl.bintray.com/image-transform-converters/image-transform-converters</url>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<!-- ImageJ dependencies -->
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>imagej-legacy</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>imagej</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>imagej-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>ij</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.scijava</groupId>
-			<artifactId>scijava-plugins-commands</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>net.imagej</groupId>-->
+<!--			<artifactId>imagej-legacy</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>net.imagej</groupId>-->
+<!--			<artifactId>imagej</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>net.imagej</groupId>-->
+<!--			<artifactId>imagej-common</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>net.imagej</groupId>-->
+<!--			<artifactId>ij</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.scijava</groupId>-->
+<!--			<artifactId>scijava-plugins-commands</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>cisd</groupId>
 			<artifactId>jhdf5</artifactId>
@@ -122,19 +117,12 @@
 		<dependency>
 			<groupId>de.embl.cba</groupId>
 			<artifactId>imagej-utils</artifactId>
-			<version>0.5.1</version>
+			<version>${imagej-utils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.itc</groupId>
 			<artifactId>image-transform-converters</artifactId>
-			<version>0.1.1</version>
+			<version>${image-transform-converters.version}</version>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<repository>
-			<id>bintray-tischi-snapshots</id>
-			<name>tischi-snapshots</name>
-			<url>https://api.bintray.com/maven/tischi/snapshots/fiji-plugin-elastixWrapper/;publish=1</url>
-		</repository>
-	</distributionManagement>
 </project>
