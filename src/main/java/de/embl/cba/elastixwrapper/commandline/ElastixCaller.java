@@ -45,7 +45,7 @@ public class ElastixCaller {
         args.add( "-threads" );
         args.add( "" + settings.numWorkers );
 
-        if ( ! settings.initialTransformationFilePath.equals( "" ) )
+        if ( settings.initialTransformationFilePath != null && !settings.initialTransformationFilePath.equals( "" ) )
         {
             args.add( "-t0" );
             args.add( settings.initialTransformationFilePath );

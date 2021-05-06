@@ -8,6 +8,7 @@ import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings
 import de.embl.cba.elastixwrapper.utils.Utils;
 import de.embl.cba.elastixwrapper.wrapper.BdvManager;
 import de.embl.cba.elastixwrapper.wrapper.StagingManager;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.io.FileSaver;
 
@@ -21,8 +22,8 @@ public class TransformixWrapper {
     public static final String TRANSFORMIX_INPUT_FILENAME = "to_be_transformed";
     public static final String TRANSFORMIX_OUTPUT_FILENAME = "result";
 
-    TransformixWrapperSettings settings;
-    StagingManager stagingManager;
+    private TransformixWrapperSettings settings;
+    private StagingManager stagingManager;
     private ArrayList< String > transformedImageFilePaths;
 
     public TransformixWrapper( TransformixWrapperSettings settings ) {
@@ -116,8 +117,8 @@ public class TransformixWrapper {
 
     public Bdv showTransformedImage( BdvManager bdvManager, int imageIndex )
     {
-        String baseName = new File( transformedImageFilePaths.get(imageIndex) ).getName();
-        return bdvManager.showMetaImageInBdv( settings.tmpDir, baseName );
+        ImagePlus imagePlus = IJ.openImage( transformedImageFilePaths.get( imageIndex ) );
+        return bdvManager.showImagePlusInBdv( imagePlus );
     }
 
 }
