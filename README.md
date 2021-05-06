@@ -1,4 +1,4 @@
-# Fiji plugins for running elastix and transformix
+# Elastix Wrapper
 
 This repository contains the code for the Fiji plugin [Elastix](https://imagej.net/Elastix) for 2D and 3D image registration. The plugin is a wrapper around the image registration suite [elastix](http://elastix.isi.uu.nl/). Wrapping elastix into Fiji provides the convenience of easy image handling, visualisation and a graphical user interface.
 
@@ -100,7 +100,8 @@ To adapt it to your own application, the following parameters should be adapted:
     - FinalNearestNeighborInterpolator
         - for binary or label masks
 - gaussianSmoothingSigmas
-    - specify how much you want to smooth in pixels (my experience is that rather smoothing more is better than less)
+    - specify how much you want to smooth in pixels in 3D (my experience is that rather smoothing more is better than less)
+    - you may specify a semicolon separated list of smoothing factors in order to do the registration at different resolutions, e.g. "10,10,10;1,1,1" will first do the registration with a 10x10x10 downsampled version of the data and then in a second step at full resolution.
 - outputModality
     - Save transformed image as Tiff
         - This will save the transformed output image into the `workingDirectory` 
