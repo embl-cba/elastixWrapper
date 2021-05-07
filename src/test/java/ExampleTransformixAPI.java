@@ -1,6 +1,9 @@
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
-import de.embl.cba.elastixwrapper.metaimage.MetaImage_Reader;
+import de.embl.cba.elastixwrapper.wrapper.StagingManager;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
+import de.embl.cba.metaimage_io.MetaImage_Reader;
 import ij.IJ;
 import ij.ImagePlus;
 import net.imagej.ImageJ;
@@ -18,7 +21,7 @@ public class ExampleTransformixAPI
 
 		IJ.open( inputImagePath );
 
-		ElastixSettings settings = new ElastixSettings();
+		TransformixWrapperSettings settings = new TransformixWrapperSettings();
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
@@ -26,14 +29,14 @@ public class ExampleTransformixAPI
 		settings.movingImageFilePath = inputImagePath;
 		settings.transformationFilePath = "/Users/tischer/Desktop/transform.txt";
 
-		final ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
-		elastixWrapper.runTransformix();
+		final TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
+		transformixWrapper.runTransformix();
 
 		MetaImage_Reader reader = new MetaImage_Reader();
 		final ImagePlus transformed = reader.load(
 				settings.tmpDir,
-				ElastixWrapper.TRANSFORMIX_OUTPUT_FILENAME
-						+ "." + settings.resultImageFileType,
+				StagingManager.TRANSFORMIX_OUTPUT_FILENAME
+						+ "." + StagingManager.STAGING_FILE_TYPE,
 				false );
 
 		transformed.show();

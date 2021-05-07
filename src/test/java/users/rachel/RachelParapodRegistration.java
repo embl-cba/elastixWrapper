@@ -1,8 +1,9 @@
 package users.rachel;
 
 import bdv.util.Bdv;
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import net.imagej.ImageJ;
 
 public class RachelParapodRegistration
@@ -12,7 +13,7 @@ public class RachelParapodRegistration
 		final ImageJ ij = new ImageJ();
 		ij.ui().showUI();
 
-		ElastixSettings settings = new ElastixSettings();
+		ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
@@ -26,7 +27,7 @@ public class RachelParapodRegistration
 
 		settings.initialTransformationFilePath = "/Users/tischer/Documents/rachel-mellwig-em-prospr-registration/data/ganglion-segmentation/amira-transform.txt";
 
-		settings.transformationType = ElastixSettings.AFFINE;
+		settings.transformationType = ElastixParameters.TransformationType.Affine;
 		settings.downSamplingFactors = "10 10 10; 2, 2, 2";
 		// settings.movingMaskPath = "";
 		// settings.bSplineGridSpacing = "50 50 50";

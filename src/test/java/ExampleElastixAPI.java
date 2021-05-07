@@ -1,6 +1,7 @@
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
 
+import de.embl.cba.elastixwrapper.wrapper.elastix.parameters.ElastixParameters;
 import net.imagej.ImageJ;
 
 public class ExampleElastixAPI
@@ -10,12 +11,12 @@ public class ExampleElastixAPI
 		final ImageJ ij = new ImageJ();
 		ij.ui().showUI();
 
-		ElastixSettings settings = new ElastixSettings();
+		ElastixWrapperSettings settings = new ElastixWrapperSettings();
 
 		settings.logService = ij.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8" ;
 		settings.tmpDir = "/Users/tischer/Desktop/elastix-tmp";
-		settings.transformationType = ElastixSettings.EULER;
+		settings.transformationType = ElastixParameters.TransformationType.Euler;
 		settings.fixedImageFilePath = getImageFilePath( "test-data/fluo01/ellipsoid-horizontal-dxyz200nm.tif" );
 		settings.movingImageFilePath = getImageFilePath( "test-data/fluo01/ellipsoid-at45degrees-dxyz200nm.tif" );
 		settings.downSamplingFactors = "10 10 10";

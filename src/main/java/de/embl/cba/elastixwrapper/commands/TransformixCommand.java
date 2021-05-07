@@ -1,8 +1,9 @@
 package de.embl.cba.elastixwrapper.commands;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings.OutputModality;
 import de.embl.cba.elastixwrapper.utils.Utils;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
 import org.scijava.command.Command;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -13,6 +14,7 @@ import java.io.File;
 @Plugin(type = Command.class, menuPath = "Plugins>Registration>Elastix>Transformix" )
 public class TransformixCommand implements Command
 {
+
     @Parameter
     public LogService logService;
 
@@ -30,9 +32,9 @@ public class TransformixCommand implements Command
     public File transformationFile;
 
     @Parameter( label = "Output modality", choices = {
-            ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES,
-            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
-            ElastixSettings.OUTPUT_MODALITY_SAVE_AS_BDV
+            TransformixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES,
+            TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF,
+            TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV
     } )
     public String outputModality;
 
@@ -47,29 +49,38 @@ public class TransformixCommand implements Command
         runTransformix();
     }
 
-    private ElastixWrapper runTransformix()
+    private void runTransformix()
     {
-        ElastixSettings settings = getSettingsFromUI();
-        ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
-        elastixWrapper.runTransformix();
-        return elastixWrapper;
+        TransformixWrapperSettings settings = getSettingsFromUI();
+        TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
+        transformixWrapper.runTransformix();
     }
 
-    private ElastixSettings getSettingsFromUI()
+    private TransformixWrapperSettings getSettingsFromUI()
     {
-        ElastixSettings settings = new ElastixSettings();
-
+        TransformixWrapperSettings settings = new TransformixWrapperSettings();
         settings.logService = logService;
-
         settings.elastixDirectory = elastixDirectory.toString();
         settings.tmpDir = tmpDir.toString();
         settings.movingImageFilePath = inputImageFile.toString();
         settings.transformationFilePath = transformationFile.toString();
         settings.numWorkers = numThreads;
-        settings.outputModality = outputModality;
+
+        switch ( outputModality ) {
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SHOW_IMAGES:
+                settings.outputModality = OutputModality.Show_images;
+                break;
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_TIFF:
+                settings.outputModality = OutputModality.Save_as_tiff;
+                break;
+            case TransformixWrapperSettings.OUTPUT_MODALITY_SAVE_AS_BDV:
+                settings.outputModality = OutputModality.Save_as_bdv;
+                break;
+        }
+
         settings.outputFile = outputFile;
 
-        if ( ! outputModality.equals( ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES ) )
+        if ( !settings.outputModality.equals( OutputModality.Show_images ) )
             if ( outputFile == null )
                 Utils.logErrorAndExit( settings,"Please specify an output file.");
 

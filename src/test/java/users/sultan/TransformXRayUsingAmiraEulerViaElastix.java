@@ -1,7 +1,9 @@
 package users.sultan;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
-import de.embl.cba.elastixwrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapperSettings;
+import de.embl.cba.elastixwrapper.wrapper.elastix.ElastixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapper;
+import de.embl.cba.elastixwrapper.wrapper.transformix.TransformixWrapperSettings;
 import ij.IJ;
 import ij.ImagePlus;
 import itc.converters.AffineTransform3DToElastixAffine3D;
@@ -67,7 +69,7 @@ public class TransformXRayUsingAmiraEulerViaElastix
 		elastixAffineTransform3D.save( elastixTransformPath );
 
 
-		ElastixSettings settings = new ElastixSettings();
+		TransformixWrapperSettings settings = new TransformixWrapperSettings();
 
 		settings.logService = imageJ.log();
 		settings.elastixDirectory = "/Applications/elastix_macosx64_v4.8";
@@ -75,11 +77,11 @@ public class TransformXRayUsingAmiraEulerViaElastix
 		settings.movingImageFilePath = xRayPath;
 		settings.transformationFilePath = elastixTransformPath;
 		settings.numWorkers = 4;
-		settings.outputModality = ElastixSettings.OUTPUT_MODALITY_SHOW_IMAGES;
+		settings.outputModality = TransformixWrapperSettings.OutputModality.Show_images;
 		// settings.outputFile = outputFile;
 
-		ElastixWrapper elastixWrapper = new ElastixWrapper( settings );
-		elastixWrapper.runTransformix();
+		TransformixWrapper transformixWrapper = new TransformixWrapper( settings );
+		transformixWrapper.runTransformix();
 
 
 

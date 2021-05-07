@@ -30,16 +30,11 @@
 
 package de.embl.cba.elastixwrapper.utils;
 
-import de.embl.cba.elastixwrapper.elastix.ElastixSettings;
+import de.embl.cba.elastixwrapper.commandline.settings.Settings;
+import de.embl.cba.metaimage_io.MetaImage_Reader;
 import ij.*;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
-import loci.common.services.ServiceFactory;
-import loci.formats.IFormatReader;
-import loci.formats.ImageReader;
-import loci.formats.meta.IMetadata;
-import loci.formats.services.OMEXMLService;
-import ome.units.UNITS;
 import org.scijava.log.LogService;
 
 import java.io.*;
@@ -229,10 +224,16 @@ public abstract class Utils {
 		IJ.showStatus("");
 	}
 
-	public static void logErrorAndExit( ElastixSettings settings, String msg )
+	public static void logErrorAndExit( Settings settings, String msg )
 	{
 		settings.logService.error( msg );
 		if ( settings.headless )
 			System.exit( 1 );
 	}
+
+    public static ImagePlus loadMetaImage( String directory, String filename )
+    {
+        MetaImage_Reader reader = new MetaImage_Reader();
+        return reader.load( directory, filename, false );
+    }
 }
