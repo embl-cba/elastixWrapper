@@ -30,12 +30,12 @@ elastix:
 ### Install elastix binary
 
 - Windows, MacOS and Linux
-  - install elastix: http://elastix.isi.uu.nl/download.php
+  - Install elastix: https://elastix.lumc.nl/download.php
  
 #### Windows specific requirements
 
-- install the corresponding Visual C++: http://www.microsoft.com/en-us/download/details.aspx?id=30679
-    - see also here: https://github.com/SuperElastix/elastix/wiki/FAQ
+- Install the corresponding Visual C++: http://www.microsoft.com/en-us/download/details.aspx?id=30679
+    - See also here: https://github.com/SuperElastix/elastix/wiki/FAQ
 
 ## Usage instructions
 
