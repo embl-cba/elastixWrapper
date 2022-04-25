@@ -1,6 +1,6 @@
 # Elastix Wrapper
 
-This repository contains the code for the Fiji plugin [Elastix](https://imagej.net/Elastix) for 2D and 3D image registration. The plugin is a wrapper around the image registration suite [elastix](http://elastix.isi.uu.nl/). Wrapping elastix into Fiji provides the convenience of easy image handling, visualisation and a graphical user interface.
+This repository contains the code for the Fiji plugin [Elastix](https://imagej.net/Elastix) for 2D and 3D image registration. The plugin is a wrapper around the image registration suite [elastix](https://elastix.lumc.nl/). Wrapping elastix into Fiji provides the convenience of easy image handling, visualisation and a graphical user interface.
 
 ## Citation
 
@@ -16,7 +16,7 @@ elastix:
 
 ## Learn more
 
-- Elastix manual: http://elastix.isi.uu.nl/download/elastix_manual_v4.8.pdf
+- [Elastix manual](https://elastix.lumc.nl/download/elastix-5.0.1-manual.pdf)
 
 ## Installation
 
@@ -35,7 +35,7 @@ elastix:
 #### Windows specific requirements
 
 - install the corresponding Visual C++: http://www.microsoft.com/en-us/download/details.aspx?id=30679
-    - see also here: http://elastix.isi.uu.nl/FAQ.php
+    - see also here: https://github.com/SuperElastix/elastix/wiki/FAQ
 
 ## Usage instructions
 
