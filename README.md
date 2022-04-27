@@ -23,9 +23,14 @@ elastix:
 ### Install Fiji and the plugin
 
 - Install Fiji: https://fiji.sc/
-- Add the update site: ElastixWrapper
-	- The plugins will be available here: [ Plugins > Registration > Elastix ]
-	- Note: The ElastixWrapper update site has conflicts with the EMBL-CBA update site, which thus must be disabled.
+- Add the update site: `ElastixWrapper`
+	- The plugins will be available here: `[ Plugins > Registration > Elastix ]`
+	- Note: The ElastixWrapper update site has conflicts with the deprecated EMBL-CBA update site, which thus must be disabled.
+
+#### Fiji update site
+
+
+
 
 ### Install elastix binary
 
