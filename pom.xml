@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>30.0.0</version>
+		<version>31.1.0</version>
 	</parent>
 	<groupId>de.embl.cba</groupId>
 	<artifactId>elastixWrapper</artifactId>
@@ -50,10 +50,11 @@
 		<license.copyrightOwners>EMBL</license.copyrightOwners>
 		<imagej.app.directory>/Applications/Fiji.app/</imagej.app.directory>
 		<license.projectName>Fiji distribution of ImageJ for the life sciences.</license.projectName>
-		<enforcer.skip>true</enforcer.skip>
+		<enforcer.skip>false</enforcer.skip>
 
 		<image-transform-converters.version>0.1.5</image-transform-converters.version>
-		<imagej-utils.version>0.6.2</imagej-utils.version>
+		<imagej-utils.version>0.6.8</imagej-utils.version>
+		<metaimage-io.version>1.0.3</metaimage-io.version>
 	</properties>
 	<build>
 		<plugins>
@@ -95,7 +96,7 @@
 		<dependency>
 			<groupId>de.embl.cba</groupId>
 			<artifactId>metaimage-io</artifactId>
-			<version>1.0.0</version>
+			<version>${metaimage-io.version}</version>
 		</dependency>
 	</dependencies>
 </project>
