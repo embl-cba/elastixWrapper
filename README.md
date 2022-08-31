@@ -59,21 +59,21 @@ elastix:
 	- It is recommended to start with a simpler transformation type and then further transform the result (see "Use initial transformation").
 - Number of iterations:
 	- Number of iterations to find the best registration in each time-point
-	- Try 1000
+	- Try `1000` as a starting point
 - Spatial samples:
 	- Number of data points that will be used in each iteration for finding the registration
 	- To use all data point type: full
-	- Around 3000 often is a good number
+	- Around `3000` often is a good number
 - Gaussian smoothing sigma [voxels]
-	- For each dimensions (x,y,z) enter the smoothing.
-	- Typically the registration works better with more smoothing.
-	- You may specify a semicolon separated list of smoothing factors in order to do the registration at different resolutions, e.g. "10,10,10;1,1,1" will first do the registration with a 10x10x10 downsampled version of the data and then in a second step at full resolution.
+	- For each dimension (x,y,z) enter the smoothing sigma.
+	- Typically, the registration works better with more smoothing.
+	- You may specify a semicolon separated list of smoothing factors in order to do the registration at different resolutions, e.g. `10,10,10;1,1,1` will first do the registration with a 10 x 10 x 10 down-sampled version of the data and then in a second step at full resolution.
 - Using masks:
 	- You can mask either/or the moving or the fixed image. 
 	- The algorithm will then only consider pixels within the mask.
-	- In practice using masks can help a lot, because it avoids futile computations on empty pixels. 
+	- Using masks can help a lot, because it avoids futile computations on empty pixels. 
 	- The masks must have the same dimensions as your fixed and moving image in x,y,z but also in terms of the number of channels.
-	- Pixels with a value of `1` are valid, pixels with a value of `0` are not considered (in fact the wrapper code is written such that any values `>0.1` are converted to `1`, thus also ImageJ-style masks with `255` as foreground will work).
+	- Pixels with a value of `1` in the mask are considered for the registration, pixels with a value of `0` are not considered (the wrapper code is written such that any values `>0.1` are converted to `1`, thus also ImageJ-style masks with `255` as foreground will work).
 - Use initial transformation file:
 	- You can use a transformation that you saved in a previous registration as a starting point. For example, it can make sense to first only register the shift and then go on with an affine transformation.
 
