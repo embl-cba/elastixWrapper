@@ -64,6 +64,7 @@ elastix:
 	- Number of data points that will be used in each iteration for finding the registration
 	- To use all data point type: full
 	- Around `3000` often is a good number
+	- Note that a semicolon separated list can be provided to use a different number of samples for registration at different resolutions (the number of list items must match the number of list items in the below "Gaussian smoothing sigma" parameter). It usually makes sense to use relatively less samples for lower resolutions.
 - Gaussian smoothing sigma [voxels]
 	- For each dimension (x,y,z) enter the smoothing sigma.
 	- Typically, the registration works better with more smoothing.
