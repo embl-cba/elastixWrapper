@@ -69,6 +69,12 @@ elastix:
 	- For each dimension (x,y,z) enter the smoothing sigma.
 	- Typically, the registration works better with more smoothing.
 	- You may specify a semicolon separated list of smoothing factors in order to do the registration at different resolutions, e.g. `10,10,10;1,1,1` will first do the registration with a 10 x 10 x 10 down-sampled version of the data and then in a second step at full resolution.
+- Transformation output file
+	- Provide a path to a file where the transformation should be saved.
+	- The file path should end on `.txt`
+	- Do NOT save the file in the "Temporary directory for intermediate files" as it may be overwritten there. Save it to some other folder.
+	- You can then use this transformation in a next run in the below field: "Use initial transformation file". 
+	- Like this you can chain transformations of increasing complexity.
 - Using masks:
 	- You can mask either/or the moving or the fixed image. 
 	- The algorithm will then only consider pixels within the mask.
