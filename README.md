@@ -83,6 +83,10 @@ elastix:
 	- Pixels with a value of `1` in the mask are considered for the registration, pixels with a value of `0` are not considered (the wrapper code is written such that any values `>0.1` are converted to `1`, thus also ImageJ-style masks with `255` as foreground will work).
 - Use initial transformation file:
 	- You can use a transformation that you saved in a previous registration as a starting point. For example, it can make sense to first only register the shift and then go on with an affine transformation.
+- Weights for multi channel images:
+	- If your images have multiple channels you can configure how much weight you want to give each of them during the registration, e.g. `0.0,1.0,0.0` would only consider channel 2 for the registration. 
+	- Note that the registration will be applied to all channel, regardless.
+	- As far as I know the weights do not need to add up to `1.0`; e.g. `1.0,1.0,0.0` should be fine to only consider the first two channels.
 
 ## Further notes
 
